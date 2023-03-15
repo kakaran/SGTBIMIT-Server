@@ -27,11 +27,18 @@ import dbConnect from "./Config/dbConfig.js"
 dbConnect();
 
 
-//just for checking
-app.get("/", function(req,res) {
-    return res.status(200).send("Everthing is working fine --");
-})
 
+//routes
+import userRoute from "./Routes/xyz";
+app.use("/api",userRoute);
+
+
+
+
+//just for checking
+// app.get("/", function(req,res) {
+//     return res.status(200).send("Everthing is working fine --");
+// })
 
 
 
