@@ -1,6 +1,5 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 mongoose.set('strictQuery', false);
-
 
 const dbConnect = async () => {
 
@@ -16,5 +15,5 @@ const dbConnect = async () => {
   }
 };
 
-// module.exports = dbConnect;
-export default dbConnect;
+module.exports = dbConnect;
+// export default dbConnect;

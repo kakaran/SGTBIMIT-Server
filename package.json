@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "college website",
   "main": "index.js",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js"
@@ -17,6 +17,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.1",
     "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
     "nodemon": "^2.0.21"
   }
 }

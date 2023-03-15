@@ -1,18 +1,18 @@
-import express from "express";
-import cors from "cors";
-import morgan from "morgan";
+const express = require("express");
+const cors = require("cors");
+const morgan = require("morgan");
+const path = require ('path');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 
 
-
 //env
-import dotenv from 'dotenv';
+const dotenv = require('dotenv');
 dotenv.config();
+const publicpath = path.join(__dirname,"./Public/Images");
 
-
-
+app.use('/Public/Images',express.static(publicpath));
 app.use(express.json());
 app.use(cors({origin: true, credentials: true}));
 app.use(morgan("dev"));
@@ -23,13 +23,13 @@ app.use(express.urlencoded({ limit: "100mb", extended: false }));
 
 
 //database
-import dbConnect from "./Config/dbConfig.js";
+const dbConnect = require("./Config/dbConfig.js");
 dbConnect();
 
 
 
 //routes
-import userRoute from "./Routes/xyz.js";
+const userRoute = require("./Routes/xyz.js");
 app.use("/",userRoute);
 
 
