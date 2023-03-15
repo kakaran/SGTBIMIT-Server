@@ -23,14 +23,14 @@ app.use(express.urlencoded({ limit: "100mb", extended: false }));
 
 
 //database
-import dbConnect from "./Config/dbConfig.js"
+import dbConnect from "./Config/dbConfig.js";
 dbConnect();
 
 
 
 //routes
-import userRoute from "./Routes/xyz";
-app.use("/api",userRoute);
+import userRoute from "./Routes/xyz.js";
+app.use("/",userRoute);
 
 
 

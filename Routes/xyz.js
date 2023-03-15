@@ -1,5 +1,5 @@
 import express from "express";
-import { justForchecking, sgtbimitCheck } from "../Controllers/user";
+import { justForchecking, sgtbimitCheck } from "../Controllers/user.js";
 const router = express.Router();
 
 
@@ -7,3 +7,7 @@ const router = express.Router();
 router.get("/", justForchecking);
 
 router.get("/sgtbimit", sgtbimitCheck);
+
+
+
+export default router;
