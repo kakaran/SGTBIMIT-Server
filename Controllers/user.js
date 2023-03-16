@@ -1,7 +1,8 @@
 const Administrations = require("../Models/Administration");
 const fs = require('fs');
 const path = require('path');
-const imagepath = path.join(__dirname, "../public/images")
+const imagepath = path.join(__dirname, "../public/images");
+const PlaceInter = require('../Models/Interships_Placements');
 
 
 // const justForchecking = async(req,res) => {
@@ -137,11 +138,32 @@ const AdministrationUpdate = async (req, res) => {
             message: "Successfully Update the detail",
             detail: Update_Data,
         });
-        
+
         // return res.status(200).send("Successfully Update the detail");
 
     } catch (error) {
 
+        console.log(error);
+        return res.status(500).send({
+            success: false,
+            message: 'Error'
+        })
+    }
+}
+
+
+const PlacementIntershipsAdd = async (req,res) =>{
+    try {
+        const data = {
+            name : req.body.name,
+            image : path.join('/Public/Images/' + req.file.filename),
+            companyName :req.body.companyName
+        }
+
+        await new PlaceInter(data).save();
+        return res.status(200).send(data)
+
+    } catch (error) {
         console.log(error);
         return res.status(500).send({
             success: false,
@@ -155,5 +177,7 @@ module.exports = {
     SingleAdministrationDisplay,
     AdministrationDelete,
     AdministrationDisplay,
-    AdministrationUpdate, dataCheck
+    AdministrationUpdate, 
+    dataCheck,
+    PlacementIntershipsAdd
 }
