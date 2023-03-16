@@ -1,15 +1,17 @@
 const express = require("express");
-const { AdministrationAdd, justForchecking,AdministrationDelete,AdministrationDisplay } = require ("../Controllers/user.js");
+const { AdministrationAdd,AdministrationUpdate,dataCheck,AdministrationDelete,SingleAdministrationDisplay,AdministrationDisplay } = require ("../Controllers/user.js");
 const upload = require("../Config/multer.js");
 const router = express.Router();
 
 
 
 //just for checking
-router.get("/", justForchecking);
-router.post("/Administration/AdministrationAdd", upload.single('image'),AdministrationAdd);
-router.post("/Administration/AdministrationDelete",AdministrationDelete);
-router.get("/Administration/AdministrationDisplay",AdministrationDisplay);
+// router.get("/", justForchecking);
+router.post("/Administration/Administration_Add",upload.single('image'),AdministrationAdd);
+router.post("/Administration/Administration_Delete",AdministrationDelete);
+router.get("/Administration/Administration_Display",AdministrationDisplay);
+router.post("/Administration/Single_Administration_Display",SingleAdministrationDisplay);
+router.post("/Administration/Administration_Update/:_id",dataCheck,upload.single('image'),AdministrationUpdate);
 
 
 
