@@ -29,7 +29,7 @@ dbConnect();
 
 
 //routes
-const userRoute = require("./Routes/xyz.js");
+const userRoute = require("./Routes/Routes");
 app.use("/",userRoute);
 
 
