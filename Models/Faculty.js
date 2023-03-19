@@ -5,6 +5,9 @@ const faculty = mongoose.Schema({
     name :{
         type : String,
     },
+    post : {
+        type : String
+    },
     image : {
         type : String
     },

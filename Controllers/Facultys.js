@@ -4,8 +4,10 @@ const FacultysAdd = async(req,res) =>{
     try {
         const data = {
             name : req.body.name,
+            post : req.body.post,
             image : path.join('/Public/Images/' + req.file.filename),
-            detail : req.body.detail
+            detail : req.body.detail,
+
         }
 
         await new Facultys(data).save();
@@ -115,9 +117,11 @@ const FacultyUpdate = async(req,res)=>{
 
         const data = {
             name : req.body.name,
+            post : req.body.post,
             image : path.join('/Public/Images/' + req.file.filename),
-            companyName :req.body.companyName
+            detail : req.body.detail,
         }
+
 
         const Update_Data = await Facultys.updateMany({ _id: req.params._id }, data);
 
