@@ -28,7 +28,7 @@ const SocietyAdd = async (req, res) => {
 const SocietyDelete = async (req, res) => {
     try {
         const _id = req.body.Id;
-        console.log(req.body.id);
+        console.log(req.body.Id);
         const Society_Search = await Society.findById({ _id });
 
         if (Society_Search) {

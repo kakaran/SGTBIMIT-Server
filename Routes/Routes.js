@@ -5,7 +5,8 @@ const { AdministrationAdd, AdministrationUpdate, dataCheck, AdministrationDelete
 const { PlacementIntershipsAdd, PlacementIntershipsSingle, PlacementIntershipsDisplay, PlacementIntershipsDelete, PlacementIntershipsUpdate, dataCheckInterShip } = require("../Controllers/PlacementInternship")
 const { TestimonialAdd, TestimonialDisplay, TestimonialUpdate, TestimonialDelete } = require("../Controllers/Testimonials")
 const { recruitersAdd, recruitersUpdate, recruitersDisplay, recruitersDelete, dataCheckRecruiters } = require('../Controllers/Recruiters');
-
+const {FacultysAdd,FacultyDelete,FacultyDisplay,FacultySingle,FacultyUpdate,dataCheckFaculty} = require("../Controllers/Facultys");
+const { SocietyAdd,SocietyDelete,SocietyDisplay,SingleSocietyDisplay,dataCheckSociety,SocietyUpdate} = require("../Controllers/Society");
 //just for checking
 // router.get("/", justForchecking);
 router.post("/Administration/Administration_Add", upload.single('image'), AdministrationAdd);
