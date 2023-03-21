@@ -5,7 +5,6 @@ const { AdministrationAdd, AdministrationUpdate, dataCheck, AdministrationDelete
 const { PlacementIntershipsAdd, PlacementIntershipsSingle, PlacementIntershipsDisplay, PlacementIntershipsDelete, PlacementIntershipsUpdate, dataCheckInterShip } = require("../Controllers/PlacementInternship")
 const { TestimonialAdd, TestimonialDisplay, TestimonialUpdate, TestimonialDelete } = require("../Controllers/Testimonials")
 const { recruitersAdd, recruitersUpdate, recruitersDisplay, recruitersDelete, dataCheckRecruiters } = require('../Controllers/Recruiters');
-const {SocietyAdd,SocietyDelete,SocietyDisplay,SingleSocietyDisplay,dataCheckSociety,SocietyUpdate} = require("../Controllers/Society");
 
 //just for checking
 // router.get("/", justForchecking);
@@ -21,6 +20,14 @@ router.get("/Placement_Intership/PlacementInterships_Display", PlacementIntershi
 router.post("/Placement_Intership/PlacementInterships_Single", PlacementIntershipsSingle);
 router.post("/Placement_Intership/PlacementInterships_Delete", PlacementIntershipsDelete);
 router.post("/Placement_Intership/PlacementInterships_Update/:_id", dataCheckInterShip, upload.single('image'), PlacementIntershipsUpdate);
+
+//Faculty Routes 
+router.post("/Faculty/Facultys_Add", upload.single('image'), FacultysAdd);
+router.get("/Faculty/Faculty_Display", FacultyDisplay);
+router.post("/Faculty/FacultySingle", FacultySingle);
+router.post("/Faculty/Faculty_Delete", FacultyDelete);
+router.post("/Faculty/Faculty_Update/:_id", dataCheckFaculty, upload.single('image'), FacultyUpdate);
+
 
 //Testimonial Routes
 router.post("/Testimonial/Testimonial_Add", TestimonialAdd);
