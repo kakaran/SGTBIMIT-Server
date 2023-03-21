@@ -5,6 +5,7 @@ const { AdministrationAdd, AdministrationUpdate, dataCheck, AdministrationDelete
 const { PlacementIntershipsAdd, PlacementIntershipsSingle, PlacementIntershipsDisplay, PlacementIntershipsDelete, PlacementIntershipsUpdate, dataCheckInterShip } = require("../Controllers/PlacementInternship")
 const { TestimonialAdd, TestimonialDisplay, TestimonialUpdate, TestimonialDelete } = require("../Controllers/Testimonials")
 const { recruitersAdd, recruitersUpdate, recruitersDisplay, recruitersDelete, dataCheckRecruiters } = require('../Controllers/Recruiters');
+const {SocietyAdd,SocietyDelete,SocietyDisplay,SingleSocietyDisplay,dataCheckSociety,SocietyUpdate} = require("../Controllers/Society");
 
 //just for checking
 // router.get("/", justForchecking);
@@ -33,5 +34,14 @@ router.post("/Recruiters/recruiters_Add", upload.single('image'), recruitersAdd)
 router.post("/Recruiters/recruiters_Update/:_id", dataCheckRecruiters, upload.single('image'), recruitersUpdate);
 router.get("/Recruiters/recruiters_Display", recruitersDisplay);
 router.post("/Recruiters/recruiters_Delete", recruitersDelete);
+
+
+//Society Routes
+router.post("/Society/Society_Add",upload.single("image"),SocietyAdd);
+router.delete("/Society/Society_Delete",SocietyDelete);
+router.get("/Society/Society_Display", SocietyDisplay);
+router.post("/Society/Single_Society_Display", SingleSocietyDisplay);
+router.post("/Society/Society_Update/:_id", dataCheckSociety, upload.single('image'), SocietyUpdate); 3
+
 
 module.exports = router;    
