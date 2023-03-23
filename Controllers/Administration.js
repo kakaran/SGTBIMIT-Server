@@ -111,7 +111,7 @@ const AdministrationUpdate = async (req, res) => {
     try {
 
         const Search_Admin = await Administrations.findById({ _id: req.params._id });
-        
+
         //Delete the old image from Public Dir...
 
         const files = fs.readdirSync(imagepath);
@@ -157,6 +157,6 @@ module.exports = {
     SingleAdministrationDisplay,
     AdministrationDelete,
     AdministrationDisplay,
-    AdministrationUpdate, 
+    AdministrationUpdate,
     dataCheck,
 }
