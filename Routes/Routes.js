@@ -3,7 +3,7 @@ const upload = require("../Config/multer.js");
 const router = express.Router();
 const { AdministrationAdd, AdministrationUpdate, dataCheck, AdministrationDelete, SingleAdministrationDisplay, AdministrationDisplay } = require("../Controllers/Administration.js");
 const { PlacementIntershipsAdd, PlacementIntershipsSingle, PlacementIntershipsDisplay, PlacementIntershipsDelete, PlacementIntershipsUpdate, dataCheckInterShip } = require("../Controllers/PlacementInternship")
-const { TestimonialAdd, TestimonialDisplay, TestimonialUpdate, TestimonialDelete } = require("../Controllers/Testimonials")
+const { TestimonialAdd, singleTestimonialDisplay,TestimonialDisplay, TestimonialUpdate, TestimonialDelete } = require("../Controllers/Testimonials")
 const { recruitersAdd, recruitersUpdate, recruitersDisplay, recruitersDelete, dataCheckRecruiters } = require('../Controllers/Recruiters');
 const {FacultysAdd,FacultyDelete,FacultyDisplay,FacultySingle,FacultyUpdate,dataCheckFaculty} = require("../Controllers/Facultys");
 const { SocietyAdd,SocietyDelete,SocietyDisplay,SingleSocietyDisplay,dataCheckSociety,SocietyUpdate} = require("../Controllers/Society");
@@ -39,7 +39,7 @@ router.post("/Testimonial/Testimonial_Add", TestimonialAdd);
 router.get("/Testimonial/Testimonial_Display", TestimonialDisplay);
 router.post("/Testimonial/Testimonial_Update/:_id", TestimonialUpdate);
 router.post("/Testimonial/Testimonial_Delete", TestimonialDelete);
-
+router.post("/Testimonial/single_Testimonial_Display", singleTestimonialDisplay)
 
 //Recruiters Routes 
 router.post("/Recruiters/recruiters_Add", upload.single('image'), recruitersAdd);
