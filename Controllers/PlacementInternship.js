@@ -6,14 +6,32 @@ const imagepath = path.join(__dirname, "../public/images");
 
 const PlacementIntershipsAdd = async (req,res) =>{
     try {
-        const data = {
-            name : req.body.name,
-            image : path.join('/Public/Images/' + req.file.filename),
-            companyName :req.body.companyName
+
+        const {name, companyName} = req.fields;
+        const {image} = req.files;
+        
+        if (!name) {
+            return res.status(401).send("Name is required");
+        } else if (!companyName) {
+            return res.status(401).send("Position is required");
+        } else if (image && image.size > 1000000) {
+            return res.status(401).send("Image is required and should be less 1mb");
         }
 
-        await new PlaceInter(data).save();
-        return res.status(200).send(data)
+        const placeInter = await new PlaceInter(req.fields);
+        if (image) {
+            placeInter.image.data = fs.readFileSync(image.path),
+            placeInter.image.contentType = image.type,
+            placeInter.image.Name = image.name
+        }
+
+        await placeInter.save();
+
+        return res.status(201).send({
+            Success: true,
+            message: "Data Upload",
+            data: placeInter
+        })    
 
     } catch (error) {
         console.log(error);
@@ -26,7 +44,12 @@ const PlacementIntershipsAdd = async (req,res) =>{
 
 const PlacementIntershipsDisplay = async (req,res) =>{
     try {
-        const data = await PlaceInter.find();
+        const data = await PlaceInter.find().select("-image");
+
+        if(!data){
+            return res.status(400).send("Data not found")
+        }
+
         return res.status(200).send(data);
     } catch (error) {
         console.log(error);
@@ -40,7 +63,8 @@ const PlacementIntershipsDisplay = async (req,res) =>{
 
 const PlacementIntershipsSingle = async (req,res) =>{
     try {
-        const data = await PlaceInter.findById({_id: req.body._id});
+        const { _id } = req.params;
+        const data = await PlaceInter.findById({_id}).select("-image");
         if(data){
             return res.status(200).send(data);
         }else{
@@ -55,23 +79,33 @@ const PlacementIntershipsSingle = async (req,res) =>{
     }
 }
 
+const PlacementIntershipsImageDisplay = async (req, res) => {
+    try {
+        const { _id } = req.params;
+        const data = await PlaceInter.findById({ _id }).select("image");
+
+        if (data) {
+            res.set("Content-type", data.image.contentType);
+            return res.status(201).send(data.image.data);
+        }
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send({
+            success: false,
+            message: error
+        })
+    }
+}
 
 const PlacementIntershipsDelete =  async (req,res) =>{
     try {
-        const _id = req.body.Id;
-        const Adminis_Search = await PlaceInter.findById({ _id });
+        const {_id} = req.params;
+        const PlaceInter_Search = await PlaceInter.findById({ _id });
 
-        if (Adminis_Search) {
-            const files = fs.readdirSync(imagepath);
-            let imagearr = [Adminis_Search.image];
-            let repldata = imagearr[0].replace("\\Public\\Images\\", "");
-            files.forEach(async (ele) => {
-                if (ele == repldata) {
-                    fs.unlinkSync(`${imagepath}\\${repldata}`);
-                }
-            });
+        if (PlaceInter_Search) {
             await PlaceInter.findByIdAndDelete({ _id });
-            return res.status(200).send(Adminis_Search.name + " Delete")
+            return res.status(200).send(PlaceInter_Search.name + " Delete");
         } else {
             return res.status(401).send("User not found");
         }
@@ -84,47 +118,45 @@ const PlacementIntershipsDelete =  async (req,res) =>{
     }
 }
 
-const dataCheckInterShip = async (req, res, next) => {
-    const Search_PlInt = await PlaceInter.findById({ _id: req.params._id });
-
-    if (Search_PlInt) {
-        next()
-    } else {
-        return res.status(401).send("Data Not Found")
-    }
-}
 
 const PlacementIntershipsUpdate = async (req, res) => {
     try {
 
-        const Search_PlInt = await PlaceInter.findById({ _id: req.params._id });
-        
-        //Delete the old image from Public Dir...
+        const { _id } = req.params;
+        const {name, companyName} = req.fields;
+        const {image} = req.files;
+        const Search_PlInt = await PlaceInter.findById({ _id });
 
-        const files = fs.readdirSync(imagepath);
-        let imagearr = [Search_PlInt.image];
-        let repldata = imagearr[0].replace("\\Public\\Images\\", "");
-        files.forEach(async (ele) => {
-            if (ele == repldata) {
-                await fs.unlinkSync(`${imagepath}\\${repldata}`);
+        if(Search_PlInt){
+            if (!name) {
+                return res.status(401).send("Name is required");
+            } else if (!companyName) {
+                return res.status(401).send("Position is required");
+            } else if (image && image.size > 1000000) {
+                return res.status(401).send("Image is required and should be less 1mb");
             }
-        });
+            
 
-        const data = {
-            name : req.body.name,
-            image : path.join('/Public/Images/' + req.file.filename),
-            companyName :req.body.companyName
+            const PlaceIntership = await ImageData.findByIdAndUpdate(
+                { _id },
+                { ...req.fields },
+                { new: true }
+            );
+
+            if (image) {
+                PlaceIntership.image.data = fs.readFileSync(image.path),
+                PlaceIntership.image.contentType = image.type,
+                PlaceIntership.image.Name = image.name
+            }
+
+            await AdminiStration.save();
+            return res.status(201).send({
+                Success: true,
+                message: "Data Upload",
+                data: AdminiStration
+            })
         }
-
-        const Update_Data = await PlaceInter.updateMany({ _id: req.params._id }, data);
-
-        return res.status(200).send({
-            message: "Successfully Update the detail",
-            detail: Update_Data,
-        });
-
-        // return res.status(200).send("Successfully Update the detail");
-
+        
     } catch (error) {
 
         console.log(error);
@@ -141,7 +173,7 @@ module.exports = {
     PlacementIntershipsSingle,
     PlacementIntershipsDisplay,
     PlacementIntershipsDelete,
-    dataCheckInterShip,
-    PlacementIntershipsUpdate
+    PlacementIntershipsUpdate,
+    PlacementIntershipsImageDisplay
 
 }

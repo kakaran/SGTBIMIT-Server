@@ -2,21 +2,6 @@ const Administrations = require("../Models/Administration");
 const fs = require('fs');
 
 
-// const justForchecking = async(req,res) => {
-//     try {
-
-//         return res.status(200).send("Everything is working fine!");
-
-//     } catch (error) {
-//         console.log(error);
-//         return res.status(500).send({
-//             success:false,
-//             message : `Error`
-//         });
-//     }
-// }
-
-
 const AdministrationAdd = async (req, res) => {
     try {
         const { name, position, shortNote, longNote } = req.fields;
@@ -81,6 +66,11 @@ const AdministrationDisplay = async (req, res) => {
     try {
 
         const data = await Administrations.find().select("-image");
+
+        if (!data) {
+            return res.status(400).send("Data not found")
+        }
+
         return res.status(200).send(data);
 
     } catch (error) {
@@ -126,15 +116,6 @@ const SingleAdministrationDisplay = async (req, res) => {
     }
 }
 
-// const dataCheck = async (req, res, next) => {
-//     const Search_Admin = await Administrations.findById({ _id: req.params._id });
-
-//     if (Search_Admin) {
-//         next()
-//     } else {
-//         return res.status(401).send("Data Not Found")
-//     }
-// }
 
 
 const AdministrationUpdate = async (req, res) => {
@@ -165,18 +146,21 @@ const AdministrationUpdate = async (req, res) => {
 
             if (image) {
                 AdminiStration.image.data = fs.readFileSync(image.path),
-                AdminiStration.image.contentType = image.type,
-                AdminiStration.image.Name = image.name
+                    AdminiStration.image.contentType = image.type,
+                    AdminiStration.image.Name = image.name
             }
+
+            await AdminiStration.save();
+            return res.status(201).send({
+                Success: true,
+                message: "Data Upload",
+                data: AdminiStration
+            })
+            
         }
 
-        
-        await AdminiStration.save();
-        return res.status(201).send({
-            Success: true,
-            message: "Data Upload",
-            data: AdminiStration
-        })
+
+
 
 
     } catch (error) {

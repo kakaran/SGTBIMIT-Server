@@ -2,8 +2,8 @@ const express = require("express");
 const upload = require("../Config/multer.js");
 const formidable = require('express-formidable');
 const router = express.Router();
-const { AdministrationAdd, AdministrationUpdate,AdministrationImageDisplay,AdministrationDelete, SingleAdministrationDisplay, AdministrationDisplay } = require("../Controllers/Administration.js");
-const { PlacementIntershipsAdd, PlacementIntershipsSingle, PlacementIntershipsDisplay, PlacementIntershipsDelete, PlacementIntershipsUpdate, dataCheckInterShip } = require("../Controllers/PlacementInternship")
+const { AdministrationAdd, AdministrationUpdate, AdministrationImageDisplay,AdministrationDelete, SingleAdministrationDisplay, AdministrationDisplay } = require("../Controllers/Administration.js");
+const { PlacementIntershipsAdd, PlacementIntershipsSingle, PlacementIntershipsDisplay, PlacementIntershipsDelete, PlacementIntershipsUpdate, PlacementIntershipsImageDisplay } = require("../Controllers/PlacementInternship")
 const { TestimonialAdd, singleTestimonialDisplay,TestimonialDisplay, TestimonialUpdate, TestimonialDelete } = require("../Controllers/Testimonials")
 const { recruitersAdd, recruitersUpdate, recruitersDisplay, recruitersDelete, dataCheckRecruiters } = require('../Controllers/Recruiters');
 const {FacultysAdd,FacultyDelete,FacultyDisplay,FacultySingle,FacultyUpdate,dataCheckFaculty} = require("../Controllers/Facultys");
@@ -22,11 +22,12 @@ router.post("/Administration/Single_Administration_Display/:_id", SingleAdminist
 router.post("/Administration/Administration_Update/:_id", formidable(), AdministrationUpdate); 3
 
 //Placement and Intership Routes 
-router.post("/Placement_Intership/PlacementInterships_Add", upload.single('image'), PlacementIntershipsAdd);
+router.post("/Placement_Intership/PlacementInterships_Add", formidable(), PlacementIntershipsAdd);
 router.get("/Placement_Intership/PlacementInterships_Display", PlacementIntershipsDisplay);
-router.post("/Placement_Intership/PlacementInterships_Single", PlacementIntershipsSingle);
-router.post("/Placement_Intership/PlacementInterships_Delete", PlacementIntershipsDelete);
-router.post("/Placement_Intership/PlacementInterships_Update/:_id", dataCheckInterShip, upload.single('image'), PlacementIntershipsUpdate);
+router.get("/Placement_Intership/PlacementInterships_Single/:_id", PlacementIntershipsSingle);
+router.post("/Placement_Intership/PlacementInterships_Delete/:_id", PlacementIntershipsDelete);
+router.post("/Placement_Intership/PlacementInterships_Image_Display/:_id", PlacementIntershipsImageDisplay);
+router.post("/Placement_Intership/PlacementInterships_Update/:_id", formidable(), PlacementIntershipsUpdate);
 
 //Faculty Routes 
 router.post("/Faculty/Facultys_Add", upload.single('image'), FacultysAdd);
