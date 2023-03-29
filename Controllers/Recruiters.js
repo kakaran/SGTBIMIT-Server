@@ -1,18 +1,32 @@
 const Recruiters = require('../Models/Recruiters');
 const fs = require('fs');
-const path = require('path');
-const imagepath = path.join(__dirname, "../public/images");
+
 
 
 const recruitersAdd = async (req, res) => {
     try {
+        const { Name } = req.fields;
+        const { image } = req.files;
 
-        const data = {
-            image: path.join('/Public/Images/'+req.file.filename),
+        if (!Name) {
+            return res.status(401).send("Name is required");
+        } else if (image && image.size > 1000000) {
+            return res.status(401).send("Image is required and should be less 1mb");
         }
 
-        await new Recruiters(data).save();
-        return res.status(200).send(data)
+        const Recruiter_Add = await new Recruiters(req.fields);
+        if (image) {
+            Recruiter_Add.image.data = fs.readFileSync(image.path),
+                Recruiter_Add.image.contentType = image.type,
+                Recruiter_Add.image.Name = image.name
+        }
+
+        await Recruiter_Add.save();
+        return res.status(201).send({
+            Success: true,
+            message: "Data Upload",
+            data: Recruiter_Add
+        })
 
     } catch (error) {
         console.log(error);
@@ -26,18 +40,11 @@ const recruitersAdd = async (req, res) => {
 
 const recruitersDelete = async (req, res) => {
     try {
-        const _id = req.body.Id;
+        const { _id } = req.params;
         const Recruiter_Search = await Recruiters.findById({ _id });
 
         if (Recruiter_Search) {
-            const files = fs.readdirSync(imagepath);
-            let imagearr = [Recruiter_Search.image];
-            let repldata = imagearr[0].replace("\\Public\\Images\\", "");
-            files.forEach(async (ele) => {
-                if (ele == repldata) {
-                    fs.unlinkSync(`${imagepath}\\${repldata}`);
-                }
-            });
+
             await Recruiters.findByIdAndDelete({ _id });
             return res.status(200).send(" Delete")
         } else {
@@ -55,7 +62,7 @@ const recruitersDelete = async (req, res) => {
 
 const recruitersDisplay = async (req, res) => {
     try {
-        const data = await Recruiters.find();
+        const data = await Recruiters.find().select("-image");
 
         return res.status(200).send(data);
 
@@ -68,41 +75,58 @@ const recruitersDisplay = async (req, res) => {
     }
 }
 
-const dataCheckRecruiters = async (req, res, next) => {
-    const Search_Recru = await Recruiters.findById({ _id: req.params._id });
+const RecruiterImageDisplay = async (req, res) => {
+    try {
+        const { _id } = req.params;
+        const data = await Recruiters.findById({ _id }).select("image");
 
-    if (Search_Recru) {
-        next()
-    } else {
-        return res.status(401).send("Data Not Found")
+        if (data) {
+            res.set("Content-type", data.image.contentType);
+            return res.status(201).send(data.image.data);
+        }
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send({
+            success: false,
+            message: error
+        })
     }
 }
 
-
 const recruitersUpdate = async (req, res) => {
     try {
-        const Search_Recru = await Recruiters.findById({ _id: req.params._id });
+        const { _id } = req.params;
+        const { Name } = req.fields;
+        const { image } = req.files;
+        const Search_Recru = await Recruiters.findById({ _id });
 
-        //Delete the old image from Public Dir...
-        const files = fs.readdirSync(imagepath);
-        let imagearr = [Search_Recru.image];
-        let repldata = imagearr[0].replace("\\Public\\Images\\", "");
-        files.forEach(async (ele) => {
-            if (ele == repldata) {
-                await fs.unlinkSync(`${imagepath}\\${repldata}`);
+        if (Search_Recru) {
+            if (!Name) {
+                return res.status(401).send("Name is required");
+            } else if (image && image.size > 1000000) {
+                return res.status(401).send("Image is required and should be less 1mb");
             }
-        });
+            const Recruiter_Update = await Recruiters.findByIdAndUpdate(
+                { _id },
+                { ...req.fields },
+                { new: true }
+            );
 
-        const data = {
-            image: path.join('/Public/Images/' + req.file.filename),
+            if (image) {
+                Recruiter_Update.image.data = fs.readFileSync(image.path),
+                    Recruiter_Update.image.contentType = image.type,
+                    Recruiter_Update.image.Name = image.name
+            }
+
+            await Recruiter_Update.save();
+            return res.status(201).send({
+                Success: true,
+                message: "Data Upload",
+                data: Recruiter_Update
+            })
+
         }
-
-        const Update_Data = await Recruiters.updateMany({ _id: req.params._id }, data);
-
-        return res.status(200).send({
-            message: "Successfully Update the detail",
-            detail: Update_Data,
-        });
 
     } catch (error) {
         console.log(error);
@@ -118,5 +142,5 @@ module.exports = {
     recruitersUpdate,
     recruitersDisplay,
     recruitersDelete,
-    dataCheckRecruiters
+    RecruiterImageDisplay
 }

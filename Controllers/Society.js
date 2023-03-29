@@ -1,21 +1,35 @@
 const fs = require('fs');
-const path = require('path');
-const imagepath = path.join(__dirname, "../public/images");
 const Society = require('../Models/society');
 
 
 const SocietyAdd = async (req, res) => {
     try {
-        const data = {
-            title: req.body.title,
-            image: path.join('/Public/Images/' + req.file.filename),
-            subdetail: req.body.subdetail,
-            detail: req.body.detail
+        const { title, subdetail, detail } = req.fields;
+        const { image } = req.files;
+
+        if (!title) {
+            return res.status(401).send("Socity is required");
+        } else if (!subdetail) {
+            return res.status(401).send("Heading is required");
+        } else if (!detail) {
+            return res.status(401).send("Detail is required");
+        } else if (image && image.size > 1000000) {
+            return res.status(401).send("Image is required and should be less 1mb");
         }
 
-        await Society(data).save();
-        return res.status(200).send(data);
+        const SocietyDetail = await new Society(req.fields);
+        if (image) {
+            SocietyDetail.image.data = fs.readFileSync(image.path),
+                SocietyDetail.image.contentType = image.type,
+                SocietyDetail.image.Name = image.name
+        }
 
+        await SocietyDetail.save();
+        return res.status(201).send({
+            Success: true,
+            message: "Data Upload",
+            data: SocietyDetail
+        })
     } catch (error) {
         console.log(error);
         return res.status(500).send({
@@ -27,18 +41,10 @@ const SocietyAdd = async (req, res) => {
 
 const SocietyDelete = async (req, res) => {
     try {
-        const _id = req.body.id;
+        const { _id } = req.params;
         const Society_Search = await Society.findById({ _id });
 
         if (Society_Search) {
-            const files = fs.readdirSync(imagepath);
-            let imagearr = [Society_Search.image];
-            let repldata = imagearr[0].replace("\\Public\\Images\\", "");
-            files.forEach(async (ele) => {
-                if (ele == repldata) {
-                    fs.unlinkSync(`${imagepath}\\${repldata}`);
-                }
-            });
             await Society.findByIdAndDelete({ _id });
             return res.status(200).send(Society_Search.title + " Delete");
 
@@ -59,7 +65,11 @@ const SocietyDelete = async (req, res) => {
 const SocietyDisplay = async (req, res) => {
     try {
 
-        const data = await Society.find();
+        const data = await Society.find().select("-image");
+
+        if (!data) {
+            return res.status(400).send("Data not found")
+        }
         return res.status(200).send(data);
 
     } catch (error) {
@@ -70,10 +80,31 @@ const SocietyDisplay = async (req, res) => {
         })
     }
 }
+
+const SocietyImageDisplay = async (req, res) => {
+    try {
+        const { _id } = req.params;
+        const data = await Society.findById({ _id }).select("image");
+
+        if (data) {
+            res.set("Content-type", data.image.contentType);
+            return res.status(201).send(data.image.data);
+        }
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send({
+            success: false,
+            message: error
+        })
+    }
+}
+
 
 const SingleSocietyDisplay = async (req, res) => {
     try {
-        const data = await Society.findById({ _id: req.body._id });
+        const { _id } = req.params;
+        const data = await Society.findById({ _id }).select("-image");
 
         return res.status(200).send(data);
     } catch (error) {
@@ -85,47 +116,46 @@ const SingleSocietyDisplay = async (req, res) => {
     }
 }
 
-const dataCheckSociety = async (req, res, next) => {
-    const Search_Socity = await Society.findById({ _id: req.params._id });
 
-    if (Search_Socity) {
-        next()
-    } else {
-        return res.status(401).send("Data Not Found")
-    }
-}
 
 const SocietyUpdate = async (req, res) => {
     try {
+        const { _id } = req.params;
+        const { title, subdetail, detail } = req.fields;
+        const { image } = req.files;
+        const Search_Socity = await Society.findById({ _id });
 
-        const Search_Socity = await Society.findById({ _id: req.params._id });
-
-        //Delete the old image from Public Dir...
-
-        const files = fs.readdirSync(imagepath);
-        let imagearr = [Search_Socity.image];
-        let repldata = imagearr[0].replace("\\Public\\Images\\", "");
-        files.forEach(async (ele) => {
-            if (ele == repldata) {
-                await fs.unlinkSync(`${imagepath}\\${repldata}`);
+        if (Search_Socity) {
+            if (!title) {
+                return res.status(401).send("Socity is required");
+            } else if (!subdetail) {
+                return res.status(401).send("Heading is required");
+            } else if (!detail) {
+                return res.status(401).send("Detail is required");
+            } else if (image && image.size > 1000000) {
+                return res.status(401).send("Image is required and should be less 1mb");
             }
-        });
 
-        const data = {
-            title: req.body.title,
-            image: path.join('/Public/Images/' + req.file.filename),
-            subdetail: req.body.subdetail,
-            detail: req.body.detail,
+            const SocietyDataUpdate = await Society.findByIdAndUpdate(
+                { _id },
+                { ...req.fields },
+                { new: true }
+            );
+
+            if (image) {
+                SocietyDataUpdate.image.data = fs.readFileSync(image.path),
+                SocietyDataUpdate.image.contentType = image.type,
+                SocietyDataUpdate.image.Name = image.name
+            }
+
+            await SocietyDataUpdate.save();
+            return res.status(201).send({
+                Success: true,
+                message: "Data Upload",
+                data: SocietyDataUpdate
+            })
+
         }
-
-        const Update_Data = await Society.updateMany({ _id: req.params._id }, data);
-
-        return res.status(200).send({
-            message: "Successfully Update the detail",
-            detail: Update_Data,
-        });
-
-        // return res.status(200).send("Successfully Update the detail");
 
     } catch (error) {
 
@@ -143,6 +173,6 @@ module.exports = {
     SocietyDelete,
     SocietyDisplay,
     SingleSocietyDisplay,
-    dataCheckSociety,
-    SocietyUpdate
+    SocietyUpdate,
+    SocietyImageDisplay
 }

@@ -1,18 +1,32 @@
 const Facultys = require("../Models/Faculty");
 
-const FacultysAdd = async(req,res) =>{
+const FacultyAdd = async (req, res) => {
     try {
-        const data = {
-            name : req.body.name,
-            post : req.body.post,
-            image : path.join('/Public/Images/' + req.file.filename),
-            detail : req.body.detail,
-
+        const { name, post, detail } = req.fields;
+        const { image } = req.files;
+        if (!name) {
+            return res.status(401).send("Name is required");
+        } else if (!post) {
+            return res.status(401).send("Post is required");
+        } else if (!detail) {
+            return res.status(401).send("Detail is required");
+        } else if (image && image.size > 1000000) {
+            return res.status(401).send("Image is required and should be less 1mb");
         }
 
-        await new Facultys(data).save();
+        const Faculty = await new Facultys(req.fields);
+        if (image) {
+            Faculty.image.data = fs.readFileSync(image.path),
+            Faculty.image.contentType = image.type,
+            Faculty.image.Name = image.name
+        }
 
-        return res.status(200).send(data);
+        await Faculty.save();
+        return res.status(201).send({
+            Success: true,
+            message: "Data Upload",
+            data: Faculty
+        })
 
     } catch (error) {
         console.log(error);
@@ -24,10 +38,29 @@ const FacultysAdd = async(req,res) =>{
 }
 
 
-const FacultyDisplay = async (req,res)=>{
+const FacultyImageDisplay = async (req, res) => {
     try {
-        
-        const Data = await Facultys.find();
+        const { _id } = req.params;
+        const data = await Facultys.findById({ _id }).select("image");
+
+        if (data) {
+            res.set("Content-type", data.image.contentType);
+            return res.status(201).send(data.image.data);
+        }
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send({
+            success: false,
+            message: error
+        })
+    }
+}
+
+const FacultyDisplay = async (req, res) => {
+    try {
+
+        const Data = await Facultys.find().select("-image");
 
         return res.status(200).send(Data);
 
@@ -40,13 +73,13 @@ const FacultyDisplay = async (req,res)=>{
     }
 }
 
-const FacultySingle = async (req,res) =>{
+const FacultySingle = async (req, res) => {
     try {
-
-        const Data = await Facultys.findById({_id: req.body._id});
-        if(!Data){
+        const {_id} = req.params;
+        const Data = await Facultys.findById({ _id}).select("-image");
+        if (!Data) {
             return res.status(400).send({
-                message : "Data not found"
+                message: "Data not found"
             })
         }
         return res.status(200).send(Data);
@@ -60,24 +93,17 @@ const FacultySingle = async (req,res) =>{
     }
 }
 
-const FacultyDelete = async (req,res) =>{
+const FacultyDelete = async (req, res) => {
     try {
-        const Faculty_Search = await Facultys.findById({_id: req.body._id});
+        const {_id} = req.params;
+        const Faculty_Search = await Facultys.findById({ _id});
 
-        if(Faculty_Search){
-            const files = fs.readdirSync(imagepath);
-            let imagearr = [Faculty_Search.image];
-            let repldata = imagearr[0].replace("\\Public\\Images\\", "");
-            files.forEach(async (ele) => {
-                if (ele == repldata) {
-                    fs.unlinkSync(`${imagepath}\\${repldata}`);
-                }
-            });
-            await PlaceInter.findByIdAndDelete({ _id });
+        if (Faculty_Search) {
+            await Facultys.findByIdAndDelete({ _id });
             return res.status(200).send(Faculty_Search.name + " Delete")
-        }else{
+        } else {
             return res.status(200).send({
-                message : "Data not found"
+                message: "Data not found"
             })
         }
 
@@ -90,45 +116,45 @@ const FacultyDelete = async (req,res) =>{
     }
 }
 
-const dataCheckFaculty = async (req, res, next) => {
-    const Search_PlInt = await Facultys.findById({ _id: req.params._id });
 
-    if (Search_PlInt) {
-        next()
-    } else {
-        return res.status(401).send("Data Not Found")
-    }
-}
-
-const FacultyUpdate = async(req,res)=>{
+const FacultyUpdate = async (req, res) => {
     try {
-        const Search_PlInt = await Facultys.findById({ _id: req.params._id });
-        
-        //Delete the old image from Public Dir...
+        const { _id } = req.params;
+        const { name, post, detail } = req.fields;
+        const { image } = req.files;
+        const Search_Faculty = await Facultys.findById({ _id });
 
-        const files = fs.readdirSync(imagepath);
-        let imagearr = [Search_PlInt.image];
-        let repldata = imagearr[0].replace("\\Public\\Images\\", "");
-        files.forEach(async (ele) => {
-            if (ele == repldata) {
-                await fs.unlinkSync(`${imagepath}\\${repldata}`);
+        if(Search_Faculty)
+        {
+            if (!name) {
+                return res.status(401).send("Name is required");
+            } else if (!post) {
+                return res.status(401).send("Post is required");
+            } else if (!detail) {
+                return res.status(401).send("Detail is required");
+            } else if (image && image.size > 1000000) {
+                return res.status(401).send("Image is required and should be less 1mb");
             }
-        });
 
-        const data = {
-            name : req.body.name,
-            post : req.body.post,
-            image : path.join('/Public/Images/' + req.file.filename),
-            detail : req.body.detail,
+            const FacultyUpdate = await Facultys.findByIdAndUpdate(
+                { _id },
+                { ...req.fields },
+                { new: true }
+            );
+
+            if (image) {
+                FacultyUpdate.image.data = fs.readFileSync(image.path),
+                FacultyUpdate.image.contentType = image.type,
+                FacultyUpdate.image.Name = image.name
+            }
+
+            await FacultyUpdate.save();
+            return res.status(201).send({
+                Success: true,
+                message: "Data Upload",
+                data: FacultyUpdate
+            })
         }
-
-
-        const Update_Data = await Facultys.updateMany({ _id: req.params._id }, data);
-
-        return res.status(200).send({
-            message: "Successfully Update the detail",
-            detail: Update_Data,
-        });
 
     } catch (error) {
         console.log(error);
@@ -140,11 +166,11 @@ const FacultyUpdate = async(req,res)=>{
 }
 
 module.exports = {
-    FacultysAdd,
+    FacultyAdd,
     FacultyDelete,
     FacultyDisplay,
     FacultySingle,
     FacultyUpdate,
-    dataCheckFaculty
+    FacultyImageDisplay
 
 }

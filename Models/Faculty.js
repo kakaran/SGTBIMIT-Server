@@ -9,7 +9,9 @@ const faculty = mongoose.Schema({
         type : String
     },
     image : {
-        type : String
+        data : Buffer,
+        contentType : String,
+        Name : String,
     },
     detail : {
         type : String

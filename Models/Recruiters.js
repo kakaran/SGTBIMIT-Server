@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 
 const recruiters = mongoose.Schema({
     image : {
+        data : Buffer,
+        contentType : String,
+        Name : String,
+    },
+    Name :{
         type : String
     }
 

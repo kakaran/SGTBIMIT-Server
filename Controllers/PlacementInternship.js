@@ -1,7 +1,6 @@
 const PlaceInter = require('../Models/Interships_Placements');
 const fs = require('fs');
-const path = require('path');
-const imagepath = path.join(__dirname, "../public/images");
+
 
 
 const PlacementIntershipsAdd = async (req,res) =>{
@@ -13,7 +12,7 @@ const PlacementIntershipsAdd = async (req,res) =>{
         if (!name) {
             return res.status(401).send("Name is required");
         } else if (!companyName) {
-            return res.status(401).send("Position is required");
+            return res.status(401).send("Company name is required");
         } else if (image && image.size > 1000000) {
             return res.status(401).send("Image is required and should be less 1mb");
         }

@@ -5,8 +5,10 @@ const society = mongoose.Schema({
     title : {
         type :String,
     },
-    image :{
-        type : String
+    image : {
+        data : Buffer,
+        contentType : String,
+        Name : String,
     },
     subdetail : {
         type : String

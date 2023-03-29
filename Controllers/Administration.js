@@ -138,7 +138,7 @@ const AdministrationUpdate = async (req, res) => {
                 return res.status(401).send("Image is required and should be less 1mb");
             }
 
-            const AdminiStration = await ImageData.findByIdAndUpdate(
+            const AdminiStration = await Administrations.findByIdAndUpdate(
                 { _id },
                 { ...req.fields },
                 { new: true }
@@ -156,12 +156,8 @@ const AdministrationUpdate = async (req, res) => {
                 message: "Data Upload",
                 data: AdminiStration
             })
-            
+
         }
-
-
-
-
 
     } catch (error) {
 
