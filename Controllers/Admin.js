@@ -1,5 +1,6 @@
 const adminModel = require("../Models/Admin");
 const {hashPassword, comparePassword} = require("../Middlewares/authPassword");
+const Jwt = require("jsonwebtoken");
 
 const adminRegister = async(req,res) => {
     try {
@@ -56,15 +57,14 @@ const adminLogin = async(req,res) => {
     }
 
     //check admin already exists
-    const admin = await userModel.findOne({ email });
-    if (!user) {
+    const admin = await adminModel.findOne({ email });
+    if (!admin) {
       return res.status(400).send({
-        success: false,
         message: "Email is not registerd",
       });
     }
     
-    const match = await comparePassword(password, user.password);
+    const match = await comparePassword(password, admin.password);
 
     if (!match) {
       return res.status(200).send({
@@ -80,6 +80,8 @@ const adminLogin = async(req,res) => {
     },
       token,
     });
+
+    
 
     } catch (error) {
       console.log(error);

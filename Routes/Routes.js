@@ -9,7 +9,8 @@ const { recruitersAdd, recruitersUpdate, recruitersDisplay, recruitersDelete, Re
 const { FacultyAdd, FacultyDelete, FacultyImageDisplay, FacultyDisplay, FacultySingle, FacultyUpdate } = require("../Controllers/Facultys");
 const { SocietyAdd, SocietyDelete, SocietyDisplay, SingleSocietyDisplay, SocietyImageDisplay, SocietyUpdate } = require("../Controllers/Society");
 const { EResourcesAdd, EResourcesDisplay, EResourcesUpdate, EResourcesSingle, EResourcesDelete } = require("../Controllers/E-Resources");
-
+const { adminRegister, adminLogin } = require("../Controllers/Admin.js");
+ 
 //just for checking
 // router.get("/", justForchecking);
 
