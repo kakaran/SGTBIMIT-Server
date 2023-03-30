@@ -69,5 +69,8 @@ router.post('/E_Resources/EResources_Single_Display', EResourcesSingle);
 router.post('/E_Resources/EResources_Update/:_id', EResourcesUpdate);
 router.post("/E_Resources/EResources_Delete/:id", EResourcesDelete);
 
+//Admin Routes
+router.post("/Admin/Register", adminRegister);
+router.post("/Admin/Login", adminLogin);
 
 module.exports = router;    
