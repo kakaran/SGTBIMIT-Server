@@ -4,9 +4,8 @@ const fs = require('fs');
 
 const AdministrationAdd = async (req, res) => {
     try {
-        const { name, position, shortNote, longNote ,Index} = req.fields;
+        const { name, position, shortNote, longNote, Index } = req.fields;
         const { image } = req.files;
-
         if (!name) {
             return res.status(401).send("Name is required");
         } else if (!position) {
@@ -26,12 +25,12 @@ const AdministrationAdd = async (req, res) => {
                 AdminiStation.image.Name = image.name
         }
 
-        if(!Index){
+        if (!Index) {
             const Data = await Administrations.find();
-            if(Data == undefined){
+            if (Data == undefined) {
                 AdminiStation.Index = 1;
-            }else{
-                AdminiStation.Index = Data.length+1
+            } else {
+                AdminiStation.Index = Data.length + 1
             }
         }
 
@@ -131,10 +130,10 @@ const SingleAdministrationDisplay = async (req, res) => {
 const AdministrationUpdate = async (req, res) => {
     try {
         const { _id } = req.params;
-        const { name, position, shortNote, longNote,Index } = req.fields;
+        const { name, position, shortNote, longNote, Index } = req.fields;
         const { image } = req.files;
         const Search_Admin = await Administrations.findById({ _id: req.params._id });
-
+        // console.log(image);
         if (Search_Admin) {
             if (!name) {
                 return res.status(401).send("Name is required");
