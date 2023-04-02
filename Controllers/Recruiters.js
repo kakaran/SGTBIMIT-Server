@@ -37,6 +37,23 @@ const recruitersAdd = async (req, res) => {
     }
 }
 
+const recruiters_Single_Display = async (req,res) =>{
+    try {
+        const {_id} = req.params;
+        const Recruiter_Search = await Recruiters.findById({_id}).select("-image");
+
+        if(Recruiter_Search){
+            return res.status(200).send(Recruiter_Search)
+        }
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send({
+            success: false,
+            message: 'Error'
+        })
+    }
+}
 
 const recruitersDelete = async (req, res) => {
     try {
@@ -142,5 +159,6 @@ module.exports = {
     recruitersUpdate,
     recruitersDisplay,
     recruitersDelete,
-    RecruiterImageDisplay
+    RecruiterImageDisplay,
+    recruiters_Single_Display
 }

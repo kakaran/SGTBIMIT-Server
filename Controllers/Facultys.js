@@ -1,4 +1,5 @@
 const Facultys = require("../Models/Faculty");
+const fs = require('fs');
 
 const FacultyAdd = async (req, res) => {
     try {

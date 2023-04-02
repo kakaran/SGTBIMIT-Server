@@ -71,6 +71,7 @@ const adminLogin = async(req,res) => {
         message: "Invalid Password",
       });
     }
+    
     //token
     const token = await Jwt.sign({ _id: admin._id }, process.env.JWT_SECRET, { expiresIn: "7d",});
     res.status(200).send({

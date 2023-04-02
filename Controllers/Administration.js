@@ -4,7 +4,7 @@ const fs = require('fs');
 
 const AdministrationAdd = async (req, res) => {
     try {
-        const { name, position, shortNote, longNote } = req.fields;
+        const { name, position, shortNote, longNote ,Index} = req.fields;
         const { image } = req.files;
 
         if (!name) {
@@ -24,6 +24,15 @@ const AdministrationAdd = async (req, res) => {
             AdminiStation.image.data = fs.readFileSync(image.path),
                 AdminiStation.image.contentType = image.type,
                 AdminiStation.image.Name = image.name
+        }
+
+        if(!Index){
+            const Data = await Administrations.find();
+            if(Data == undefined){
+                AdminiStation.Index = 1;
+            }else{
+                AdminiStation.Index = Data.length+1
+            }
         }
 
         await AdminiStation.save();
@@ -104,6 +113,7 @@ const AdministrationImageDisplay = async (req, res) => {
 const SingleAdministrationDisplay = async (req, res) => {
     try {
         const { _id } = req.params;
+        console.log();
         const data = await Administrations.findById({ _id }).select("-image");
 
         return res.status(200).send(data);
@@ -121,7 +131,7 @@ const SingleAdministrationDisplay = async (req, res) => {
 const AdministrationUpdate = async (req, res) => {
     try {
         const { _id } = req.params;
-        const { name, position, shortNote, longNote } = req.fields;
+        const { name, position, shortNote, longNote,Index } = req.fields;
         const { image } = req.files;
         const Search_Admin = await Administrations.findById({ _id: req.params._id });
 
@@ -149,6 +159,7 @@ const AdministrationUpdate = async (req, res) => {
                     AdminiStration.image.contentType = image.type,
                     AdminiStration.image.Name = image.name
             }
+
 
             await AdminiStration.save();
             return res.status(201).send({

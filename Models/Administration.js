@@ -16,6 +16,9 @@ const administration = mongoose.Schema({
     },
     longNote :{
         type : String,
+    },
+    Index :{
+        type : Number
     }
 },{
     timestamps : true,

@@ -124,6 +124,8 @@ const PlacementIntershipsUpdate = async (req, res) => {
         const { _id } = req.params;
         const {name, companyName} = req.fields;
         const {image} = req.files;
+
+        console.log(name , companyName, _id);
         const Search_PlInt = await PlaceInter.findById({ _id });
 
         if(Search_PlInt){
@@ -136,7 +138,7 @@ const PlacementIntershipsUpdate = async (req, res) => {
             }
             
 
-            const PlaceIntership = await ImageData.findByIdAndUpdate(
+            const PlaceIntership = await PlaceInter.findByIdAndUpdate(
                 { _id },
                 { ...req.fields },
                 { new: true }
@@ -148,11 +150,11 @@ const PlacementIntershipsUpdate = async (req, res) => {
                 PlaceIntership.image.Name = image.name
             }
 
-            await AdminiStration.save();
+            await PlaceIntership.save();
             return res.status(201).send({
                 Success: true,
                 message: "Data Upload",
-                data: AdminiStration
+                data: PlaceIntership
             })
         }
         

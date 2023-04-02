@@ -5,11 +5,12 @@ const router = express.Router();
 const { AdministrationAdd, AdministrationUpdate, AdministrationImageDisplay, AdministrationDelete, SingleAdministrationDisplay, AdministrationDisplay } = require("../Controllers/Administration.js");
 const { PlacementIntershipsAdd, PlacementIntershipsSingle, PlacementIntershipsDisplay, PlacementIntershipsDelete, PlacementIntershipsUpdate, PlacementIntershipsImageDisplay } = require("../Controllers/PlacementInternship")
 const { TestimonialAdd, singleTestimonialDisplay, TestimonialDisplay, TestimonialUpdate, TestimonialDelete } = require("../Controllers/Testimonials")
-const { recruitersAdd, recruitersUpdate, recruitersDisplay, recruitersDelete, RecruiterImageDisplay } = require('../Controllers/Recruiters');
+const { recruitersAdd, recruitersUpdate, recruiters_Single_Display,recruitersDisplay, recruitersDelete, RecruiterImageDisplay } = require('../Controllers/Recruiters');
 const { FacultyAdd, FacultyDelete, FacultyImageDisplay, FacultyDisplay, FacultySingle, FacultyUpdate } = require("../Controllers/Facultys");
 const { SocietyAdd, SocietyDelete, SocietyDisplay, SingleSocietyDisplay, SocietyImageDisplay, SocietyUpdate } = require("../Controllers/Society");
 const { EResourcesAdd, EResourcesDisplay, EResourcesUpdate, EResourcesSingle, EResourcesDelete } = require("../Controllers/E-Resources");
 const { adminRegister, adminLogin } = require("../Controllers/Admin.js");
+const {QuestionPaperAdd,QuestionPaperDisplay,QuestionPaperFileDisplay,QuestionPaperDelete,QuestionPaperYearDelete} = require("../Controllers/QuestionPaper.js")
  
 //just for checking
 // router.get("/", justForchecking);
@@ -19,7 +20,7 @@ router.post("/Administration/Administration_Add", formidable(), AdministrationAd
 router.post("/Administration/Administration_Delete/:_id", AdministrationDelete);
 router.get("/Administration/Administration_Display", AdministrationDisplay);
 router.get("/Administration/AdministrationImageDisplay/:_id", AdministrationImageDisplay);
-router.post("/Administration/Single_Administration_Display/:_id", SingleAdministrationDisplay);
+router.get("/Administration/Single_Administration_Display/:_id", SingleAdministrationDisplay);
 router.post("/Administration/Administration_Update/:_id", formidable(), AdministrationUpdate); 3
 
 //Placement and Intership Routes 
@@ -27,7 +28,7 @@ router.post("/Placement_Intership/PlacementInterships_Add", formidable(), Placem
 router.get("/Placement_Intership/PlacementInterships_Display", PlacementIntershipsDisplay);
 router.get("/Placement_Intership/PlacementInterships_Single/:_id", PlacementIntershipsSingle);
 router.post("/Placement_Intership/PlacementInterships_Delete/:_id", PlacementIntershipsDelete);
-router.post("/Placement_Intership/PlacementInterships_Image_Display/:_id", PlacementIntershipsImageDisplay);
+router.get("/Placement_Intership/PlacementInterships_Image_Display/:_id", PlacementIntershipsImageDisplay);
 router.post("/Placement_Intership/PlacementInterships_Update/:_id", formidable(), PlacementIntershipsUpdate);
 
 //Faculty Routes 
@@ -50,6 +51,7 @@ router.post("/Testimonial/single_Testimonial_Display", singleTestimonialDisplay)
 router.post("/Recruiters/recruiters_Add", formidable(), recruitersAdd);
 router.post("/Recruiters/recruiters_Update/:_id", formidable(), recruitersUpdate);
 router.get("/Recruiters/recruiters_Display", recruitersDisplay);
+router.get("/Recruiters/recruiters_Single_Display/:_id", recruiters_Single_Display);
 router.get("/Recruiters/Recruiter_Image_Display/:_id", RecruiterImageDisplay);
 router.post("/Recruiters/recruiters_Delete/:_id", recruitersDelete);
 
@@ -73,5 +75,13 @@ router.post("/E_Resources/EResources_Delete/:id", EResourcesDelete);
 //Admin Routes
 router.post("/Admin/Register", adminRegister);
 router.post("/Admin/Login", adminLogin);
+
+
+//Question Paper Route
+router.post("/QuestionPaper/Add",formidable({multiples : true}),QuestionPaperAdd );
+router.get("/QuestionPaper/Display/:course/:Year/:Semester",QuestionPaperDisplay)
+router.get("/QuestionPaper/Display/:_id/:Index",QuestionPaperFileDisplay)
+router.get("/QuestionPaper/Paper_Delete/:_id/:Index",QuestionPaperDelete)
+router.get("/QuestionPaper/Year_Delete/:_id",QuestionPaperYearDelete)
 
 module.exports = router;    
