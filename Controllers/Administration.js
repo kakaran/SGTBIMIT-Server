@@ -73,7 +73,7 @@ const AdministrationDelete = async (req, res) => {
 const AdministrationDisplay = async (req, res) => {
     try {
 
-        const data = await Administrations.find().select("-image");
+        const data = await Administrations.find().sort({ Index: 1 }).select("-image");
 
         if (!data) {
             return res.status(400).send("Data not found")
