@@ -1,4 +1,3 @@
-const { log } = require('console');
 const QuestionPaper = require('../Models/QuestionPaper');
 const fs = require('fs');
 
@@ -95,7 +94,7 @@ const QuestionPaperDisplay = async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        return res.send({
+        return res.status(500).send({
             message: "Please check the detail",
         })
     }
@@ -123,6 +122,7 @@ const QuestionPaperFileDisplay = async (req, res) => {
 const QuestionPaperDelete = async (req, res) => {
     try {
         const { _id, Index } = req.params;
+        console.log(req.params);
         const Search_Data = await QuestionPaper.findById({ _id }).select("file");
 
         if (Search_Data) {
@@ -133,7 +133,7 @@ const QuestionPaperDelete = async (req, res) => {
                 }
             })
             console.log(data1);
-            return res.status(410).send("Deleted")
+            return res.status(200).send("Deleted")
         } else {
             return res.status(404).send("Data Not Found")
         }
@@ -163,10 +163,10 @@ const QuestionPaperYearDelete = async (req, res) => {
     }
 }
 
-
-const QuestionPaperUpdate = async (req, res) => {
+const QuestionPaperDisplayAll = async (req, res) => {
     try {
-
+        const Search_Data = await QuestionPaper.find().select("-file");
+        return res.status(201).send(Search_Data);
     } catch (error) {
         console.log(error);
         return res.send({
@@ -175,10 +175,64 @@ const QuestionPaperUpdate = async (req, res) => {
     }
 }
 
+const QuestionPaperUpdate = async (req, res) => {
+    try {
+        const { _id } = req.params;
+        const { course, Year, Semester } = req.fields;
+        const { file } = req.files;
+        // console.log(file);
+
+        if (!course) {
+            return res.status(401).send("Course is required");
+        } else if (!Year) {
+            return res.status(401).send("Year name is required");
+        } else if (!Semester) {
+            return res.status(401).send("Index name is required");
+        } else if (file && file.size > 1000000) {
+            return res.status(401).send("file is required and should be less 1mb");
+        }
+
+        const Search_Data = await QuestionPaper.findById({ _id })
+
+        if (Search_Data) {
+            const QuestiPaper = await ImageData.findByIdAndUpdate(
+                { _id },
+                { ...req.fields },
+                { new: true }
+            );
+
+            if (file.length) {
+                for (let i = 0; i < file.length; i++) {
+                    QuestiPaper.file.push({
+                        data: fs.readFileSync(file[i].path),
+                        contentType: file[i].type,
+                        Name: `${course + " " + Semester + "-Semester" + " " + Year + " " + file[i].name}`
+                    })
+                }
+            } else {
+                // console.log(QuestiPaper);
+                QuestiPaper.file.push({
+                    data: fs.readFileSync(file.path),
+                    contentType: file.type,
+                    Name: `${course + " " + Semester + "-Semester" + " " + Year + " " + file.name}`
+                })
+            }
+        }
+        } catch (error) {
+            console.log(error);
+            return res.send({
+                message: "Please check the detail",
+            })
+
+        }
+    }
+
 module.exports = {
-    QuestionPaperAdd,
-    QuestionPaperDisplay,
-    QuestionPaperFileDisplay,
-    QuestionPaperDelete,
-    QuestionPaperYearDelete
-}
+        QuestionPaperAdd,
+        QuestionPaperDisplay,
+        QuestionPaperFileDisplay,
+        QuestionPaperDelete,
+        QuestionPaperYearDelete,
+        QuestionPaperDisplayAll,
+        QuestionPaperUpdate
+    }

@@ -37,12 +37,12 @@ const recruitersAdd = async (req, res) => {
     }
 }
 
-const recruiters_Single_Display = async (req,res) =>{
+const recruiters_Single_Display = async (req, res) => {
     try {
-        const {_id} = req.params;
-        const Recruiter_Search = await Recruiters.findById({_id}).select("-image");
+        const { _id } = req.params;
+        const Recruiter_Search = await Recruiters.findById({ _id }).select("-image");
 
-        if(Recruiter_Search){
+        if (Recruiter_Search) {
             return res.status(200).send(Recruiter_Search)
         }
 
@@ -129,9 +129,10 @@ const recruitersUpdate = async (req, res) => {
                 { ...req.fields },
                 { new: true }
             );
-
+            console.log(image);
             if (image) {
-                Recruiter_Update.image.data = fs.readFileSync(image.path),
+                console.log("hi");
+                Recruiter_Update.image.data =  fs.readFileSync(image.path),
                     Recruiter_Update.image.contentType = image.type,
                     Recruiter_Update.image.Name = image.name
             }
