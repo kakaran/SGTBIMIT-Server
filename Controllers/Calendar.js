@@ -73,3 +73,6 @@ const CalendarDelete = async(req,res) => {
         })
     }
 }
+
+
+module.exports = {CalendarAdd, CalendarDisplay, CalendarSingle, CalendarDelete, CalendarUpdate};

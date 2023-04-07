@@ -11,6 +11,7 @@ const { SocietyAdd, SocietyDelete, SocietyDisplay, SingleSocietyDisplay, Society
 const { EResourcesAdd, EResourcesDisplay, EResourcesUpdate, EResourcesSingle, EResourcesDelete } = require("../Controllers/E-Resources");
 const { adminRegister, adminLogin } = require("../Controllers/Admin.js");
 const {QuestionPaperAdd,QuestionPaperDisplay,QuestionPaperDisplayAll,QuestionPaperFileDisplay,QuestionPaperDelete,QuestionPaperYearDelete} = require("../Controllers/QuestionPaper.js")
+const {CalendarAdd, CalendarDisplay, CalendarSingle, CalendarDelete, CalendarUpdate} = require("../Controllers/Calendar.js");
  
 //just for checking
 // router.get("/", justForchecking);
