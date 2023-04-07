@@ -2,11 +2,11 @@ const mongoose = require('mongoose')
 
 const calendarSchema = new mongoose.Schema({
 
-    name : {
+    Date : {
         type : String,
         require : true,
     },
-    name1 : {
+    Event : {
         type : String,
         require : true,
     },
