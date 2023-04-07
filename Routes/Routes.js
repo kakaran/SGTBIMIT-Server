@@ -86,4 +86,13 @@ router.get("/QuestionPaper/Year_Delete/:_id",QuestionPaperYearDelete)
 router.get("/QuestionPaper/Question_Paper_Display_All",QuestionPaperDisplayAll)
 router.post("/QuestionPaper/Question_Paper_Update/:_id",formidable({multiples : true}),QuestionPaperDisplayAll)
 
+
+//calender
+router.post('/Calendar/Calendar_Add', CalendarAdd);
+router.get('/Calendar/Calendar_Display', CalendarDisplay);
+router.post('/Calendar/Calendar_Single_Display', CalendarSingle);
+router.post('/Calendar/Calendar_Update/:_id', CalendarUpdate);
+router.post("/Calendar/Calendar_Delete/:id", CalendarDelete);
+
+
 module.exports = router;    
