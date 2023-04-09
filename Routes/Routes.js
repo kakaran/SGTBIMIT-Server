@@ -91,9 +91,9 @@ router.post("/QuestionPaper/Question_Paper_Update/:_id",formidable({multiples : 
 //calender
 router.post('/Calendar/Calendar_Add', CalendarAdd);
 router.get('/Calendar/Calendar_Display', CalendarDisplay);
-router.post('/Calendar/Calendar_Single_Display', CalendarSingle);
-router.post('/Calendar/Calendar_Update/:_id', CalendarUpdate);
-router.post("/Calendar/Calendar_Delete/:id", CalendarDelete);
+router.get('/Calendar/Calendar_Single_Display/:id', CalendarSingle);
+router.put('/Calendar/Calendar_Update/:id', CalendarUpdate);
+router.delete("/Calendar/Calendar_Delete/:id", CalendarDelete);
 
 
 module.exports = router;    
