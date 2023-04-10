@@ -116,8 +116,7 @@ const recruitersUpdate = async (req, res) => {
         const { _id } = req.params;
         const { Name } = req.fields;
         const { image } = req.files;
-        const Search_Recru = await Recruiters.findById({ _id });
-
+        const Search_Recru = await Recruiters.findById({_id});
         if (Search_Recru) {
             if (!Name) {
                 return res.status(401).send("Name is required");
@@ -129,13 +128,11 @@ const recruitersUpdate = async (req, res) => {
                 { ...req.fields },
                 { new: true }
             );
-            console.log(image);
             if (image) {
-                console.log("hi");
-                Recruiter_Update.image.data =  fs.readFileSync(image.path),
+                Recruiter_Update.image.data = fs.readFileSync(image.path),
                     Recruiter_Update.image.contentType = image.type,
                     Recruiter_Update.image.Name = image.name
-            }
+            } 
 
             await Recruiter_Update.save();
             return res.status(201).send({
