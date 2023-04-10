@@ -10,7 +10,7 @@ const { FacultyAdd, FacultyDelete, FacultyImageDisplay, FacultyDisplay, FacultyS
 const { SocietyAdd, SocietyDelete, SocietyDisplay, SingleSocietyDisplay, SocietyImageDisplay, SocietyUpdate } = require("../Controllers/Society");
 const { EResourcesAdd, EResourcesDisplay, EResourcesUpdate, EResourcesSingle, EResourcesDelete } = require("../Controllers/E-Resources");
 const { adminRegister, adminLogin } = require("../Controllers/Admin.js");
-const {QuestionPaperAdd,PaperFilterDisplay,QuestionPaperDisplay,QuestionPaperDisplayAll,QuestionPaperFileDisplay,QuestionPaperDelete,QuestionPaperYearDelete} = require("../Controllers/QuestionPaper.js")
+const {QuestionPaperAdd,QuestionPaperDisplay,QuestionPaperDisplayAll,QuestionPaperFileDisplay,QuestionPaperDelete,QuestionPaperYearDelete} = require("../Controllers/QuestionPaper.js")
  
 //just for checking
 // router.get("/", justForchecking);
@@ -84,6 +84,6 @@ router.get("/QuestionPaper/Display/:_id/:Index",QuestionPaperFileDisplay)
 router.get("/QuestionPaper/Paper_Delete/:_id/:Index",QuestionPaperDelete)
 router.get("/QuestionPaper/Year_Delete/:_id",QuestionPaperYearDelete)
 router.get("/QuestionPaper/Question_Paper_Display_All",QuestionPaperDisplayAll)
-router.get("/QuestionPaper/Filter_Data/:course",PaperFilterDisplay)
+router.post("/QuestionPaper/Question_Paper_Update/:_id",formidable({multiples : true}),QuestionPaperDisplayAll)
 
 module.exports = router;    

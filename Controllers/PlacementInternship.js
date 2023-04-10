@@ -2,18 +2,13 @@ const PlaceInter = require('../Models/Interships_Placements');
 const fs = require('fs');
 
 
-
+//Add 
 const PlacementIntershipsAdd = async (req,res) =>{
     try {
 
-        const {name, companyName} = req.fields;
         const {image} = req.files;
         
-        if (!name) {
-            return res.status(401).send("Name is required");
-        } else if (!companyName) {
-            return res.status(401).send("Company name is required");
-        } else if (image && image.size > 1000000) {
+        if (image && image.size > 1000000) {
             return res.status(401).send("Image is required and should be less 1mb");
         }
 
@@ -41,9 +36,11 @@ const PlacementIntershipsAdd = async (req,res) =>{
     }
 }
 
+
+//display
 const PlacementIntershipsDisplay = async (req,res) =>{
     try {
-        const data = await PlaceInter.find().select("-image");
+        const data = await PlaceInter.find().select("image");
 
         if(!data){
             return res.status(400).send("Data not found")
@@ -60,10 +57,11 @@ const PlacementIntershipsDisplay = async (req,res) =>{
 }
 
 
+//single data display
 const PlacementIntershipsSingle = async (req,res) =>{
     try {
         const { _id } = req.params;
-        const data = await PlaceInter.findById({_id}).select("-image");
+        const data = await PlaceInter.findById({_id}).select("image");
         if(data){
             return res.status(200).send(data);
         }else{
@@ -78,6 +76,7 @@ const PlacementIntershipsSingle = async (req,res) =>{
     }
 }
 
+//show image
 const PlacementIntershipsImageDisplay = async (req, res) => {
     try {
         const { _id } = req.params;
@@ -97,6 +96,7 @@ const PlacementIntershipsImageDisplay = async (req, res) => {
     }
 }
 
+//delte data
 const PlacementIntershipsDelete =  async (req,res) =>{
     try {
         const {_id} = req.params;
@@ -117,27 +117,20 @@ const PlacementIntershipsDelete =  async (req,res) =>{
     }
 }
 
-
+//update data
 const PlacementIntershipsUpdate = async (req, res) => {
     try {
 
         const { _id } = req.params;
-        const {name, companyName} = req.fields;
         const {image} = req.files;
 
-        console.log(name , companyName, _id);
         const Search_PlInt = await PlaceInter.findById({ _id });
 
         if(Search_PlInt){
-            if (!name) {
-                return res.status(401).send("Name is required");
-            } else if (!companyName) {
-                return res.status(401).send("Position is required");
-            } else if (image && image.size > 1000000) {
+            if (image && image.size > 1000000) {
                 return res.status(401).send("Image is required and should be less 1mb");
             }
             
-
             const PlaceIntership = await PlaceInter.findByIdAndUpdate(
                 { _id },
                 { ...req.fields },
