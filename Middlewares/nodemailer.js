@@ -8,8 +8,8 @@ const mailer = (email, otp) => {
         port: 587,
         secure: false,
         auth: {
-          user: 'looks9826@gmail.com',
-          pass: 'keqanhibtairddna'
+          user: 'xxxx',
+          pass: 'xxx'
         }
       });
       var mailOptions = {
