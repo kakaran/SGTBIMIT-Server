@@ -9,7 +9,7 @@ const { recruitersAdd, recruitersUpdate, recruiters_Single_Display,recruitersDis
 const { FacultyAdd, FacultyDelete, FacultyImageDisplay, FacultyDisplay, FacultySingle, FacultyUpdate } = require("../Controllers/Facultys");
 const { SocietyAdd, SocietyDelete, SocietyDisplay, SingleSocietyDisplay, SocietyImageDisplay, SocietyUpdate } = require("../Controllers/Society");
 const { EResourcesAdd, EResourcesDisplay, EResourcesUpdate, EResourcesSingle, EResourcesDelete } = require("../Controllers/E-Resources");
-const { adminRegister, adminLogin } = require("../Controllers/Admin.js");
+const { adminRegister, adminLogin, EmailCheck, forgetpassword } = require("../Controllers/Admin.js");
 const {QuestionPaperAdd,PaperFilterDisplay,QuestionPaperDisplay,QuestionPaperDisplayAll,QuestionPaperFileDisplay,QuestionPaperDelete,QuestionPaperYearDelete} = require("../Controllers/QuestionPaper.js")
  
 //just for checking
@@ -75,6 +75,8 @@ router.post("/E_Resources/EResources_Delete/:id", EResourcesDelete);
 //Admin Routes
 router.post("/Admin/Register", adminRegister);
 router.post("/Admin/Login", adminLogin);
+router.post("/Admin/EmailCheck", EmailCheck);
+router.post("/Admin/forgetpassword/:email", forgetpassword);
 
 
 //Question Paper Route

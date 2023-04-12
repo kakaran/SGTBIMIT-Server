@@ -1,5 +1,7 @@
 const adminModel = require("../Models/Admin");
 const {hashPassword, comparePassword} = require("../Middlewares/authPassword");
+const mailer = require("../Middlewares/nodemailer");
+const Otp = require("../Models/otp");
 const Jwt = require("jsonwebtoken");
 
 const adminRegister = async(req,res) => {
@@ -94,5 +96,74 @@ const adminLogin = async(req,res) => {
 }
 
 
+//For Password Reset To Check the email ID
+const EmailCheck = async (req, res) => {
+  try {
+    const { email } = req.body;
+    console.log(email);
+    if (!email) {
+      return res.status(500).send("Email Id Is Not defined")
+    }
+    const user = await adminModel.findOne({ email });
+    if (!user) {
+      return res.status(500).send("User Not Found");
+    } else {
+      const otpcode = Math.floor((Math.random() * 10000) + 1);
+      const otpData = await Otp.create({
+        email: email,
+        code: otpcode,
+        expireIn: new Date().getTime() + 300 * 1000
+      });
+      mailer(otpData.email, otpData.code)
+      return res.send("We Have Sent AN OTP. Please Check Your Email");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-module.exports = {adminRegister, adminLogin}
+
+
+
+
+//Change the user password route
+
+const forgetpassword =  async (req, res) => {
+  try {
+    const { password } = req.body;
+
+    if (!password) {
+      return res.status(500).send("Confirm Password Does Not Match With Password, Please Re-Enter");
+    }
+
+    const hashedPassword = await hashPassword(password);
+    const checkdata = { email: req.params.email, code: req.body.code }
+    console.log(checkdata);
+    const check = await Otp.find(checkdata);
+    console.log(check);
+    if (check ) {
+      let currentTime = new Date().getTime();
+      let diff = check[0].expireIn - currentTime;
+      console.log(check[0].expireIn,currentTime,diff);
+      if (diff < 0) {
+        return res.status(500).send("OTP Is Expired");
+      } else {
+        const passwordChange = { password: hashedPassword }
+        console.log(checkdata.email);
+        await adminModel.findOneAndUpdate({ email: req.params.email }, passwordChange, {
+          new: true,
+          runValidators: true
+        });
+        return res.send("Password Successfully Changed");
+      }
+    } else {
+      return res.status(500).send("OTP Is Invalid");
+    }
+
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+module.exports = {adminRegister, adminLogin, forgetpassword, EmailCheck}
