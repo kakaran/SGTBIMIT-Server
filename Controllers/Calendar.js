@@ -8,7 +8,7 @@ const CalendarAdd = async(req,res) => {
 
         const {Date, Event} = req.body;
 
-        if (!Date || !Event) {
+        if (!Date || !Event) { 
             return res.status(401).send("All fields are required");
         }
 
