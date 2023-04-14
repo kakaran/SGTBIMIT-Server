@@ -100,7 +100,7 @@ router.get("/QuestionPaper/Filter_Data/:course",PaperFilterDisplay)
 router.post("/QuestionPaper/Question_Paper_Update/:_id",formidable({multiples : true}),QuestionPaperDisplayAll)
 
 //Alumini gallery
-router.post("/Alumini/gallery/aluminiAddImage",formidable(), aluminiAddImage);
+router.post("/Alumini/gallery/aluminiAddImage",formidable({multiples : true}), aluminiAddImage);
 router.put("/Alumini/gallery/aluminiUpdateImage/:_id",formidable({multiples : true}), aluminiUpdateImage);
 router.post("/Alumini/gallery/aluminiAddCarouselImage",formidable({multiples : true}), aluminiAddCarouselImage);
 
