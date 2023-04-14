@@ -12,6 +12,7 @@ const { EResourcesAdd, EResourcesDisplay, EResourcesUpdate, EResourcesSingle, ER
 const { adminRegister, adminLogin, EmailCheck, forgetpassword } = require("../Controllers/Admin.js");
 const {QuestionPaperAdd,PaperFilterDisplay,QuestionPaperDisplay,QuestionPaperDisplayAll,QuestionPaperFileDisplay,QuestionPaperDelete,QuestionPaperYearDelete} = require("../Controllers/QuestionPaper.js");
 const { CalendarAdd, CalendarDisplay, CalendarDelete, CalendarUpdate, CalendarSingle } = require("../Controllers/Calendar.js");
+const { aluminiAddImage, aluminiAddCarouselImage, aluminiUpdateImage } = require("../Controllers/AluminiGallery.js");
  
 //just for checking
 // router.get("/", justForchecking);
@@ -97,5 +98,10 @@ router.get("/QuestionPaper/Year_Delete/:_id",QuestionPaperYearDelete)
 router.get("/QuestionPaper/Question_Paper_Display_All",QuestionPaperDisplayAll)
 router.get("/QuestionPaper/Filter_Data/:course",PaperFilterDisplay)
 router.post("/QuestionPaper/Question_Paper_Update/:_id",formidable({multiples : true}),QuestionPaperDisplayAll)
+
+//Alumini gallery
+router.post("/Alumini/gallery/aluminiAddImage",formidable(), aluminiAddImage);
+router.put("/Alumini/gallery/aluminiUpdateImage/:_id",formidable({multiples : true}), aluminiUpdateImage);
+router.post("/Alumini/gallery/aluminiAddCarouselImage",formidable({multiples : true}), aluminiAddCarouselImage);
 
 module.exports = router;    
