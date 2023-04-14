@@ -10,7 +10,8 @@ const { FacultyAdd, FacultyDelete, FacultyImageDisplay, FacultyDisplay, FacultyS
 const { SocietyAdd, SocietyDelete, SocietyDisplay, SingleSocietyDisplay, SocietyImageDisplay, SocietyUpdate } = require("../Controllers/Society");
 const { EResourcesAdd, EResourcesDisplay, EResourcesUpdate, EResourcesSingle, EResourcesDelete } = require("../Controllers/E-Resources");
 const { adminRegister, adminLogin, EmailCheck, forgetpassword } = require("../Controllers/Admin.js");
-const {QuestionPaperAdd,PaperFilterDisplay,QuestionPaperDisplay,QuestionPaperDisplayAll,QuestionPaperFileDisplay,QuestionPaperDelete,QuestionPaperYearDelete} = require("../Controllers/QuestionPaper.js")
+const {QuestionPaperAdd,PaperFilterDisplay,QuestionPaperDisplay,QuestionPaperDisplayAll,QuestionPaperFileDisplay,QuestionPaperDelete,QuestionPaperYearDelete} = require("../Controllers/QuestionPaper.js");
+const { CalendarAdd, CalendarDisplay, CalendarDelete, CalendarUpdate, CalendarSingle } = require("../Controllers/Calendar.js");
  
 //just for checking
 // router.get("/", justForchecking);
@@ -71,6 +72,14 @@ router.get('/E_Resources/EResources_Display', EResourcesDisplay);
 router.post('/E_Resources/EResources_Single_Display', EResourcesSingle);
 router.post('/E_Resources/EResources_Update/:_id', EResourcesUpdate);
 router.post("/E_Resources/EResources_Delete/:id", EResourcesDelete);
+
+//Calendar Routes
+router.post('/Calendar/CalendarAdd', CalendarAdd);
+router.get('/Calendar/CalendarDisplay', CalendarDisplay);
+router.get('/Calendar/CalendarSingle/:id', CalendarSingle);
+router.post('/Calendar/CalendarUpdate/:_id', CalendarUpdate);
+router.post("/Calendar/CalendarDelete/:id", CalendarDelete);
+
 
 //Admin Routes
 router.post("/Admin/Register", adminRegister);
