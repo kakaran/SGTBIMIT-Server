@@ -3,19 +3,19 @@ const fs = require('fs');
 
 
 //alumini image add
-const aluminiAddImage = async(req,res) => {
+const aluminiAddImage = async (req, res) => {
 
     try {
-        const {category} = req.fields;
-        const {image,images} = req.files;
+        const { category } = req.fields;
+        const { image, images } = req.files;
 
         if (!image || !images || image.size > 1000000 || images.size > 1000000) {
             return res.status(401).send(`image is req or image size should be less then 1MB`);
-        }else if (!category) {
-            return res.status(401).send(`category must be defined`);            
+        } else if (!category) {
+            return res.status(401).send(`category must be defined`);
         }
 
-        const already = await aluminiModel.findOne({category})
+        const already = await aluminiModel.findOne({ category })
 
         if (already) {
             return res.status(400).send(`This kind of Category is already exists`)
@@ -27,7 +27,7 @@ const aluminiAddImage = async(req,res) => {
 
         if (image) {
             alumini.image.data = fs.readFileSync(image.path),
-            alumini.image.contentType = image.type            
+                alumini.image.contentType = image.type
 
             if (images.length) {
                 for (let i = 0; i < images.length; i++) {
@@ -36,7 +36,7 @@ const aluminiAddImage = async(req,res) => {
                         contentType: images[i].type,
                     })
                 }
-            }else {
+            } else {
                 alumini.images.push({
                     data: fs.readFileSync(images.path),
                     contentType: images.type,
@@ -47,11 +47,11 @@ const aluminiAddImage = async(req,res) => {
         const final = await alumini.save();
 
         return res.status(200).send({
-            message : `Image uploaded successfully`,
+            message: `Image uploaded successfully`,
             final
         });
-    
-        
+
+
     } catch (error) {
         console.log(error);
         return res.status(500).send({
@@ -88,8 +88,8 @@ const aluminiAddImage = async(req,res) => {
 //         // const final = await alumini_g.save();
 
 //         return res.status(200).send({message : `Updated successfully`});
-    
-        
+
+
 //     } catch (error) {
 //         console.log(error);
 //         return res.status(500).send({
@@ -126,7 +126,7 @@ const aluminiAddImage = async(req,res) => {
 //                 contentType: images.type,
 //             })
 //         }
-        
+
 //         const final = await alumini.save();
 
 //         return res.status(200).send({
@@ -145,4 +145,7 @@ const aluminiAddImage = async(req,res) => {
 //     }
 // }
 
-module.exports = {aluminiAddImage, aluminiUpdateImage, aluminiAddCarouselImage} 
+module.exports = { aluminiAddImage, 
+    // aluminiUpdateImage, 
+    // aluminiAddCarouselImage 
+} 

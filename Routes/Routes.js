@@ -101,7 +101,7 @@ router.post("/QuestionPaper/Question_Paper_Update/:_id",formidable({multiples : 
 
 //Alumini gallery
 router.post("/Alumini/gallery/aluminiAddImage",formidable({multiples : true}), aluminiAddImage);
-router.put("/Alumini/gallery/aluminiUpdateImage/:_id",formidable({multiples : true}), aluminiUpdateImage);
-router.post("/Alumini/gallery/aluminiAddCarouselImage",formidable({multiples : true}), aluminiAddCarouselImage);
+// router.put("/Alumini/gallery/aluminiUpdateImage/:_id",formidable({multiples : true}), aluminiUpdateImage);
+// router.post("/Alumini/gallery/aluminiAddCarouselImage",formidable({multiples : true}), aluminiAddCarouselImage);
 
 module.exports = router;    

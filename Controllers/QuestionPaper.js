@@ -143,7 +143,7 @@ const QuestionPaperDisplay = async (req, res) => {
 
         const { course, Year, Semester } = req.params;
 
-        console.log(course, Year, Semester);
+        // console.log(course, Year, Semester);
         if (!course) {
             return res.status(500).send("Kindly select the Course");
         } else if (!Year) {
@@ -165,7 +165,7 @@ const QuestionPaperDisplay = async (req, res) => {
             for (let i = 0; i < file.file.length; i++) {
                 filenames.push(file.file[i].Name);
             }
-            console.log(filenames);
+            // console.log(filenames);
             return res.status(200).send({
                 Data: Search_Data,
                 FileNames: filenames
@@ -182,9 +182,8 @@ const QuestionPaperDisplay = async (req, res) => {
 
 const QuestionPaperFileDisplay = async (req, res) => {
     try {
-        const { _id, Index } = req.params;
+        const { _id,Index,name } = req.params;
         const Search_Data = await QuestionPaper.findById({ _id }).select("file");
-
         if (Search_Data) {
             res.set("Content-type", Search_Data.file[Number(Index)].contentType);
             return res.send(Search_Data.file[Number(Index)].data);
@@ -333,6 +332,8 @@ const QuestionPaperUpdate = async (req, res) => {
                     Name: `${course + " " + Semester + "-Semester" + " " + Year + " " + file.name}`
                 })
             }
+            PaperFilter(course,Year,Semester)
+            await QuestiPaper.save();
         }
     } catch (error) {
         console.log(error);
