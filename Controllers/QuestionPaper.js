@@ -80,8 +80,8 @@ const QuestionPaperAdd = async (req, res) => {
     try {
         const { course, Year, Semester } = req.fields;
         const { file } = req.files;
-        console.log(req.fields);
-        console.log(req.files);
+        // console.log(req.fields);
+        // console.log(req.files);
 
         if (!course) {
             return res.status(401).send({ message: "Course is required" });
@@ -296,6 +296,9 @@ const QuestionPaperUpdate = async (req, res) => {
         const { course, Year, Semester } = req.fields;
         const { file } = req.files;
         // console.log(file);
+        console.log(req.fields);
+        console.log(_id);
+
 
         if (!course) {
             return res.status(401).send("Course is required");
@@ -310,7 +313,7 @@ const QuestionPaperUpdate = async (req, res) => {
         const Search_Data = await QuestionPaper.findById({ _id })
 
         if (Search_Data) {
-            const QuestiPaper = await ImageData.findByIdAndUpdate(
+            const QuestiPaper = await QuestionPaper.findByIdAndUpdate(
                 { _id },
                 { ...req.fields },
                 { new: true }
@@ -334,6 +337,7 @@ const QuestionPaperUpdate = async (req, res) => {
             }
             PaperFilter(course,Year,Semester)
             await QuestiPaper.save();
+            return res.send("Data Successfully Update")
         }
     } catch (error) {
         console.log(error);

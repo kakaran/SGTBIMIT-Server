@@ -10,10 +10,12 @@ const { FacultyAdd, FacultyDelete, FacultyImageDisplay, FacultyDisplay, FacultyS
 const { SocietyAdd, SocietyDelete, SocietyDisplay, SingleSocietyDisplay, SocietyImageDisplay, SocietyUpdate } = require("../Controllers/Society");
 const { EResourcesAdd, EResourcesDisplay, EResourcesUpdate, EResourcesSingle, EResourcesDelete } = require("../Controllers/E-Resources");
 const { adminRegister, adminLogin, EmailCheck, forgetpassword } = require("../Controllers/Admin.js");
-const {QuestionPaperAdd,PaperFilterDisplay,QuestionPaperDisplay,QuestionPaperDisplayAll,QuestionPaperFileDisplay,QuestionPaperDelete,QuestionPaperYearDelete} = require("../Controllers/QuestionPaper.js");
+const {QuestionPaperAdd,PaperFilterDisplay,QuestionPaperUpdate,QuestionPaperDisplay,QuestionPaperDisplayAll,QuestionPaperFileDisplay,QuestionPaperDelete,QuestionPaperYearDelete} = require("../Controllers/QuestionPaper.js");
 const { CalendarAdd, CalendarDisplay, CalendarDelete, CalendarUpdate, CalendarSingle } = require("../Controllers/Calendar.js");
 const { aluminiAddImage, aluminiAddCarouselImage, aluminiUpdateImage } = require("../Controllers/AluminiGallery.js");
- 
+const { NoticeAdd,NoticeDelete,NoticeDataDisplay,NoticeFileDisplay,NoticeUpdata} = require("../Controllers/Notice.js"); 
+const {AdmissionRequestDelete,AdmissionRequestDisplay,AdmissionFormFill} = require("../Controllers/Admission.js");
+
 //just for checking
 // router.get("/", justForchecking);
 
@@ -97,11 +99,25 @@ router.get("/QuestionPaper/Paper_Delete/:_id/:Index",QuestionPaperDelete)
 router.get("/QuestionPaper/Year_Delete/:_id",QuestionPaperYearDelete)
 router.get("/QuestionPaper/Question_Paper_Display_All",QuestionPaperDisplayAll)
 router.get("/QuestionPaper/Filter_Data/:course",PaperFilterDisplay)
-router.post("/QuestionPaper/Question_Paper_Update/:_id",formidable({multiples : true}),QuestionPaperDisplayAll)
+router.post("/QuestionPaper/Question_Paper_Update/:_id",formidable({multiples : true}),QuestionPaperUpdate)
 
 //Alumini gallery
 router.post("/Alumini/gallery/aluminiAddImage",formidable({multiples : true}), aluminiAddImage);
 // router.put("/Alumini/gallery/aluminiUpdateImage/:_id",formidable({multiples : true}), aluminiUpdateImage);
 // router.post("/Alumini/gallery/aluminiAddCarouselImage",formidable({multiples : true}), aluminiAddCarouselImage);
+
+
+//Notice Routes//
+router.post("/Notice/Notice_Add",formidable(),NoticeAdd);
+router.get("/Notice/Notice_Delete/:_id",NoticeDelete);
+router.get("/Notice/Notice_Data_Display/:_id",NoticeDataDisplay);
+router.get("/Notice/Notice_File_Display/:_id",NoticeFileDisplay);
+router.post("/Notice/Notice_Update/:_id",formidable(),NoticeUpdata);
+
+//Admission Routes//
+router.post("/Admission/Request",AdmissionFormFill);
+router.get("/Admission/RequestDelete",AdmissionRequestDelete);
+router.get("/Admission/RequestDisplay",AdmissionRequestDisplay)
+
 
 module.exports = router;    
