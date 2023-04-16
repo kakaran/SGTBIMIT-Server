@@ -40,7 +40,7 @@ const PlacementIntershipsAdd = async (req,res) =>{
 //display
 const PlacementIntershipsDisplay = async (req,res) =>{
     try {
-        const data = await PlaceInter.find().select("image");
+        const data = await PlaceInter.find().select("-image");
 
         if(!data){
             return res.status(400).send("Data not found")
