@@ -12,9 +12,10 @@ const { EResourcesAdd, EResourcesDisplay, EResourcesUpdate, EResourcesSingle, ER
 const { adminRegister, adminLogin, EmailCheck, forgetpassword } = require("../Controllers/Admin.js");
 const {QuestionPaperAdd,PaperFilterDisplay,QuestionPaperUpdate,QuestionPaperDisplay,QuestionPaperDisplayAll,QuestionPaperFileDisplay,QuestionPaperDelete,QuestionPaperYearDelete} = require("../Controllers/QuestionPaper.js");
 const { CalendarAdd, CalendarDisplay, CalendarDelete, CalendarUpdate, CalendarSingle } = require("../Controllers/Calendar.js");
-const { aluminiAddImage, aluminiAddCarouselImage, aluminiUpdateImage } = require("../Controllers/AluminiGallery.js");
+const { aluminiAddImage, aluminiAddCarouselImage, aluminiUpdateImage, aluminiDisplayImage, aluminiDelete, aluminiDisplayImages, aluminiUpdateImages, aluminiImagesDelete } = require("../Controllers/AluminiGallery.js");
 const { NoticeAdd,NoticeDelete,NoticeDataDisplay,NoticeFileDisplay,NoticeUpdata} = require("../Controllers/Notice.js"); 
 const {AdmissionRequestDelete,AdmissionRequestDisplay,AdmissionFormFill} = require("../Controllers/Admission.js");
+const { eventAddImage, eventDisplayImage, eventDisplayImages, eventUpdateImage, eventUpdateImages, eventDelete, eventImagesDelete } = require("../Controllers/EventGallery.js");
 
 //just for checking
 // router.get("/", justForchecking);
@@ -103,8 +104,23 @@ router.post("/QuestionPaper/Question_Paper_Update/:_id",formidable({multiples : 
 
 //Alumini gallery
 router.post("/Alumini/gallery/aluminiAddImage",formidable({multiples : true}), aluminiAddImage);
-// router.put("/Alumini/gallery/aluminiUpdateImage/:_id",formidable({multiples : true}), aluminiUpdateImage);
-// router.post("/Alumini/gallery/aluminiAddCarouselImage",formidable({multiples : true}), aluminiAddCarouselImage);
+router.get("/Alumini/gallery/aluminiDisplayImage", aluminiDisplayImage);
+router.post("/Alumini/gallery/aluminiDisplayImages/:id/:Index", aluminiDisplayImages);
+router.post("/Alumini/gallery/aluminiUpdateImage/:_id", formidable(), aluminiUpdateImage);
+router.post("/Alumini/gallery/aluminiUpdateImages/:id", formidable({multiples : true}), aluminiUpdateImages);
+router.delete("/Alumini/gallery/aluminiDelete/:id", aluminiDelete);
+router.delete("/Alumini/gallery/aluminiImagesDelete/:_id/:Index", aluminiImagesDelete);
+
+
+//Event gallery
+router.post("/Event/gallery/eventAddImage",formidable({multiples : true}), eventAddImage);
+router.get("/Event/gallery/eventDisplayImage", eventDisplayImage);
+router.get("/Event/gallery/eventDisplayImages/:id/:Index", eventDisplayImages);
+router.put("/Event/gallery/eventUpdateImage/:_id", formidable(), eventUpdateImage);
+router.put("/Event/gallery/eventUpdateImages/:id", formidable({multiples : true}), eventUpdateImages);
+router.delete("/Event/gallery/eventDelete/:id", eventDelete);
+router.delete("/Event/gallery/eventImagesDelete/:_id/:Index", eventImagesDelete);
+
 
 
 //Notice Routes//
