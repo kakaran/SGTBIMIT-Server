@@ -1,9 +1,9 @@
-const aluminiModel = require("../Models/AluminiGallery");
+const eventModel = require("../Models/EventGallery");
 const fs = require('fs');
 
 
-//alumini image add
-const aluminiAddImage = async(req,res) => {
+//event image add
+const eventAddImage = async(req,res) => {
 
     try {
         const {category} = req.fields;
@@ -15,7 +15,7 @@ const aluminiAddImage = async(req,res) => {
             return res.status(401).send(`category must be defined`);            
         }
 
-        const already = await aluminiModel.findOne({category})
+        const already = await eventModel.findOne({category})
 
         if (already) {
             return res.status(400).send(`This kind of Category is already exists`)
@@ -23,28 +23,28 @@ const aluminiAddImage = async(req,res) => {
 
 
 
-        const alumini = await new aluminiModel(req.fields);
+        const event = await new eventModel(req.fields);
 
         if (image) {
-            alumini.image.data = fs.readFileSync(image.path),
-            alumini.image.contentType = image.type            
+            event.image.data = fs.readFileSync(image.path),
+            event.image.contentType = image.type            
 
             if (images.length) {
                 for (let i = 0; i < images.length; i++) {
-                    alumini.images.push({
+                    event.images.push({
                         data: fs.readFileSync(images[i].path),
                         contentType: images[i].type,
                     })
                 }
             }else {
-                alumini.images.push({
+                event.images.push({
                     data: fs.readFileSync(images.path),
                     contentType: images.type,
                 })
             }
         }
 
-        const final = await alumini.save();
+        const final = await event.save();
 
         return res.status(200).send({
             message : `Image uploaded successfully`,
@@ -62,12 +62,11 @@ const aluminiAddImage = async(req,res) => {
 }
 
 
-
-//alumini image display 
-const aluminiDisplayImage = async(req,res) => {
+//event image display 
+const eventDisplayImage = async(req,res) => {
     try {
         
-        const image_display = await aluminiModel.find().select('-images');
+        const image_display = await eventModel.find().select('-images');
         return res.status(201).send(image_display);
 
 
@@ -82,8 +81,8 @@ const aluminiDisplayImage = async(req,res) => {
 
 
 
-//alumini image update
-const aluminiUpdateImage = async(req,res) => {
+//event image update
+const eventUpdateImage = async(req,res) => {
 
     try {
         const {image} = req.files;
@@ -94,16 +93,17 @@ const aluminiUpdateImage = async(req,res) => {
         }
 
 
-        const alumini = await aluminiModel.findById(id);
+        const event = await eventModel.findById(id);
 
-        if (alumini) {
-            const alumini_g  = await aluminiModel.findByIdAndUpdate(alumini, {...req.fields }, { new: true });
-            alumini_g.image.data = fs.readFileSync(image.path)
-            alumini_g.image.contentType = image.type   
+        if (event) {
+            const event_g  = await eventModel.findByIdAndUpdate(event, {...req.fields }, { new: true });
+            event_g.image.data = fs.readFileSync(image.path)
+            event_g.image.contentType = image.type   
 
+            return res.status(200).send({message : `Image Updated successfully`});
         }
+        return res.status(400).send(`No image found`)
 
-        return res.status(200).send({message : `Image Updated successfully`});
     
         
     } catch (error) {
@@ -116,22 +116,22 @@ const aluminiUpdateImage = async(req,res) => {
 }
 
 
-//one alumini delete with carousel images
-const aluminiDelete = async(req,res) => {
+//one event delete with carousel images
+const eventDelete = async(req,res) => {
     try {
         
         const id = req.params.id;
 
-        const alumini_delete = await aluminiModel.findById(id);
+        const event_delete = await eventModel.findById(id);
 
-        if (!alumini_delete) {
+        if (!event_delete) {
             return res.status(400).send(`No category found`); 
         }
 
-        const final = await aluminiModel.findByIdAndDelete(alumini_delete);
+        const final = await eventModel.findByIdAndDelete(event_delete);
      
 
-        return res.status(200).send(`alumini deleted successfully `)
+        return res.status(200).send(`Event deleted successfully `)
 
     } catch (error) {
         console.log(error);
@@ -146,17 +146,17 @@ const aluminiDelete = async(req,res) => {
 
 
 
-//-----------alumini images carousel----------------
+//-----------event images carousel----------------
 
-//alumini images carousel display 
-const aluminiDisplayImages = async(req,res) => {
+//event images carousel display 
+const eventDisplayImages = async(req,res) => {
     try {
         
         
-        const {id,Index}  = req.params;
+        const {Index}  = req.params;
         console.log(req.params);
         
-        const data = await aluminiModel.findById({id}).select("images");
+        const data = await eventModel.findById(req.params.id).select("images");
 
         if (data) {
             res.set("Content-type", data.images[Number(Index)].contentType);
@@ -178,7 +178,7 @@ const aluminiDisplayImages = async(req,res) => {
 
 
 //alumini images i.e carousel update
-const aluminiUpdateImages = async(req,res) => {
+const eventUpdateImages = async(req,res) => {
 
     try {
         const {images} = req.files;
@@ -188,10 +188,10 @@ const aluminiUpdateImages = async(req,res) => {
             return res.status(401).send(`image is req or image size should be less then 1MB`);
         }
 
-        const alumini = await aluminiModel.findById(id);
+        const alumini = await eventModel.findById(id);
 
         if (alumini) {
-            const alumini_g  = await aluminiModel.findByIdAndUpdate(alumini, {...req.fields }, { new: true });
+            const alumini_g  = await eventModel.findByIdAndUpdate(alumini, {...req.fields }, { new: true });
 
             if (images.length) {
                 for (let i = 0; i < images.length; i++) {
@@ -209,6 +209,8 @@ const aluminiUpdateImages = async(req,res) => {
             return res.status(200).send({message : `Images Updated successfully`});
              
         }
+        return res.status(400).send({message : `No Images Found`});
+
 
             
     } catch (error) {
@@ -223,15 +225,15 @@ const aluminiUpdateImages = async(req,res) => {
 
 
 //alumini images carousel delete
-const aluminiImagesDelete = async(req,res) => {
+const eventImagesDelete = async(req,res) => {
     try {
         const { _id, Index } = req.params;
         console.log(req.params);
-        const alumini_delete = await aluminiModel.findById({ _id }).select("images");
+        const alumini_delete = await eventModel.findById({ _id }).select("images");
 
         if (alumini_delete) {
             const imgeId = alumini_delete.images[Index]._id;
-            const data1 = await aluminiModel.updateOne({ _id: { $eq: _id } }, {
+            const data1 = await eventModel.updateOne({ _id: { $eq: _id } }, {
                 $pull: {
                     images: { _id: imgeId }
                 }
@@ -250,12 +252,15 @@ const aluminiImagesDelete = async(req,res) => {
 }
 
 
+
+
+
 module.exports = {
-     aluminiAddImage,
-     aluminiUpdateImage, 
-     aluminiUpdateImages, 
-     aluminiDelete, 
-     aluminiDisplayImage,
-     aluminiDisplayImages,
-     aluminiImagesDelete,
-    } 
+    eventAddImage,
+    eventDisplayImage,
+    eventDisplayImages,
+    eventUpdateImage,
+    eventUpdateImages,
+    eventDelete,
+    eventImagesDelete,
+}
