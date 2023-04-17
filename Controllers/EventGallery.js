@@ -62,7 +62,7 @@ const eventAddImage = async(req,res) => {
 }
 
 
-//alumini image display 
+//event image display 
 const eventDisplayImage = async(req,res) => {
     try {
         
@@ -81,7 +81,7 @@ const eventDisplayImage = async(req,res) => {
 
 
 
-//alumini image update
+//event image update
 const eventUpdateImage = async(req,res) => {
 
     try {
@@ -93,16 +93,17 @@ const eventUpdateImage = async(req,res) => {
         }
 
 
-        const alumini = await eventModel.findById(id);
+        const event = await eventModel.findById(id);
 
-        if (alumini) {
-            const alumini_g  = await eventModel.findByIdAndUpdate(alumini, {...req.fields }, { new: true });
-            alumini_g.image.data = fs.readFileSync(image.path)
-            alumini_g.image.contentType = image.type   
+        if (event) {
+            const event_g  = await eventModel.findByIdAndUpdate(event, {...req.fields }, { new: true });
+            event_g.image.data = fs.readFileSync(image.path)
+            event_g.image.contentType = image.type   
 
+            return res.status(200).send({message : `Image Updated successfully`});
         }
+        return res.status(400).send(`No image found`)
 
-        return res.status(200).send({message : `Image Updated successfully`});
     
         
     } catch (error) {
@@ -115,22 +116,22 @@ const eventUpdateImage = async(req,res) => {
 }
 
 
-//one alumini delete with carousel images
+//one event delete with carousel images
 const eventDelete = async(req,res) => {
     try {
         
         const id = req.params.id;
 
-        const alumini_delete = await eventModel.findById(id);
+        const event_delete = await eventModel.findById(id);
 
-        if (!alumini_delete) {
+        if (!event_delete) {
             return res.status(400).send(`No category found`); 
         }
 
-        const final = await eventModel.findByIdAndDelete(alumini_delete);
+        const final = await eventModel.findByIdAndDelete(event_delete);
      
 
-        return res.status(200).send(`alumini deleted successfully `)
+        return res.status(200).send(`Event deleted successfully `)
 
     } catch (error) {
         console.log(error);
@@ -145,17 +146,17 @@ const eventDelete = async(req,res) => {
 
 
 
-//-----------alumini images carousel----------------
+//-----------event images carousel----------------
 
-//alumini images carousel display 
+//event images carousel display 
 const eventDisplayImages = async(req,res) => {
     try {
         
         
-        const {id,Index}  = req.params;
+        const {Index}  = req.params;
         console.log(req.params);
         
-        const data = await eventModel.findById({id}).select("images");
+        const data = await eventModel.findById(req.params.id).select("images");
 
         if (data) {
             res.set("Content-type", data.images[Number(Index)].contentType);
@@ -208,6 +209,8 @@ const eventUpdateImages = async(req,res) => {
             return res.status(200).send({message : `Images Updated successfully`});
              
         }
+        return res.status(400).send({message : `No Images Found`});
+
 
             
     } catch (error) {
