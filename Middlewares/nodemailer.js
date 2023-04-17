@@ -8,12 +8,12 @@ const mailer = (email, otp) => {
         port: 587,
         secure: false,
         auth: {
-          user: 'xxxx',
-          pass: 'xxx'
+          user: 'web.sgtbimit@gmail.com',
+          pass: process.env.Emailer_Password
         }
       });
       var mailOptions = {
-        from: ' looks0126@gmail.com ',
+        from: ' web.sgtbimit@gmail.com ',
         to: `<${email}>`,
         subject: ' Sent the Otp for password Change ',
         text: `${otp} is your One-Time Password (OTP) to complete reset your password.`,

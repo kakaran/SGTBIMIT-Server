@@ -51,7 +51,7 @@ const adminLogin = async (req, res) => {
   try {
 
     const { email, password } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
 
     if (!email || !password) {
       return res.status(400).send({
@@ -86,10 +86,10 @@ const adminLogin = async (req, res) => {
 
     res.status(200).send({
       message: "login successfully",
-        admin: {
-          _id: admin._id,
+      admin: {
+        _id: admin._id,
       },
-        token,
+      token,
     });
 
 
@@ -107,7 +107,7 @@ const adminLogin = async (req, res) => {
 //For Password Reset To Check the email ID
 const EmailCheck = async (req, res) => {
   try {
-    const { email } = req.body;
+    const { email } = req.params;
     console.log(email);
     if (!email) {
       return res.status(500).send("Email Id Is Not defined")
@@ -122,8 +122,11 @@ const EmailCheck = async (req, res) => {
         code: otpcode,
         expireIn: new Date().getTime() + 300 * 1000
       });
-      mailer(otpData.email, otpData.code)
-      return res.send("We Have Sent AN OTP. Please Check Your Email");
+      await mailer(otpData.email, otpData.code)
+      return res.send({
+        status: true,
+        message: "We Have Sent AN OTP. Please Check Your Email"
+      });
     }
   } catch (error) {
     console.log(error);

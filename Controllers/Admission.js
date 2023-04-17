@@ -11,7 +11,7 @@ const mailer = (Name, email, PNumber, Course) => {
             secure: false,
             auth: {
                 user: 'web.sgtbimit@gmail.com',
-                pass: 'zbqlvzuvhjrhibrh'
+                pass: process.env.Emailer_Password
             }
         });
         var mailOptions = {
