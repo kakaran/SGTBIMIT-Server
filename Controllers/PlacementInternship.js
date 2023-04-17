@@ -61,7 +61,7 @@ const PlacementIntershipsDisplay = async (req,res) =>{
 const PlacementIntershipsSingle = async (req,res) =>{
     try {
         const { _id } = req.params;
-        const data = await PlaceInter.findById({_id}).select("image");
+        const data = await PlaceInter.findById({_id}).select("-image");
         if(data){
             return res.status(200).send(data);
         }else{
