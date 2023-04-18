@@ -15,6 +15,9 @@ const faculty = mongoose.Schema({
     },
     detail : {
         type : String
+    },
+    Department : {
+        type : String,
     }
 }, {
     timestamps : true

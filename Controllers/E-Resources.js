@@ -22,7 +22,7 @@ const EResourcesDisplay = async (req, res) => {
         const getData = await EResources.find();
         res.json(getData);
     } catch (err) {
-        console.log(error);
+        // console.log(error);
         return res.status(500).send({
             success: false,
             message: 'Error'

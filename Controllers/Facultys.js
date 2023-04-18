@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const FacultyAdd = async (req, res) => {
     try {
-        const { name, post, detail } = req.fields;
+        const { name, post, detail, Department} = req.fields;
         const { image } = req.files;
         if (!name) {
             return res.status(401).send("Name is required");
@@ -11,7 +11,9 @@ const FacultyAdd = async (req, res) => {
             return res.status(401).send("Post is required");
         } else if (!detail) {
             return res.status(401).send("Detail is required");
-        } else if (image && image.size > 1000000) {
+        }else if(!Department){
+            return res.status(401).send("Department is required");
+        }else if (image && image.size > 1000000) {
             return res.status(401).send("Image is required and should be less 1mb");
         }
 
@@ -121,8 +123,10 @@ const FacultyDelete = async (req, res) => {
 const FacultyUpdate = async (req, res) => {
     try {
         const { _id } = req.params;
-        const { name, post, detail } = req.fields;
+        const { name, post, detail , Department} = req.fields;
         const { image } = req.files;
+
+        console.log(req.fields);
         const Search_Faculty = await Facultys.findById({ _id });
 
         if(Search_Faculty)
@@ -133,6 +137,8 @@ const FacultyUpdate = async (req, res) => {
                 return res.status(401).send("Post is required");
             } else if (!detail) {
                 return res.status(401).send("Detail is required");
+            }else if(!Department){
+                return res.status(401).send("Department is required");
             } else if (image && image.size > 1000000) {
                 return res.status(401).send("Image is required and should be less 1mb");
             }

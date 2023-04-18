@@ -15,12 +15,10 @@ const { CalendarAdd, CalendarDisplay, CalendarDelete, CalendarUpdate, CalendarSi
 const { aluminiAddImage, aluminiAddCarouselImage, aluminiUpdateImage, aluminiDisplayImage, aluminiDelete, aluminiDisplayImages, aluminiUpdateImages, aluminiImagesDelete } = require("../Controllers/AluminiGallery.js");
 const { NoticeAdd,NoticeDelete,NoticeDataDisplay,NoticeFileDisplay,NoticeUpdata} = require("../Controllers/Notice.js"); 
 const {AdmissionRequestDelete,AdmissionRequestDisplay,AdmissionFormFill} = require("../Controllers/Admission.js");
-<<<<<<< HEAD
+
 const authchecker = require("../Middlewares/authentication.js");
-=======
 const { eventAddImage, eventDisplayImage, eventDisplayImages, eventUpdateImage, eventUpdateImages, eventDelete, eventImagesDelete } = require("../Controllers/EventGallery.js");
 
->>>>>>> 64a69ed76a6c09c2c6e1e17a16e264e5c3cb09a3
 //just for checking
 // router.get("/", justForchecking);
 
