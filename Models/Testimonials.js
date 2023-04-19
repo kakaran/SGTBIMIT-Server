@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 const testimonial = mongoose.Schema({
     name: {
         type : String,
-        require : true
+        required : true
     },
     detail :{
         type : String,
-        require : true
+        required : true
     }
 },
 {

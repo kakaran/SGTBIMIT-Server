@@ -4,11 +4,11 @@ const calendarSchema = new mongoose.Schema({
 
     Date : {
         type : String,
-        require : true,
+        required : true,
     },
     Event : {
         type : String,
-        require : true,
+        required : true,
     },
 
 },{timestamps : true}

@@ -8,11 +8,11 @@ const Eventgallery = new mongoose.Schema({
     },
     category : {
         type : String,
-        require : true,        
+        required : true,        
     },  
     images: [{ data: Buffer, contentType: String }]        
         
 }, {timestamps : true}
 );
 
-module.exports = mongoose.model("Event", Eventgallery);
+module.exports = mongoose.model("Eventgallery", Eventgallery);

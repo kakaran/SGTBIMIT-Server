@@ -8,7 +8,7 @@ const Aluminigallery = new mongoose.Schema({
     },
     category : {
         type : String,
-        require : true,        
+        required : true,        
     },  
     images: [{ data: Buffer, contentType: String }]        
         
