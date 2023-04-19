@@ -51,8 +51,7 @@ const NoticeDelete = async (req, res) => {
 
 const NoticeDataDisplay = async (req, res) => {
     try {
-        const { _id } = req.params;
-        const Data = await Notice.findById({ _id }).select("-file");
+        const Data = await Notice.find().select("-file");
 
         if (Data) {
             return res.status(200).send(Data);
