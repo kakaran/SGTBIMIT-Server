@@ -47,6 +47,21 @@ const EventHandlerAdd = async (req,res) =>{
     }
 }
 
+const EventHandlerDisplay = async (req,res) =>{
+    try {
+        const data = await EventHandler.find().populate("Years.Events.Event_id");
+
+        if(data){
+            return res.status(200).send(data);
+        }else{
+            return res.status(404).send("data not found");s
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
-    EventHandlerAdd
+    EventHandlerAdd,
+    EventHandlerDisplay
 }

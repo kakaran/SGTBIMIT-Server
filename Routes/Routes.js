@@ -19,8 +19,8 @@ const {AdmissionRequestDelete,AdmissionRequestDisplay,AdmissionFormFill} = requi
 const authchecker = require("../Middlewares/authentication.js");
 const { eventAddImage, eventDisplayImage, eventDisplayImages, eventUpdateImage, eventUpdateImages, eventDelete, eventImagesDelete } = require("../Controllers/EventGallery.js");
 const {EventAdd} = require('../Controllers/EventController.js');
-const {EventHandlerAdd} = require("../Controllers/EventHandlerController.js");
-const {CollaborationsAdd} = require("../Controllers/CollaborationsController.js")
+const {EventHandlerAdd,EventHandlerDisplay} = require("../Controllers/EventHandlerController.js");
+const {CollaborationsAdd,CollaborationsDelete,CollaborationsImageDisplay,CollaborationsDisplay} = require("../Controllers/CollaborationsController.js")
 //just for checking
 // router.get("/", justForchecking);
 
@@ -149,9 +149,13 @@ router.post("/Event/Event_Add",formidable({multiples : true}),EventAdd);
 
 //EventHandler Routes//
 router.post("/Eventhandler/EventHandler_Add",formidable({multiples : true}),EventHandlerAdd);
+router.post("/Eventhandler/EventHandler_Display",EventHandlerDisplay);
 
 //Collaborations Routes
 router.post("/Collaborations/Collaborations_Add",formidable(),CollaborationsAdd)
+router.get("/Collaborations/Collaborations_Delete/:_id",CollaborationsDelete);
+router.get("/Collaborations/Collaborations_Image_Display/:_id",CollaborationsImageDisplay);
+router.get("/Collaborations/Collaborations_Display",CollaborationsDisplay);
 
 
 module.exports = router;    

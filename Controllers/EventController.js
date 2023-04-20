@@ -130,6 +130,7 @@ const EventAdd = async (req, res) => {
     }
 }
 
+
 module.exports = {
     EventAdd
 }
