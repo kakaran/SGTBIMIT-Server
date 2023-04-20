@@ -5,18 +5,21 @@ const EvendHandlerSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    detail : {
-        type : String,
+    HeaderImage: {
+        data: Buffer, contentType: String, Name: String
     },
-    images: [{data : Buffer, contentType : String,Name : String}],
-    Years : [{
-        year :{
+    detail: {
+        type: String,
+    },
+    images: [{ data: Buffer, contentType: String, Name: String }],
+    Years: [{
+        year: {
             type: String
         },
-        Events :[{
-            Event_id : {
-                type : mongoose.Schema.Types.ObjectId,
-                ref : "Event"
+        Events: [{
+            Event_id: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Event"
             }
         }]
     }],

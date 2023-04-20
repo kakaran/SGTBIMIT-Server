@@ -19,7 +19,7 @@ const {AdmissionRequestDelete,AdmissionRequestDisplay,AdmissionFormFill} = requi
 const authchecker = require("../Middlewares/authentication.js");
 const { eventAddImage, eventDisplayImage, eventDisplayImages, eventUpdateImage, eventUpdateImages, eventDelete, eventImagesDelete } = require("../Controllers/EventGallery.js");
 const {EventAdd} = require('../Controllers/EventController.js');
-const {EventHandlerAdd,EventHandlerDisplay} = require("../Controllers/EventHandlerController.js");
+const {EventHandlerAdd,EventHandlerDisplay,EventHandlerImageDisplay,EventHandlerDelete} = require("../Controllers/EventHandlerController.js");
 const {CollaborationsAdd,CollaborationsDelete,CollaborationsImageDisplay,CollaborationsDisplay} = require("../Controllers/CollaborationsController.js")
 //just for checking
 // router.get("/", justForchecking);
@@ -140,7 +140,7 @@ router.get("/Notice/Notice_File_Display/:_id",NoticeFileDisplay);
 router.post("/Notice/Notice_Update/:_id",authchecker,formidable(),NoticeUpdata);
 
 //Admission Routes//
-router.post("/Admission/Request",authchecker,AdmissionFormFill);
+router.post("/Admission/Request",AdmissionFormFill);
 router.get("/Admission/RequestDelete",authchecker,AdmissionRequestDelete);
 router.get("/Admission/RequestDisplay",AdmissionRequestDisplay)
 
@@ -149,7 +149,9 @@ router.post("/Event/Event_Add",formidable({multiples : true}),EventAdd);
 
 //EventHandler Routes//
 router.post("/Eventhandler/EventHandler_Add",formidable({multiples : true}),EventHandlerAdd);
-router.post("/Eventhandler/EventHandler_Display",EventHandlerDisplay);
+router.get("/Eventhandler/EventHandler_Display",EventHandlerDisplay);
+router.get("/Eventhandler/EventHandler_Image_Display/:_id/:image_id",EventHandlerImageDisplay);
+router.get("/Eventhandler/EventHandler_Delete/:_id",EventHandlerDelete);
 
 //Collaborations Routes
 router.post("/Collaborations/Collaborations_Add",formidable(),CollaborationsAdd)
