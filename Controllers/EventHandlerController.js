@@ -7,7 +7,7 @@ const EventHandlerAdd = async (req, res) => {
         const { name, detail } = req.fields;
         console.log(req.fields);
         const { images ,HeaderImage} = req.files;
-
+console.log(HeaderImage);
         if (!name) {
             return res.status(401).send({ message: "name is required" });
         } else if (!detail) {
@@ -54,7 +54,7 @@ const EventHandlerAdd = async (req, res) => {
 
 const EventHandlerDisplay = async (req, res) => {
     try {
-        const data = await EventHandler.find().populate("Years.Events.Event_id", "-Images -mainImage").select("images._id name HeaderImage detail Years");
+        const data = await EventHandler.find().populate("Years.Events.Event_id", "Images._id mainImage._id name year eventHandler detail").select("images._id name HeaderImage detail Years");
 
         if (data) {
             return res.status(200).send(data);
