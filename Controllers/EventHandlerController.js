@@ -52,14 +52,29 @@ console.log(HeaderImage);
     }
 }
 
-const EventHandlerDisplay = async (req, res) => {
+const EventHandlerSingleDisplay = async (req, res) => {
     try {
-        const data = await EventHandler.find().populate("Years.Events.Event_id", "Images._id mainImage._id name year eventHandler detail").select("images._id name HeaderImage detail Years");
+        const {_id} = req.params;
+        const data = await EventHandler.find({_id}).populate("Years.Events.Event_id", "Images._id mainImage._id name year eventHandler detail").select("images._id name HeaderImage detail Years");
 
         if (data) {
             return res.status(200).send(data);
         } else {
             return res.status(404).send("data not found"); s
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const EventHandlerDisplay = async (req,res) =>{
+    try {
+        const data = await EventHandler.find().select("name");
+        if(data){
+            return res.send(data);
+        }else
+        {
+            return res.send("Data not found")
         }
     } catch (error) {
         console.log(error);
@@ -103,5 +118,6 @@ module.exports = {
     EventHandlerAdd,
     EventHandlerDisplay,
     EventHandlerImageDisplay,
-    EventHandlerDelete
+    EventHandlerDelete,
+    EventHandlerSingleDisplay
 }

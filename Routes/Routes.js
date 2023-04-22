@@ -10,7 +10,7 @@ const { FacultyAdd, FacultyDelete, FacultyImageDisplay, FacultyDisplay, FacultyS
 const { SocietyAdd, SocietyDelete, SocietyDisplay, SingleSocietyDisplay, SocietyImageDisplay, SocietyUpdate } = require("../Controllers/Society");
 const { EResourcesAdd, EResourcesDisplay, EResourcesUpdate, EResourcesSingle, EResourcesDelete } = require("../Controllers/E-Resources");
 const { adminRegister, adminLogin, EmailCheck, forgetpassword } = require("../Controllers/Admin.js");
-const {QuestionPaperAdd,PaperFilterDisplay,QuestionPaperUpdate,QuestionPaperDisplay,QuestionPaperDisplayAll,QuestionPaperFileDisplay,QuestionPaperDelete,QuestionPaperYearDelete} = require("../Controllers/QuestionPaper.js");
+const { QuestionPaperAdd,PaperFilterDisplay,QuestionPaperUpdate,QuestionPaperDisplay,QuestionPaperDisplayAll,QuestionPaperFileDisplay,QuestionPaperDelete,QuestionPaperYearDelete} = require("../Controllers/QuestionPaper.js");
 const { CalendarAdd, CalendarDisplay, CalendarDelete, CalendarUpdate, CalendarSingle } = require("../Controllers/Calendar.js");
 const { aluminiAddImage, aluminiAddCarouselImage, aluminiUpdateImage, aluminiDisplayImage, aluminiDelete, aluminiDisplayImages, aluminiUpdateImages, aluminiImagesDelete } = require("../Controllers/AluminiGallery.js");
 const { NoticeAdd,NoticeDelete,NoticeDataDisplay,NoticeFileDisplay,NoticeUpdata} = require("../Controllers/Notice.js"); 
@@ -18,9 +18,10 @@ const {AdmissionRequestDelete,AdmissionRequestDisplay,AdmissionFormFill} = requi
 
 const authchecker = require("../Middlewares/authentication.js");
 const { eventAddImage, eventDisplayImage, eventDisplayImages, eventUpdateImage, eventUpdateImages, eventDelete, eventImagesDelete } = require("../Controllers/EventGallery.js");
-const {EventAdd} = require('../Controllers/EventController.js');
-const {EventHandlerAdd,EventHandlerDisplay,EventHandlerImageDisplay,EventHandlerDelete} = require("../Controllers/EventHandlerController.js");
+const {EventAdd,EventDelete,EventUpdate} = require('../Controllers/EventController.js');
+const {EventHandlerAdd,EventHandlerDisplay,EventHandlerImageDisplay,EventHandlerDelete,EventHandlerSingleDisplay} = require("../Controllers/EventHandlerController.js");
 const {CollaborationsAdd,CollaborationsDelete,CollaborationsImageDisplay,CollaborationsDisplay} = require("../Controllers/CollaborationsController.js")
+const {RegistrationAdd} = require("../Controllers/RegistrationController.js")
 //just for checking
 // router.get("/", justForchecking);
 
@@ -146,12 +147,16 @@ router.get("/Admission/RequestDisplay",AdmissionRequestDisplay)
 
 //Event Routes//
 router.post("/Event/Event_Add",formidable({multiples : true}),EventAdd);
+router.delete("/Event/Event_Delete/:_id",EventDelete);
+router.delete("/Event/Event_Update/:_id",formidable({multiples : true}),EventUpdate);
+
 
 //EventHandler Routes//
 router.post("/Eventhandler/EventHandler_Add",formidable({multiples : true}),EventHandlerAdd);
 router.get("/Eventhandler/EventHandler_Display",EventHandlerDisplay);
 router.get("/Eventhandler/EventHandler_Image_Display/:_id/:image_id",EventHandlerImageDisplay);
 router.get("/Eventhandler/EventHandler_Delete/:_id",EventHandlerDelete);
+router.get("/Eventhandler/EventHandler_Single_Display/:_id",EventHandlerSingleDisplay);
 
 //Collaborations Routes
 router.post("/Collaborations/Collaborations_Add",formidable(),CollaborationsAdd)
@@ -159,5 +164,7 @@ router.get("/Collaborations/Collaborations_Delete/:_id",CollaborationsDelete);
 router.get("/Collaborations/Collaborations_Image_Display/:_id",CollaborationsImageDisplay);
 router.get("/Collaborations/Collaborations_Display",CollaborationsDisplay);
 
+//Registration Rotes//
+router.post("/Registration/Registration_Add",RegistrationAdd);
 
 module.exports = router;    

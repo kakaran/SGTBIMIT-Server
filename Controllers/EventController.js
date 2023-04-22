@@ -130,14 +130,14 @@ const EventAdd = async (req, res) => {
     }
 }
 
-const EventImageDisplay = async (req,res) =>{ 
+const EventImageDisplay = async (req, res) => {
     try {
-        const {_id,Image_id} = req.params;
+        const { _id, Image_id } = req.params;
 
-        const data = await Event.find({_id},{Images : {$elemMatch :{_id : Image_id}}});
+        const data = await Event.find({ _id }, { Images: { $elemMatch: { _id: Image_id } } });
 
-        if(data){
-            res.set("Content-type",data.Images[0].contentType);
+        if (data) {
+            res.set("Content-type", data.Images[0].contentType);
             return res.status(201).send(data.Images[0].data)
         }
     } catch (error) {
@@ -145,8 +145,108 @@ const EventImageDisplay = async (req,res) =>{
     }
 }
 
+const EventHandlerDeleteEvent = async (_id, name, year) => {
+    try {
+        const SearcheventHandler = await EventHandler.find({ name: name }).select("-images -HeaderImage");
+        if (SearcheventHandler) {
+            const EventDeleteFromEveHand = await EventHandler.updateOne({ name: name, "Years.year": year }, {
+                $pull: {
+                    "Years.$.Events": {
+                        Event_id: _id
+                    }
+                }
+            })
+
+            console.log(EventDeleteFromEveHand);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const EventDelete = async (req, res) => {
+    try {
+        const { _id } = req.params;
+
+        const Search_Data = await Event.find({ _id });
+
+        // console.log(Search_Data);
+
+        if (Search_Data.length) {
+            await EventHandlerDeleteEvent(Search_Data[0]._id, Search_Data[0].name, Search_Data[0].year);
+            await Event.findByIdAndDelete({ _id });
+            return res.status(200).send("Data deleted");
+        } else {
+            return res.status(404).send("data not exist")
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const EventUpdate = async (req, res) => {
+    try {
+        const { _id } = req.params;
+        const { detail, name, year, eventHandler } = req.fields;
+        const { mainImage, Images } = req.files;
+
+        const Search_Data = await Event.findById({ _id });
+
+        if (Search_Data) {
+
+            if (!detail) {
+                return res.status(401).send("Info is required");
+            } else if (!name) {
+                return res.status(401).send("Name is required");
+            } else if (!year) {
+                return res.status(401).send("Year is required");
+            } else if (!eventHandler) {
+                return res.status(401).send('select Event Handler');
+            } else if (mainImage && mainImage.size > 1000000) {
+                return res.status(401).send("Image is required and should be less 1mb");
+            }
+
+            const EventUpdateData = await Event.findByIdAndUpdate({ _id },
+                { ...req.fields },
+                { new: true });
+
+            if (mainImage) {
+                EventUpdateData.mainImage.data = fs.readFileSync(mainImage.path),
+                EventUpdateData.mainImage.contentType = mainImage.type,
+                EventUpdateData.mainImage.Name = mainImage.name
+            }
+            if (Images.length) {
+                for (let i = 0; i < Images.length; i++) {
+                    EventUpdateData.Images.push({
+                        data: fs.readFileSync(Images[i].path),
+                        contentType: Images[i].type,
+                        Name: Images[i].name
+                    })
+                }
+            } else {
+                EventUpdateData.Images.push({
+                    data: fs.readFileSync(Images.path),
+                    contentType: Images.type,
+                    Name: Images.name
+                })
+            }
+
+            await EventUpdateData.save();
+            return res.status(201).send({
+                Success : true ,
+                message : "Data Updated",
+                data : EventUpdateData
+            })
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 module.exports = {
     EventAdd,
-    EventImageDisplay
+    EventImageDisplay,
+    EventDelete,
+    EventUpdate
 }

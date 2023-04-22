@@ -104,15 +104,16 @@ const mailer = (Name, email, PNumber, Course) => {
 const AdmissionFormFill = async (req, res) => {
     try {
         const { Name, Email, PNumber, Course } = req.body;
+        console.log(req.body);
 
         if (!Name) {
-            return res.status(401).send("Name is required");
+            return res.status(201).send({message:"Name is required"});
         } else if (!Email) {
-            return res.status(401).send("Email is required");
+            return res.status(201).send({message:"Email is required"});
         } else if (!PNumber) {
-            return res.status(401).send("Phone Number is required");
+            return res.status(201).send({message : "Phone Number is required"});
         } else if (!Course) {
-            return res.status(401).send("Course is required");
+            return res.status(201).send({message: "Course is required"});
         }
 
         if (!Email.match(emailformat)) {
@@ -120,16 +121,18 @@ const AdmissionFormFill = async (req, res) => {
         }
 
 
-        const SearchData = await Admission.find({ Email: Email });
+        const SearchData = await Admission.find({ Email: Email.toLowerCase()});
 
 
         if (!SearchData.length) {
             const AdmissionFormDetail = await Admission(req.body);
             await AdmissionFormDetail.save();
             await mailer(Name, Email, PNumber, Course);
-            return res.send("Request Successfully Submitted");
+            return res.send({status : "success",
+                message : "Request Successfully Submitted"});
         } else {
-            return res.send("Your request Allready Submitted")
+            return res.status(200).send({status : "warn",
+                message : "Your request Allready Submitted"})
         }
     } catch (error) {
         console.log(error);
