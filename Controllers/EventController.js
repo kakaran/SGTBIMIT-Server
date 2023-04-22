@@ -133,12 +133,11 @@ const EventAdd = async (req, res) => {
 const EventImageDisplay = async (req, res) => {
     try {
         const { _id, Image_id } = req.params;
-
         const data = await Event.find({ _id }, { Images: { $elemMatch: { _id: Image_id } } });
-
+        
         if (data) {
-            res.set("Content-type", data.Images[0].contentType);
-            return res.status(201).send(data.Images[0].data)
+            res.set("Content-type", data[0].Images[0].contentType);
+            return res.status(201).send(data[0].Images[0].data)
         }
     } catch (error) {
         console.log(error);
@@ -215,6 +214,7 @@ const EventUpdate = async (req, res) => {
                 EventUpdateData.mainImage.contentType = mainImage.type,
                 EventUpdateData.mainImage.Name = mainImage.name
             }
+
             if (Images.length) {
                 for (let i = 0; i < Images.length; i++) {
                     EventUpdateData.Images.push({
@@ -238,7 +238,6 @@ const EventUpdate = async (req, res) => {
                 data : EventUpdateData
             })
         }
-
     } catch (error) {
         console.log(error);
     }

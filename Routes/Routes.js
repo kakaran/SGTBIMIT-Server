@@ -18,10 +18,11 @@ const {AdmissionRequestDelete,AdmissionRequestDisplay,AdmissionFormFill} = requi
 
 const authchecker = require("../Middlewares/authentication.js");
 const { eventAddImage, eventDisplayImage, eventDisplayImages, eventUpdateImage, eventUpdateImages, eventDelete, eventImagesDelete } = require("../Controllers/EventGallery.js");
-const {EventAdd,EventDelete,EventUpdate} = require('../Controllers/EventController.js');
+const {EventAdd,EventDelete,EventUpdate,EventImageDisplay} = require('../Controllers/EventController.js');
 const {EventHandlerAdd,EventHandlerDisplay,EventHandlerImageDisplay,EventHandlerDelete,EventHandlerSingleDisplay,EventHandleRHederImage} = require("../Controllers/EventHandlerController.js");
 const {CollaborationsAdd,CollaborationsDelete,CollaborationsImageDisplay,CollaborationsDisplay} = require("../Controllers/CollaborationsController.js")
 const {RegistrationAdd} = require("../Controllers/RegistrationController.js")
+const {PlacementFeatureAdd,PlacemetFeatureDisplay,PlacementfeatureImageDisplay,PlacementFeatureCompanyImDaisplay,PlacementFeatureDelete} = require("../Controllers/PlacementFeatureStarController.js")
 //just for checking
 // router.get("/", justForchecking);
 
@@ -148,14 +149,14 @@ router.get("/Admission/RequestDisplay",AdmissionRequestDisplay)
 //Event Routes//
 router.post("/Event/Event_Add",formidable({multiples : true}),EventAdd);
 router.delete("/Event/Event_Delete/:_id",EventDelete);
-router.delete("/Event/Event_Update/:_id",formidable({multiples : true}),EventUpdate);
-
+router.post("/Event/Event_Update/:_id",formidable({multiples : true}),EventUpdate);
+router.get("/Event/Event_Image_Display/:_id/:Image_id",EventImageDisplay);
 
 //EventHandler Routes//
 router.post("/Eventhandler/EventHandler_Add",formidable({multiples : true}),EventHandlerAdd);
 router.get("/Eventhandler/EventHandler_Display",EventHandlerDisplay);
 router.get("/Eventhandler/EventHandler_Image_Display/:_id/:image_id",EventHandlerImageDisplay);
-router.get("/Eventhandler/EventHandler_Delete/:_id",EventHandlerDelete);
+router.delete("/Eventhandler/EventHandler_Delete/:_id",EventHandlerDelete);
 router.get("/Eventhandler/EventHandler_Single_Display/:_id",EventHandlerSingleDisplay);
 router.get("/Eventhandler/EventHandleR_Heder_Image/:_id",EventHandleRHederImage);
 
@@ -167,5 +168,13 @@ router.get("/Collaborations/Collaborations_Display",CollaborationsDisplay);
 
 //Registration Rotes//
 router.post("/Registration/Registration_Add",RegistrationAdd);
+
+
+//Placement Feature Star Routes
+router.post("/PlacementFeature/PlacementFeature_Add",formidable({multiples: true}),PlacementFeatureAdd)
+router.get("/PlacementFeature/PlacemetFeature_Display",PlacemetFeatureDisplay)
+router.get("/PlacementFeature/Placementfeature_Image_Display/:_id",PlacementfeatureImageDisplay)
+router.get("/PlacementFeature/PlacementFeature_Company_ImDaisplay/:_id",PlacementFeatureCompanyImDaisplay)
+router.get("/PlacementFeature/PlacementFeature_Delete/:_id",PlacementFeatureDelete)
 
 module.exports = router;    

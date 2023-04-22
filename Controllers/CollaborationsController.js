@@ -9,6 +9,8 @@ const CollaborationsAdd = async (req, res) => {
 
         if (!name) {
             return res.status(401).send("Name is required")
+        }else if (image && image.size > 1000000) {
+            return res.status(401).send("Image is required and should be less 1mb");
         }
 
         const Collaborations_Data = await new Collaborations(req.fields);
