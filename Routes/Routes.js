@@ -19,7 +19,7 @@ const {AdmissionRequestDelete,AdmissionRequestDisplay,AdmissionFormFill} = requi
 const authchecker = require("../Middlewares/authentication.js");
 const { eventAddImage, eventDisplayImage, eventDisplayImages, eventUpdateImage, eventUpdateImages, eventDelete, eventImagesDelete } = require("../Controllers/EventGallery.js");
 const {EventAdd,EventDelete,EventUpdate} = require('../Controllers/EventController.js');
-const {EventHandlerAdd,EventHandlerDisplay,EventHandlerImageDisplay,EventHandlerDelete,EventHandlerSingleDisplay} = require("../Controllers/EventHandlerController.js");
+const {EventHandlerAdd,EventHandlerDisplay,EventHandlerImageDisplay,EventHandlerDelete,EventHandlerSingleDisplay,EventHandleRHederImage} = require("../Controllers/EventHandlerController.js");
 const {CollaborationsAdd,CollaborationsDelete,CollaborationsImageDisplay,CollaborationsDisplay} = require("../Controllers/CollaborationsController.js")
 const {RegistrationAdd} = require("../Controllers/RegistrationController.js")
 //just for checking
@@ -157,6 +157,7 @@ router.get("/Eventhandler/EventHandler_Display",EventHandlerDisplay);
 router.get("/Eventhandler/EventHandler_Image_Display/:_id/:image_id",EventHandlerImageDisplay);
 router.get("/Eventhandler/EventHandler_Delete/:_id",EventHandlerDelete);
 router.get("/Eventhandler/EventHandler_Single_Display/:_id",EventHandlerSingleDisplay);
+router.get("/Eventhandler/EventHandleR_Heder_Image/:_id",EventHandleRHederImage);
 
 //Collaborations Routes
 router.post("/Collaborations/Collaborations_Add",formidable(),CollaborationsAdd)

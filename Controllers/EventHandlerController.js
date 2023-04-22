@@ -67,6 +67,20 @@ const EventHandlerSingleDisplay = async (req, res) => {
     }
 }
 
+const EventHandleRHederImage = async (req,res) =>{
+    try {
+        const {_id} = req.params;
+        const data = await EventHandler.find({_id}).select("HeaderImage")
+        console.log(data);
+        if(data){
+            res.set("Content-type", data[0].HeaderImage.contentType);
+            return res.status(201).send(data[0].HeaderImage.data)
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 const EventHandlerDisplay = async (req,res) =>{
     try {
         const data = await EventHandler.find().select("name");
@@ -119,5 +133,6 @@ module.exports = {
     EventHandlerDisplay,
     EventHandlerImageDisplay,
     EventHandlerDelete,
-    EventHandlerSingleDisplay
+    EventHandlerSingleDisplay,
+    EventHandleRHederImage
 }
