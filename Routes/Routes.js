@@ -4,7 +4,7 @@ const formidable = require('express-formidable');
 const router = express.Router();
 const { AdministrationAdd, AdministrationUpdate, AdministrationImageDisplay, AdministrationDelete, SingleAdministrationDisplay, AdministrationDisplay } = require("../Controllers/Administration.js");
 const { PlacementIntershipsAdd, PlacementIntershipsSingle, PlacementIntershipsDisplay, PlacementIntershipsDelete, PlacementIntershipsUpdate, PlacementIntershipsImageDisplay } = require("../Controllers/PlacementInternship")
-const { TestimonialAdd, singleTestimonialDisplay, TestimonialDisplay, TestimonialUpdate, TestimonialDelete } = require("../Controllers/Testimonials")
+const { TestimonialAdd, singleTestimonialDisplay, TestimonialDisplay, TestimonialImageDisplay,TestimonialUpdate, TestimonialDelete } = require("../Controllers/Testimonials")
 const { recruitersAdd, recruitersUpdate, recruiters_Single_Display,recruitersDisplay, recruitersDelete, RecruiterImageDisplay } = require('../Controllers/Recruiters');
 const { FacultyAdd, FacultyDelete, FacultyImageDisplay, FacultyDisplay, FacultySingle, FacultyUpdate } = require("../Controllers/Facultys");
 const { SocietyAdd, SocietyDelete, SocietyDisplay, SingleSocietyDisplay, SocietyImageDisplay, SocietyUpdate } = require("../Controllers/Society");
@@ -52,11 +52,12 @@ router.post("/Faculty/Faculty_Update/:_id",authchecker, formidable(), FacultyUpd
 
 
 //Testimonial Routes
-router.post("/Testimonial/Testimonial_Add",authchecker, TestimonialAdd);
+router.post("/Testimonial/Testimonial_Add", formidable(),TestimonialAdd);
 router.get("/Testimonial/Testimonial_Display", TestimonialDisplay);
-router.post("/Testimonial/Testimonial_Update/:_id", authchecker,TestimonialUpdate);
-router.post("/Testimonial/Testimonial_Delete", authchecker,TestimonialDelete);
-router.post("/Testimonial/single_Testimonial_Display", singleTestimonialDisplay)
+router.post("/Testimonial/Testimonial_Update/:_id" ,formidable(),TestimonialUpdate);
+router.get("/Testimonial/Testimonial_Delete/:_id",TestimonialDelete);
+router.get("/Testimonial/single_Testimonial_Display/:_id", singleTestimonialDisplay)
+router.get("/Testimonial/Testimonial_Image_Display/:_id",TestimonialImageDisplay)
 
 //Recruiters Routes 
 router.post("/Recruiters/recruiters_Add", formidable(), recruitersAdd);
@@ -162,7 +163,7 @@ router.get("/Eventhandler/EventHandleR_Heder_Image/:_id",EventHandleRHederImage)
 
 //Collaborations Routes
 router.post("/Collaborations/Collaborations_Add",formidable(),CollaborationsAdd)
-router.get("/Collaborations/Collaborations_Delete/:_id",CollaborationsDelete);
+router.delete("/Collaborations/Collaborations_Delete/:_id",CollaborationsDelete);
 router.get("/Collaborations/Collaborations_Image_Display/:_id",CollaborationsImageDisplay);
 router.get("/Collaborations/Collaborations_Display",CollaborationsDisplay);
 

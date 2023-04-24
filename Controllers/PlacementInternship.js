@@ -6,9 +6,12 @@ const fs = require('fs');
 const PlacementIntershipsAdd = async (req,res) =>{
     try {
 
+        const {name} = req.fields
         const {image} = req.files;
-        
-        if (image && image.size > 1000000) {
+
+        if(!name) {
+            return res.status(200).send({message : "Name is required"});
+        }else if (image && image.size > 1000000) {
             return res.status(401).send("Image is required and should be less 1mb");
         }
 
@@ -122,12 +125,15 @@ const PlacementIntershipsUpdate = async (req, res) => {
     try {
 
         const { _id } = req.params;
+        const {name} = req.fields;
         const {image} = req.files;
 
         const Search_PlInt = await PlaceInter.findById({ _id });
 
         if(Search_PlInt){
-            if (image && image.size > 1000000) {
+            if(!name) {
+                return res.status(200).send({message : "Name is required"});
+            }else if (image && image.size > 1000000) {
                 return res.status(401).send("Image is required and should be less 1mb");
             }
             

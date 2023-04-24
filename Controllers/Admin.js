@@ -60,7 +60,7 @@ const adminLogin = async (req, res) => {
     }
 
     //check admin already exists
-    const admin = await adminModel.findOne({ email });
+    const admin = await adminModel.findOne({ email : email.toLowerCase() });
     if (!admin) {
       return res.status(400).send({
         message: "Email is not registerd",
@@ -120,11 +120,12 @@ const EmailCheck = async (req, res) => {
       const otpData = await Otp.create({
         email: email,
         code: otpcode,
-        expireIn: new Date().getTime() + 300 * 1000
+        expireIn: new Date().getTime() + 1000*120
       });
       await mailer(otpData.email, otpData.code)
       return res.send({
         status: true,
+        user_id : user._id,
         message: "We Have Sent AN OTP. Please Check Your Email"
       });
     }
@@ -132,8 +133,6 @@ const EmailCheck = async (req, res) => {
     console.log(error);
   }
 };
-
-
 
 
 
@@ -165,7 +164,9 @@ const forgetpassword = async (req, res) => {
           new: true,
           runValidators: true
         });
-        return res.send("Password Successfully Changed");
+        return res.send({
+          status : true ,
+          message : "Password Successfully Changed"});
       }
     } else {
       return res.status(500).send("OTP Is Invalid");

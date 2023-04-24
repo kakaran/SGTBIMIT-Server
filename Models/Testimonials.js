@@ -7,6 +7,19 @@ const testimonial = mongoose.Schema({
     detail :{
         type : String,
         required : true
+    },
+    Year :{
+        type : Number,
+        required :true
+    },
+    Course :{
+        type : String,
+        required : true
+    },
+    image : {
+        data : Buffer,
+        contentType : String,
+        Name : String,
     }
 },
 {
