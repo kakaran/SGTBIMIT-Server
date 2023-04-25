@@ -201,6 +201,20 @@ const EventMainImageDisplay = async (req,res) =>{
     }
 }
 
+const SingleEventDisplay = async (req,res) =>{
+    try {
+        const {_id} = req.params;
+
+        const SearchData = await Event.findById({_id}).select("-Images, mainImage");
+
+        if(SearchData){
+            return res.status(200).send(SearchData);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 const EventUpdate = async (req, res) => {
     try {
         const { _id } = req.params;
@@ -266,5 +280,6 @@ module.exports = {
     EventImageDisplay,
     EventDelete,
     EventUpdate,
-    EventMainImageDisplay
+    EventMainImageDisplay,
+    SingleEventDisplay
 }
