@@ -48,14 +48,14 @@ console.log(HeaderImage);
 
 
     } catch (error) {
-        console.log(error);
+        console.log(error);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
     }
 }
 
 const EventHandlerSingleDisplay = async (req, res) => {
     try {
         const {_id} = req.params;
-        const data = await EventHandler.find({_id}).populate("Years.Events.Event_id", "Images._id mainImage._id name year eventHandler detail").select("images._id name HeaderImage detail Years");
+        const data = await EventHandler.findById({_id}).populate("Years.Events.Event_id", "Images._id name year eventHandler detail").select("images._id name mainImage._id detail Years");
 
         if (data) {
             return res.status(200).send(data);
@@ -71,7 +71,7 @@ const EventHandleRHederImage = async (req,res) =>{
     try {
         const {_id} = req.params;
         const data = await EventHandler.find({_id}).select("HeaderImage")
-        console.log(data);
+        // console.log(data);
         if(data){
             res.set("Content-type", data[0].HeaderImage.contentType);
             return res.status(201).send(data[0].HeaderImage.data)

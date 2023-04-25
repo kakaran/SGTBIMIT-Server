@@ -183,6 +183,24 @@ const EventDelete = async (req, res) => {
     }
 }
 
+const EventMainImageDisplay = async (req,res) =>{
+    try {
+        const {_id} = req.params;
+
+        const SearchData = await Event.findById({_id}).select("mainImage");
+
+        if(SearchData){
+            res.set("Content-type", SearchData.mainImage.contentType);
+            return res.status(201).send(SearchData.mainImage.data)
+        }else{
+            return res.status(404).send("Data NotFound");
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 const EventUpdate = async (req, res) => {
     try {
         const { _id } = req.params;
@@ -247,5 +265,6 @@ module.exports = {
     EventAdd,
     EventImageDisplay,
     EventDelete,
-    EventUpdate
+    EventUpdate,
+    EventMainImageDisplay
 }

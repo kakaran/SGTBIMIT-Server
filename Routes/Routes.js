@@ -18,7 +18,7 @@ const {AdmissionRequestDelete,AdmissionRequestDisplay,AdmissionFormFill} = requi
 
 const authchecker = require("../Middlewares/authentication.js");
 const { eventAddImage, eventDisplayImage, eventDisplayImages, eventUpdateImage, eventUpdateImages, eventDelete, eventImagesDelete } = require("../Controllers/EventGallery.js");
-const {EventAdd,EventDelete,EventUpdate,EventImageDisplay} = require('../Controllers/EventController.js');
+const {EventAdd,EventDelete,EventUpdate,EventImageDisplay,EventMainImageDisplay} = require('../Controllers/EventController.js');
 const {EventHandlerAdd,EventHandlerDisplay,EventHandlerImageDisplay,EventHandlerDelete,EventHandlerSingleDisplay,EventHandleRHederImage} = require("../Controllers/EventHandlerController.js");
 const {CollaborationsAdd,CollaborationsDelete,CollaborationsImageDisplay,CollaborationsDisplay} = require("../Controllers/CollaborationsController.js")
 const {RegistrationAdd} = require("../Controllers/RegistrationController.js")
@@ -152,6 +152,7 @@ router.post("/Event/Event_Add",formidable({multiples : true}),EventAdd);
 router.delete("/Event/Event_Delete/:_id",EventDelete);
 router.post("/Event/Event_Update/:_id",formidable({multiples : true}),EventUpdate);
 router.get("/Event/Event_Image_Display/:_id/:Image_id",EventImageDisplay);
+router.get("/Event/Event_MainImage_Display/:_id",EventMainImageDisplay);
 
 //EventHandler Routes//
 router.post("/Eventhandler/EventHandler_Add",formidable({multiples : true}),EventHandlerAdd);
