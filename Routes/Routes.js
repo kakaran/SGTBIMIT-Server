@@ -12,7 +12,7 @@ const { EResourcesAdd, EResourcesDisplay, EResourcesUpdate, EResourcesSingle, ER
 const { adminRegister, adminLogin, EmailCheck, forgetpassword } = require("../Controllers/Admin.js");
 const { QuestionPaperAdd,PaperFilterDisplay,QuestionPaperUpdate,QuestionPaperDisplay,QuestionPaperDisplayAll,QuestionPaperFileDisplay,QuestionPaperDelete,QuestionPaperYearDelete} = require("../Controllers/QuestionPaper.js");
 const { CalendarAdd, CalendarDisplay, CalendarDelete, CalendarUpdate, CalendarSingle } = require("../Controllers/Calendar.js");
-const { aluminiAddImage, aluminiAddCarouselImage, aluminiimageDisplay,aluminiUpdateImage, aluminiDisplayImage, aluminiDelete, aluminiDisplayImages, aluminiUpdateImages, aluminiImagesDelete } = require("../Controllers/AluminiGallery.js");
+const { aluminiAddImage, aluminiAddCarouselImage, aluminiimageslength,aluminiimageDisplay,aluminiUpdateImage, aluminiDisplayImage, aluminiDelete, aluminiDisplayImages, aluminiUpdateImages, aluminiImagesDelete } = require("../Controllers/AluminiGallery.js");
 const { NoticeAdd,NoticeDelete,NoticeDataDisplay,NoticeFileDisplay,NoticeUpdata} = require("../Controllers/Notice.js"); 
 const {AdmissionRequestDelete,AdmissionRequestDisplay,AdmissionFormFill} = require("../Controllers/Admission.js");
 
@@ -119,6 +119,7 @@ router.post("/QuestionPaper/Question_Paper_Update/:_id",authchecker,formidable({
 router.post("/Alumini/gallery/aluminiAddImage",formidable({multiples : true}), aluminiAddImage);
 router.get("/Alumini/gallery/aluminiDisplayImage", aluminiDisplayImage);
 router.get("/Alumini/gallery/alumini_Simgle_Image/:_id", aluminiimageDisplay);
+router.get("/Alumini/gallery/alumini_Images_length/:_id", aluminiimageslength);
 router.post("/Alumini/gallery/aluminiDisplayImages/:id/:Index", aluminiDisplayImages);
 router.post("/Alumini/gallery/aluminiUpdateImage/:_id", formidable(), aluminiUpdateImage);
 router.post("/Alumini/gallery/aluminiUpdateImages/:id", formidable({multiples : true}), aluminiUpdateImages);
