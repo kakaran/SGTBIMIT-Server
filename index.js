@@ -22,17 +22,11 @@ app.use(express.urlencoded({ limit: "100mb", extended: true }));
 app.use("/",userRoute);
 
 
-
-
 //database
 const dbConnect = require("./Config/dbConfig.js");
 dbConnect();
 
-
-
 //routes
-
-
 
 
 //just for checking

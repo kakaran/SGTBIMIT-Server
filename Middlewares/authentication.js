@@ -2,13 +2,16 @@ const JWT  = require("jsonwebtoken");
 
 const requireSignIn = async (req, res, next) => {
   try {
-    const decode = JWT.verify(
+   await JWT.verify(
       req.headers.authorization,
-      process.env.JWT_SECRET
+      process.env.JWT_SECRET,
+      (err,auth) =>{
+        if(auth) {
+          next()}
+
+      }
     );
-    req.user = decode;
-    next();
-  } catch (error) {
+     } catch (error) {
     console.log(error);
   }
 };

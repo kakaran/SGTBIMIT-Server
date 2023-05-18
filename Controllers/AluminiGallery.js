@@ -67,7 +67,7 @@ const aluminiAddImage = async(req,res) => {
 const aluminiDisplayImage = async(req,res) => {
     try {
         
-        const image_display = await aluminiModel.find().select('-images');
+        const image_display = await aluminiModel.find().select('-images, -image');
         return res.status(201).send(image_display);
 
 
@@ -80,7 +80,35 @@ const aluminiDisplayImage = async(req,res) => {
     }
 }
 
+const aluminiimageslength = async (req,res) =>{
+    try {
+        const {_id} = req.params;
+        const data = await aluminiModel.findById(_id).select("images");
+        console.log(data.images.length);
+        if(data){
+            return res.status(200).send(data.length)
+        }
 
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
+const aluminiimageDisplay = async (req,res) =>{
+    try {
+        const {_id} = req.params;
+        const Imagedata = await aluminiModel.findById(_id);
+
+        if(Imagedata){
+            res.set("Content-type", Imagedata.image.contentType);
+            return res.send(Imagedata.image.data);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 //alumini image update
 const aluminiUpdateImage = async(req,res) => {
@@ -258,4 +286,6 @@ module.exports = {
      aluminiDisplayImage,
      aluminiDisplayImages,
      aluminiImagesDelete,
+     aluminiimageDisplay,
+     aluminiimageslength
     } 
