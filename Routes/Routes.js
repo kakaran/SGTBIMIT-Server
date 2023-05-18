@@ -80,9 +80,9 @@ router.post("/Society/Society_Update/:_id", authchecker,formidable(), SocietyUpd
 //E_Resources Routes
 router.post('/E_Resources/EResources_Add', authchecker,EResourcesAdd);
 router.get('/E_Resources/EResources_Display', EResourcesDisplay);
-router.post('/E_Resources/EResources_Single_Display', EResourcesSingle);
+router.get('/E_Resources/EResources_Single_Display/:_id', EResourcesSingle);
 router.post('/E_Resources/EResources_Update/:_id',authchecker, EResourcesUpdate);
-router.post("/E_Resources/EResources_Delete/:id",authchecker, EResourcesDelete);
+router.delete("/E_Resources/EResources_Delete/:id",authchecker, EResourcesDelete);
 
 //Calendar Routes
 router.post('/Calendar/CalendarAdd',authchecker, CalendarAdd);

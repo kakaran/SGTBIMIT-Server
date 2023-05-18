@@ -2,12 +2,19 @@ const EResources = require('../models/E-Resources');
 
 const EResourcesAdd = async (req, res) => {
     try {
-        const data = {
-            name: req.body.name,
-            url: req.body.url
+
+        const {name,url} = req.body;
+        if (!name || !url) {
+            return res.status(500).send({success: false,message: 'field are required'});
         }
-        await new EResources(data).save();
-        res.status(201).json(data);
+
+        const data = await new EResources({
+            name,
+            url
+        }).save();
+       
+         return res.status(201).send(data);
+
     } catch (err) {
         console.log(error);
         return res.status(500).send({
@@ -19,7 +26,7 @@ const EResourcesAdd = async (req, res) => {
 
 const EResourcesDisplay = async (req, res) => {
     try {
-        const getData = await EResources.find();
+        const getData = await EResources.find({});
         res.json(getData);
     } catch (err) {
         // console.log(error);
@@ -32,7 +39,7 @@ const EResourcesDisplay = async (req, res) => {
 
 const EResourcesSingle = async (req, res) => {
     try {
-        const _id = req.body._id;
+        const _id = req.params._id;
         const data = await EResources.findById({ _id });
         if (!data) {
             return await res.status(400).send("Data Not found")
@@ -54,19 +61,17 @@ const EResourcesUpdate = async (req, res) => {
 
         const Search_Data = await EResources.findById({ _id: req.params._id });
 
-        if (Search_Data) {
-            console.log(req.body);
-            const data = {
-                name: req.body.name,
-                url: req.body.url
-            }
-            console.log(data);
-            await EResources.updateMany({ _id: req.params._id}, data);
-            return res.send("Data Successfully Update")
-        } else {
-            return res.status(400).send("Data Not Found");
+        if (!Search_Data) {
+            return await res.status(400).send("Data Not found")
         }
 
+        const data = {
+            name: req.body.name,
+            url: req.body.url
+        }
+          const updateData = await EResources.findByIdAndUpdate({ _id: req.params._id }, { $set: data }, { new: true });
+          return res.send(`Data Successfully Update ${updateData}`);
+       
     } catch (error) {
         console.log(error);
         return res.status(500).send({
