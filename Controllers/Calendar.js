@@ -80,7 +80,7 @@ const CalendarUpdate = async(req,res) => {
 
     try {
 
-        const _id = req.params.id ;
+        const _id = req.params.id;
         
         const c_update = await calendarModel.findById(_id);
         

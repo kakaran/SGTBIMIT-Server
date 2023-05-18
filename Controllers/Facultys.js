@@ -144,7 +144,7 @@ const FacultyUpdate = async (req, res) => {
             }
 
             const FacultyUpdate = await Facultys.findByIdAndUpdate(
-                { _id },
+                Search_Faculty,
                 { ...req.fields },
                 { new: true }
             );

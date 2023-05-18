@@ -55,7 +55,7 @@ router.post("/Faculty/Faculty_Update/:_id",authchecker, formidable(), FacultyUpd
 router.post("/Testimonial/Testimonial_Add", formidable(),TestimonialAdd);
 router.get("/Testimonial/Testimonial_Display", TestimonialDisplay);
 router.post("/Testimonial/Testimonial_Update/:_id" ,formidable(),TestimonialUpdate);
-router.get("/Testimonial/Testimonial_Delete/:_id",TestimonialDelete);
+router.delete("/Testimonial/Testimonial_Delete/:_id",TestimonialDelete);
 router.get("/Testimonial/single_Testimonial_Display/:_id", singleTestimonialDisplay)
 router.get("/Testimonial/Testimonial_Image_Display/:_id",TestimonialImageDisplay)
 

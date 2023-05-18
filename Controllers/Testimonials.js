@@ -135,7 +135,7 @@ const TestimonialDelete = async (req, res) => {
 
         if (Search_Data) {
 
-            const deleteData = await Testimonial.findByIdAndDelete({ _id: Search_Data._id });
+            const deleteData = await Testimonial.findByIdAndDelete(Search_Data);
 
             return res.status(200).send(data = {
                 message: "Testimonial Delete",
