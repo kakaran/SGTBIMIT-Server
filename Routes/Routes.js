@@ -47,7 +47,7 @@ router.post("/Faculty/Faculty_Add",authchecker, formidable(), FacultyAdd);
 router.get("/Faculty/Faculty_Display", FacultyDisplay);
 router.get("/Faculty/Faculty_Image_Display/:_id", FacultyImageDisplay);
 router.get("/Faculty/FacultySingle/:_id", FacultySingle);
-router.post("/Faculty/Faculty_Delete/:_id",authchecker, FacultyDelete);
+router.delete("/Faculty/Faculty_Delete/:_id",authchecker, FacultyDelete);
 router.post("/Faculty/Faculty_Update/:_id",authchecker, formidable(), FacultyUpdate);
 
 
