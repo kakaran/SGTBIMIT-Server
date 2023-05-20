@@ -266,7 +266,7 @@ const QuestionPaperYearDelete = async (req, res) => {
 
         if (Search_Data) {
             await PaperFilterYearDelete(Search_Data.Year, Search_Data.course, Search_Data.Semester);
-            await QuestionPaper.findByIdAndDelete({ _id });
+            await QuestionPaper.findByIdAndDelete(Search_Data);
             return res.status(200).send("Delete")
         }
 

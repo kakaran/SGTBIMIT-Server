@@ -21,7 +21,7 @@ const { eventAddImage, eventDisplayImage, eventDisplayImages, eventUpdateImage, 
 const {EventAdd,SingleEventDisplay,EventDelete,EventUpdate,EventImageDisplay,EventMainImageDisplay} = require('../Controllers/EventController.js');
 const {EventHandlerAdd,EventHandlerDisplay,EventHandlerImageDisplay,EventHandlerDelete,EventHandlerSingleDisplay,EventHandleRHederImage} = require("../Controllers/EventHandlerController.js");
 const {CollaborationsAdd,CollaborationsDelete,CollaborationsImageDisplay,CollaborationsDisplay} = require("../Controllers/CollaborationsController.js")
-const {RegistrationAdd} = require("../Controllers/RegistrationController.js")
+const {RegistrationAdd, RegistrationDisplayAll, RegistrationDelete} = require("../Controllers/RegistrationController.js")
 const {PlacementFeatureAdd,PlacemetFeatureDisplay,PlacementfeatureImageDisplay,PlacementFeatureCompanyImDaisplay,PlacementFeatureDelete} = require("../Controllers/PlacementFeatureStarController.js")
 //just for checking
 // router.get("/", justForchecking);
@@ -109,8 +109,8 @@ router.get("/admin-auth",authchecker,(req,res) =>{
 router.post("/QuestionPaper/Add",formidable({multiples : true}),authchecker,QuestionPaperAdd );
 router.get("/QuestionPaper/Display/:course/:Year/:Semester",QuestionPaperDisplay)
 router.get("/QuestionPaper/Display/:_id/:Index",QuestionPaperFileDisplay)
-router.get("/QuestionPaper/Paper_Delete/:_id/:Index",authchecker,QuestionPaperDelete)
-router.get("/QuestionPaper/Year_Delete/:_id",authchecker,QuestionPaperYearDelete)
+router.delete("/QuestionPaper/Paper_Delete/:_id/:Index",authchecker,QuestionPaperDelete)
+router.delete("/QuestionPaper/Year_Delete/:_id",authchecker,QuestionPaperYearDelete)
 router.get("/QuestionPaper/Question_Paper_Display_All",QuestionPaperDisplayAll)
 router.get("/QuestionPaper/Filter_Data/:course",PaperFilterDisplay)
 router.post("/QuestionPaper/Question_Paper_Update/:_id",authchecker,formidable({multiples : true}),QuestionPaperUpdate)
@@ -173,6 +173,8 @@ router.get("/Collaborations/Collaborations_Display",CollaborationsDisplay);
 
 //Registration Rotes//
 router.post("/Registration/Registration_Add",RegistrationAdd);
+router.get("/Registration/Registration_Display",RegistrationDisplayAll);
+router.delete("/Registration/Registration_Delete/:_id",RegistrationDelete);
 
 
 //Placement Feature Star Routes
