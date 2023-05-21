@@ -179,9 +179,9 @@ router.delete("/Registration/Registration_Delete/:_id",RegistrationDelete);
 
 //Placement Feature Star Routes
 router.post("/PlacementFeature/PlacementFeature_Add",formidable({multiples: true}),PlacementFeatureAdd)
-router.get("/PlacementFeature/PlacemetFeature_Display",PlacemetFeatureDisplay)
+router.get("/PlacementFeature/PlacementFeature_Display",PlacemetFeatureDisplay)
 router.get("/PlacementFeature/Placementfeature_Image_Display/:_id",PlacementfeatureImageDisplay)
 router.get("/PlacementFeature/PlacementFeature_Company_ImDaisplay/:_id",PlacementFeatureCompanyImDaisplay)
-router.get("/PlacementFeature/PlacementFeature_Delete/:_id",PlacementFeatureDelete)
+router.delete("/PlacementFeature/PlacementFeature_Delete/:_id",PlacementFeatureDelete)
 
 module.exports = router;    

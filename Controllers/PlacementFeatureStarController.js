@@ -43,7 +43,7 @@ const PlacementFeatureAdd = async (req, res) => {
 
 const PlacemetFeatureDisplay = async (req,res) =>{
     try {
-        const AllData = await PlacementFeature.find().select(" Name Course ");
+        const AllData = await PlacementFeature.find({}).select(" Name Course ");
 
         if(AllData){
             return res.status(200).send(AllData);
