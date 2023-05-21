@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const FacultyAdd = async (req, res) => {
     try {
-        const { name, post, detail, Department} = req.fields;
+        const { name, post, detail, Department } = req.fields;
         const { image } = req.files;
         if (!name) {
             return res.status(401).send("Name is required");
@@ -11,17 +11,17 @@ const FacultyAdd = async (req, res) => {
             return res.status(401).send("Post is required");
         } else if (!detail) {
             return res.status(401).send("Detail is required");
-        }else if(!Department){
+        } else if (!Department) {
             return res.status(401).send("Department is required");
-        }else if (image && image.size > 1000000) {
+        } else if (image && image.size > 1000000) {
             return res.status(401).send("Image is required and should be less 1mb");
         }
 
         const Faculty = await new Facultys(req.fields);
         if (image) {
             Faculty.image.data = fs.readFileSync(image.path),
-            Faculty.image.contentType = image.type,
-            Faculty.image.Name = image.name
+                Faculty.image.contentType = image.type,
+                Faculty.image.Name = image.name
         }
 
         await Faculty.save();
@@ -63,7 +63,7 @@ const FacultyImageDisplay = async (req, res) => {
 const FacultyDisplay = async (req, res) => {
     try {
 
-        const Data = await Facultys.find().select("-image");
+        const Data = await Facultys.find().sort({ createdAt: -1 }).select("-image");
 
         return res.status(200).send(Data);
 
@@ -78,8 +78,8 @@ const FacultyDisplay = async (req, res) => {
 
 const FacultySingle = async (req, res) => {
     try {
-        const {_id} = req.params;
-        const Data = await Facultys.findById({ _id}).select("-image");
+        const { _id } = req.params;
+        const Data = await Facultys.findById({ _id }).select("-image");
         if (!Data) {
             return res.status(400).send({
                 message: "Data not found"
@@ -98,8 +98,8 @@ const FacultySingle = async (req, res) => {
 
 const FacultyDelete = async (req, res) => {
     try {
-        const {_id} = req.params;
-        const Faculty_Search = await Facultys.findById({ _id});
+        const { _id } = req.params;
+        const Faculty_Search = await Facultys.findById({ _id });
 
         if (Faculty_Search) {
             await Facultys.findByIdAndDelete({ _id });
@@ -123,21 +123,20 @@ const FacultyDelete = async (req, res) => {
 const FacultyUpdate = async (req, res) => {
     try {
         const { _id } = req.params;
-        const { name, post, detail , Department} = req.fields;
+        const { name, post, detail, Department } = req.fields;
         const { image } = req.files;
 
         console.log(req.fields);
         const Search_Faculty = await Facultys.findById({ _id });
 
-        if(Search_Faculty)
-        {
+        if (Search_Faculty) {
             if (!name) {
                 return res.status(401).send("Name is required");
             } else if (!post) {
                 return res.status(401).send("Post is required");
             } else if (!detail) {
                 return res.status(401).send("Detail is required");
-            }else if(!Department){
+            } else if (!Department) {
                 return res.status(401).send("Department is required");
             } else if (image && image.size > 1000000) {
                 return res.status(401).send("Image is required and should be less 1mb");
@@ -151,8 +150,8 @@ const FacultyUpdate = async (req, res) => {
 
             if (image) {
                 FacultyUpdate.image.data = fs.readFileSync(image.path),
-                FacultyUpdate.image.contentType = image.type,
-                FacultyUpdate.image.Name = image.name
+                    FacultyUpdate.image.contentType = image.type,
+                    FacultyUpdate.image.Name = image.name
             }
 
             await FacultyUpdate.save();
