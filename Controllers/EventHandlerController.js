@@ -83,7 +83,7 @@ const EventHandleRHederImage = async (req,res) =>{
 
 const EventHandlerDisplay = async (req,res) =>{
     try {
-        const data = await EventHandler.find().select("name");
+        const data = await EventHandler.find().select("name Years");
         if(data){
             return res.send(data);
         }else

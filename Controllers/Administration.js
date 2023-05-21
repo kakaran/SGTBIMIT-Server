@@ -132,7 +132,7 @@ const AdministrationUpdate = async (req, res) => {
         const { _id } = req.params;
         const { name, position, shortNote, longNote, Index } = req.fields;
         const { image } = req.files;
-        const Search_Admin = await Administrations.findById({ _id: req.params._id });
+        const Search_Admin = await Administrations.findById({ _id: _id });
         // console.log(image);
         if (Search_Admin) {
             if (!name) {
