@@ -19,7 +19,7 @@ const {AdmissionRequestDelete,AdmissionRequestDisplay,AdmissionFormFill} = requi
 const authchecker = require("../Middlewares/authentication.js");
 const { eventAddImage, eventDisplayImage, eventDisplayImages, eventUpdateImage, eventUpdateImages, eventDelete, eventImagesDelete } = require("../Controllers/EventGallery.js");
 const {EventAdd,SingleEventDisplay,EventDelete,EventUpdate,EventImageDisplay,EventMainImageDisplay} = require('../Controllers/EventController.js');
-const {EventHandlerAdd,EventHandlerDisplay,EventHandlerImageDisplay,EventHandlerDelete,EventHandlerSingleDisplay,EventHandleRHederImage} = require("../Controllers/EventHandlerController.js");
+const {EventHandlerAdd,AllEventsDisplay,EventHandlerDisplay,EventHandlerImageDisplay,EventHandlerDelete,EventHandlerSingleDisplay,EventHandleRHederImage} = require("../Controllers/EventHandlerController.js");
 const {CollaborationsAdd,CollaborationsDelete,CollaborationsImageDisplay,CollaborationsDisplay} = require("../Controllers/CollaborationsController.js")
 const {RegistrationAdd, RegistrationDisplayAll, RegistrationDelete} = require("../Controllers/RegistrationController.js")
 const {PlacementFeatureAdd,PlacemetFeatureDisplay,PlacementfeatureImageDisplay,PlacementFeatureCompanyImDaisplay,PlacementFeatureDelete} = require("../Controllers/PlacementFeatureStarController.js")
@@ -164,6 +164,7 @@ router.get("/Eventhandler/EventHandler_Image_Display/:_id/:image_id",EventHandle
 router.delete("/Eventhandler/EventHandler_Delete/:_id",EventHandlerDelete);
 router.get("/Eventhandler/EventHandler_Single_Display/:_id",EventHandlerSingleDisplay);
 router.get("/Eventhandler/EventHandleR_Heder_Image/:_id",EventHandleRHederImage);
+router.get("/Eventhandler/AllEvents_Display",AllEventsDisplay)
 
 //Collaborations Routes
 router.post("/Collaborations/Collaborations_Add",formidable(),CollaborationsAdd)
