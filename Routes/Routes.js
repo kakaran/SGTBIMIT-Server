@@ -25,8 +25,8 @@ const { PlacementFeatureAdd, PlacemetFeatureDisplay, PlacementfeatureImageDispla
 //just for checking
 // router.get("/", justForchecking);
 
-const {PlacementStaticAdd} = require('../Controllers/PlacementStatic.js')
-
+const {PlacementStaticAdd,PlacementStaticYearDelete,PlacementStaticCourseDelete,PlacementStaticDisplay} = require('../Controllers/PlacementStatic.js')
+const {PlacementTeamAdd,PlacementTeamDelete,PlacementTeamDisplay,PlacementTeamImageDisplay} = require("../Controllers/PlacementTeamController.js")
 
 router.post("/Administration/Administration_Add", authchecker, formidable(), AdministrationAdd);
 router.post("/Administration/Administration_Delete/:_id", authchecker, AdministrationDelete);
@@ -189,5 +189,15 @@ router.delete("/PlacementFeature/PlacementFeature_Delete/:_id", PlacementFeature
 
 //Placement Statics Routes 
 router.post("/PlacementStatics/placement_Statics_Add",PlacementStaticAdd);
+router.get("/PlacementStatics/placement_Dispaly",PlacementStaticDisplay);
+router.delete("/PlacementStatics/Placement_Year_Delete/:_id",PlacementStaticYearDelete);
+router.delete("/PlacementStatics/Placement_Course_Delete/:_id/:Course_id",PlacementStaticCourseDelete);
+
+
+//Placement Team Routes
+router.post("/PlacementTeam/Placement_Team_Add",formidable(),PlacementTeamAdd);
+router.get("/PlacementTeam/Placement_Image_Display/:_id",PlacementTeamImageDisplay);
+router.delete("/PlacementTeam/Placement_Team_Delete/:_id",PlacementTeamDelete);
+router.get("/PlacementTeam/Placement_Team_Display",PlacementTeamDisplay);
 
 module.exports = router;    
