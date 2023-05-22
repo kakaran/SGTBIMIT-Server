@@ -1,5 +1,4 @@
 const express = require("express");
-const upload = require("../Config/multer.js");
 const formidable = require('express-formidable');
 const router = express.Router();
 const { AdministrationAdd, AdministrationUpdate, AdministrationImageDisplay, AdministrationDelete, SingleAdministrationDisplay, AdministrationDisplay } = require("../Controllers/Administration.js");
@@ -25,6 +24,8 @@ const {RegistrationAdd, RegistrationDisplayAll, RegistrationDelete} = require(".
 const {PlacementFeatureAdd,PlacemetFeatureDisplay,PlacementfeatureImageDisplay,PlacementFeatureCompanyImDaisplay,PlacementFeatureDelete} = require("../Controllers/PlacementFeatureStarController.js")
 //just for checking
 // router.get("/", justForchecking);
+
+const {PlacementStaticAdd} = require('../Controllers/PlacementStatic.js')
 
 
 router.post("/Administration/Administration_Add",authchecker, formidable(), AdministrationAdd);
@@ -184,5 +185,9 @@ router.get("/PlacementFeature/PlacementFeature_Display",PlacemetFeatureDisplay)
 router.get("/PlacementFeature/Placementfeature_Image_Display/:_id",PlacementfeatureImageDisplay)
 router.get("/PlacementFeature/PlacementFeature_Company_ImDaisplay/:_id",PlacementFeatureCompanyImDaisplay)
 router.delete("/PlacementFeature/PlacementFeature_Delete/:_id",PlacementFeatureDelete)
+
+
+//Placement Statics Routes 
+router.post("/PlacementStatics/placement_Statics_Add",PlacementStaticAdd);
 
 module.exports = router;    
