@@ -118,7 +118,7 @@ const TestimonialImageDisplay = async (req,res) =>{
         const {_id} = req.params;
 
         const Testimonialfind = await Testimonial.findById({_id});
-        console.log(Testimonialfind);
+        // console.log(Testimonialfind);
         if(Testimonialfind){
             res.set("Content-type", Testimonialfind.image.contentType);
             return res.status(201).send(Testimonialfind.image.data);
