@@ -164,6 +164,7 @@ router.get("/Eventhandler/EventHandler_Image_Display/:_id/:image_id", EventHandl
 router.delete("/Eventhandler/EventHandler_Delete/:_id", EventHandlerDelete);
 router.get("/Eventhandler/EventHandler_Single_Display/:_id", EventHandlerSingleDisplay);
 router.get("/Eventhandler/EventHandleR_Heder_Image/:_id", EventHandleRHederImage);
+router.get("/Eventhandler/AllEvents_Display", AllEventsDisplay)
 
 //Collaborations Routes
 router.post("/Collaborations/Collaborations_Add", formidable(), CollaborationsAdd)

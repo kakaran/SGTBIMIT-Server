@@ -95,6 +95,17 @@ const EventHandlerDisplay = async (req,res) =>{
     }
 }
 
+const AllEventsDisplay = async (req,res) =>{
+    try {
+         const data = await EventHandler.find().populate("Years.Events.Event_id", "Images._id name year eventHandler detail").select("images._id name mainImage._id detail Years");
+         if(data){
+            return res.status(200).send({message : "Data is send", data})
+         }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 const EventHandlerImageDisplay = async (req, res) => {
     try {
@@ -134,5 +145,6 @@ module.exports = {
     EventHandlerImageDisplay,
     EventHandlerDelete,
     EventHandlerSingleDisplay,
-    EventHandleRHederImage
-}
+    EventHandleRHederImage,
+    AllEventsDisplay 
+} 
