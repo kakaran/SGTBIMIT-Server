@@ -1,4 +1,6 @@
 const aluminiTestimonalsModel = require('../Models/AluminiTestimonials');
+const fs = require('fs');
+
 
 const aluminiTestimonialsAdd = async(req,res) => {
 
@@ -45,7 +47,7 @@ const aluminiTestimonialDisplay = async(req,res) => {
 
     try {
 
-        const data = await aluminiTestimonalsModel.find({}).select("-image");
+        const data = await aluminiTestimonalsModel.find().select("-image");
         return res.status(200).send(data);
 
     } catch (error) {
@@ -129,8 +131,7 @@ const aluminiTestimonialDelete = async (req, res) => {
             const deleteData = await aluminiTestimonalsModel.findByIdAndDelete(Search_Data);
 
             return res.status(200).send(data = {
-                message: "Testimonial Deleted",
-                source: deleteData
+                message: "Testimonial Deleted"
             });
         } else {
             return res.status(400).send("Data Not Found");
