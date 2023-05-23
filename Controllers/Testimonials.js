@@ -142,7 +142,7 @@ const TestimonialDelete = async (req, res) => {
                 source: deleteData
             });
         } else {
-            return res.send(400).send("Data Not Found");
+            return res.status(400).send("Data Not Found");
         }
     } catch (error) {
         console.log(error);

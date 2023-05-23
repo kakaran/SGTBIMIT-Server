@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const FacultyAdd = async (req, res) => {
     try {
-        const { name, post, detail, Department } = req.fields;
+        const { name, post, detail, Department, Index } = req.fields;
         const { image } = req.files;
         if (!name) {
             return res.status(401).send("Name is required");
@@ -15,13 +15,22 @@ const FacultyAdd = async (req, res) => {
             return res.status(401).send("Department is required");
         } else if (image && image.size > 1000000) {
             return res.status(401).send("Image is required and should be less 1mb");
-        }
+        } 
 
         const Faculty = await new Facultys(req.fields);
         if (image) {
             Faculty.image.data = fs.readFileSync(image.path),
                 Faculty.image.contentType = image.type,
                 Faculty.image.Name = image.name
+        }
+
+        if (!Index) {
+            const Data = await Facultys.find();
+            if (Data == undefined) {
+                Facultys.Index = 1;
+            } else {
+                Facultys.Index = Data.length + 1
+            }
         }
 
         await Faculty.save();
