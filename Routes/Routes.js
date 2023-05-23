@@ -26,7 +26,8 @@ const { PlacementFeatureAdd, PlacemetFeatureDisplay, PlacementfeatureImageDispla
 // router.get("/", justForchecking);
 
 const {PlacementStaticAdd,PlacementStaticYearDelete,PlacementStaticCourseDelete,PlacementStaticDisplay} = require('../Controllers/PlacementStatic.js')
-const {PlacementTeamAdd,PlacementTeamDelete,PlacementTeamDisplay,PlacementTeamImageDisplay} = require("../Controllers/PlacementTeamController.js")
+const {PlacementTeamAdd,PlacementTeamDelete,PlacementTeamDisplay,PlacementTeamImageDisplay} = require("../Controllers/PlacementTeamController.js");
+const { aluminiTestimonialsAdd, aluminiTestimonialDisplay, aluminiTestimonialUpdate, aluminiTestimonialDelete, singleAluminiTestimonialDisplay, aluminiTestimonialImageDisplay } = require("../Controllers/AluminiTestimonials.js");
 
 router.post("/Administration/Administration_Add", authchecker, formidable(), AdministrationAdd);
 router.post("/Administration/Administration_Delete/:_id", authchecker, AdministrationDelete);
@@ -59,6 +60,17 @@ router.post("/Testimonial/Testimonial_Update/:_id", formidable(), TestimonialUpd
 router.delete("/Testimonial/Testimonial_Delete/:_id", TestimonialDelete);
 router.get("/Testimonial/single_Testimonial_Display/:_id", singleTestimonialDisplay)
 router.get("/Testimonial/Testimonial_Image_Display/:_id", TestimonialImageDisplay)
+
+
+//alumini testimonials
+router.post("/alumini_Testimonial/alumini_Testimonial_Add", formidable(), aluminiTestimonialsAdd)
+router.get("/alumini_Testimonial/alumini_Testimonial_Display", aluminiTestimonialDisplay)
+router.post("/alumini_Testimonial/alumini_Testimonial_Update/:_id", formidable(), aluminiTestimonialUpdate);
+router.delete("/alumini_Testimonial/alumini_Testimonial_Delete/:_id", aluminiTestimonialDelete);
+router.get("/alumini_Testimonial/alumini_Testimonial_Display/:_id", singleAluminiTestimonialDisplay)
+router.get("/alumini_Testimonial/alumini_Testimonial_Image_Display/:_id", aluminiTestimonialImageDisplay)
+
+
 
 //Recruiters Routes 
 router.post("/Recruiters/recruiters_Add", formidable(), recruitersAdd);
