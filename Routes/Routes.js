@@ -152,7 +152,7 @@ router.delete("/Event/gallery/eventImagesDelete/:_id/:Index", eventImagesDelete)
 
 //Notice Routes//
 router.post("/Notice/Notice_Add", authchecker, formidable(), NoticeAdd);
-router.get("/Notice/Notice_Delete/:_id", authchecker, NoticeDelete);
+router.delete("/Notice/Notice_Delete/:_id", authchecker, NoticeDelete);
 router.get("/Notice/Notice_Data_Display", NoticeDataDisplay);
 router.get("/Notice/Notice_File_Display/:_id", NoticeFileDisplay);
 router.post("/Notice/Notice_Update/:_id", authchecker, formidable(), NoticeUpdata);
