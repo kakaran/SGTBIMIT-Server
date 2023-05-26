@@ -201,7 +201,7 @@ router.delete("/PlacementFeature/PlacementFeature_Delete/:_id", PlacementFeature
 
 //Placement Statics Routes 
 router.post("/PlacementStatics/placement_Statics_Add",PlacementStaticAdd);
-router.get("/PlacementStatics/placement_Dispaly",PlacementStaticDisplay);
+router.get("/PlacementStatics/placement_Display",PlacementStaticDisplay);
 router.delete("/PlacementStatics/Placement_Year_Delete/:_id",PlacementStaticYearDelete);
 router.delete("/PlacementStatics/Placement_Course_Delete/:_id/:Course_id",PlacementStaticCourseDelete);
 
