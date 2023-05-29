@@ -33,6 +33,7 @@ const PlacementStaticAdd = async (req, res) => {
             Name: Name,
             Eligible: Eligible,
             Offers: Offers,
+            Percentage: (Offers / Eligible) * 100,
           },
         ],
       }).save();
@@ -62,42 +63,42 @@ const PlacementStaticAdd = async (req, res) => {
 };
 
 
-const PlacementStaticYearDelete = async (req,res) =>{
-    try {
-        const {_id} = req.params;
-        const SearchData = await PlacementStatic.findById(_id);
-
-        if(SearchData){
-            await PlacementStatic.findByIdAndDelete(_id);
-            return res.status(200).send({message : "Data Deleted"})
-        }
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-
-const PlacementStaticCourseDelete = async (req,res) =>{
+const PlacementStaticYearDelete = async (req, res) => {
   try {
-    const {_id, Course_id} = req.params;
-    
+    const { _id } = req.params;
     const SearchData = await PlacementStatic.findById(_id);
 
-    if(SearchData){
-      await PlacementStatic.updateOne({_id},{$pull : {Course : {_id : Course_id}}});
-      return res.status(201).send({message : "Data Deleted"});
+    if (SearchData) {
+      await PlacementStatic.findByIdAndDelete(_id);
+      return res.status(200).send({ message: "Data Deleted" })
     }
   } catch (error) {
     console.log(error);
   }
 }
 
-const PlacementStaticDisplay = async (req,res) =>{
+
+const PlacementStaticCourseDelete = async (req, res) => {
+  try {
+    const { _id, Course_id } = req.params;
+
+    const SearchData = await PlacementStatic.findById(_id);
+
+    if (SearchData) {
+      await PlacementStatic.updateOne({ _id }, { $pull: { Course: { _id: Course_id } } });
+      return res.status(201).send({ message: "Data Deleted" });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const PlacementStaticDisplay = async (req, res) => {
   try {
     const AllData = await PlacementStatic.find();
 
-    if(AllData.length) return res.status(200).send({message :"All Data send" , AllData})
-    else return res.status(404).send({message : "Data not Found", status : false})
+    if (AllData.length) return res.status(200).json(AllData)
+    else return res.status(404).send({ message: "Data not Found", status: false })
 
   } catch (error) {
     console.log(error);

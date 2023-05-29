@@ -134,7 +134,7 @@ const EventImageDisplay = async (req, res) => {
     try {
         const { _id, Image_id } = req.params;
         const data = await Event.find({ _id }, { Images: { $elemMatch: { _id: Image_id } } });
-        
+
         if (data) {
             res.set("Content-type", data[0].Images[0].contentType);
             return res.status(201).send(data[0].Images[0].data)
@@ -183,16 +183,16 @@ const EventDelete = async (req, res) => {
     }
 }
 
-const EventMainImageDisplay = async (req,res) =>{
+const EventMainImageDisplay = async (req, res) => {
     try {
-        const {_id} = req.params;
+        const { _id } = req.params;
 
-        const SearchData = await Event.findById({_id}).select("mainImage");
+        const SearchData = await Event.findById({ _id }).select("mainImage");
 
-        if(SearchData){
+        if (SearchData) {
             res.set("Content-type", SearchData.mainImage.contentType);
             return res.status(201).send(SearchData.mainImage.data)
-        }else{
+        } else {
             return res.status(404).send("Data NotFound");
         }
 
@@ -201,13 +201,13 @@ const EventMainImageDisplay = async (req,res) =>{
     }
 }
 
-const SingleEventDisplay = async (req,res) =>{
+const SingleEventDisplay = async (req, res) => {
     try {
-        const {_id} = req.params;
+        const { _id } = req.params;
 
-        const SearchData = await Event.findById({_id}).select("-Images, mainImage");
+        const SearchData = await Event.findById(_id).select("-Images.data -mainImage.data");
 
-        if(SearchData){
+        if (SearchData) {
             return res.status(200).send(SearchData);
         }
     } catch (error) {
@@ -243,8 +243,8 @@ const EventUpdate = async (req, res) => {
 
             if (mainImage) {
                 EventUpdateData.mainImage.data = fs.readFileSync(mainImage.path),
-                EventUpdateData.mainImage.contentType = mainImage.type,
-                EventUpdateData.mainImage.Name = mainImage.name
+                    EventUpdateData.mainImage.contentType = mainImage.type,
+                    EventUpdateData.mainImage.Name = mainImage.name
             }
 
             if (Images.length) {
@@ -265,9 +265,9 @@ const EventUpdate = async (req, res) => {
 
             await EventUpdateData.save();
             return res.status(201).send({
-                Success : true ,
-                message : "Data Updated",
-                data : EventUpdateData
+                Success: true,
+                message: "Data Updated",
+                data: EventUpdateData
             })
         }
     } catch (error) {
