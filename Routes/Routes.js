@@ -134,7 +134,7 @@ router.post("/Alumini/gallery/aluminiAddImage", formidable({ multiples: true }),
 router.get("/Alumini/gallery/aluminiDisplayImage", aluminiDisplayImage);
 router.get("/Alumini/gallery/alumini_Simgle_Image/:_id", aluminiimageDisplay);
 router.get("/Alumini/gallery/alumini_Images_length/:_id", aluminiimageslength);
-router.post("/Alumini/gallery/aluminiDisplayImages/:id/:Index", aluminiDisplayImages);
+router.get("/Alumini/gallery/aluminiDisplayImages/:_id/:Index", aluminiDisplayImages);
 router.post("/Alumini/gallery/aluminiUpdateImage/:_id", formidable(), aluminiUpdateImage);
 router.post("/Alumini/gallery/aluminiUpdateImages/:id", formidable({ multiples: true }), aluminiUpdateImages);
 router.delete("/Alumini/gallery/aluminiDelete/:id", aluminiDelete);
