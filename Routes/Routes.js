@@ -28,6 +28,7 @@ const { PlacementFeatureAdd, PlacemetFeatureDisplay, PlacementfeatureImageDispla
 const { PlacementStaticAdd, PlacementStaticYearDelete, PlacementStaticCourseDelete, PlacementStaticDisplay } = require('../Controllers/PlacementStatic.js')
 const { PlacementTeamAdd, PlacementTeamDelete, PlacementTeamDisplay, PlacementTeamImageDisplay } = require("../Controllers/PlacementTeamController.js");
 const { aluminiTestimonialsAdd, aluminiTestimonialDisplay, aluminiTestimonialUpdate, aluminiTestimonialDelete, singleAluminiTestimonialDisplay, aluminiTestimonialImageDisplay } = require("../Controllers/AluminiTestimonials.js");
+const { IndustrialVisitsAdd, IndustrialVisitsDisplay, IndustrialVisitsImageDisplay, IndustrialVisitsCompanyImDaisplay, IndustrialVisitsDelete } = require("../Controllers/IndustrialVisits.js");
 
 router.post("/Administration/Administration_Add", authchecker, formidable(), AdministrationAdd);
 router.post("/Administration/Administration_Delete/:_id", authchecker, AdministrationDelete);
