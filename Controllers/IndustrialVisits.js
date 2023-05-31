@@ -2,20 +2,20 @@ const IndustrialModel = require('../Models/IndustrialVisits')
 const fs = require('fs');
 
 //add
-const IndustrialVisitsAdd = async(req,res) => {
-    
+const IndustrialVisitsAdd = async (req, res) => {
+
     try {
 
-        const {name, about} = req.fields;
-        const {image, companyImage} = req.files;
+        const { name, about } = req.fields;
+        const { image, companyImage } = req.files;
 
-        if (!name || !about){
+        if (!name || !about) {
             return res.status(201).send({ message: "All fields are required" });
         }
-        if (!image || !companyImage){
+        if (!image || !companyImage) {
             return res.status(201).send({ message: "Image field can not be blank" });
         }
-        if (image && image.size > 1000000 || companyImage && companyImage.size > 1000000){
+        if (image && image.size > 1000000 || companyImage && companyImage.size > 1000000) {
             return res.status(201).send({ message: "Image field can not be blank or should be less 1mb" });
         }
 
@@ -26,9 +26,9 @@ const IndustrialVisitsAdd = async(req,res) => {
         
         const indusvisit = await new IndustrialModel(req.fields);
 
-        if(image){
+        if (image) {
             indusvisit.image.data = fs.readFileSync(image.path),
-            indusvisit.image.contentType = image.type
+                indusvisit.image.contentType = image.type
         }
 
         if(companyImage){
@@ -36,21 +36,21 @@ const IndustrialVisitsAdd = async(req,res) => {
             indusvisit.companyImage.contentType = companyImage.type
         }
 
-          const indus = await indusvisit.save()
-          
-          return res.status(200).send({
-            message : "Created successfully",
-            data : indus
-          });
-          
+        const indus = await indusvisit.save()
+
+        return res.status(200).send({
+            message: "Created successfully",
+            data: indus
+        });
+
     } catch (error) {
         console.log(error);
-       
+
     }
 }
 
 //display
-const IndustrialVisitsDisplay = async(req,res) => {
+const IndustrialVisitsDisplay = async (req, res) => {
 
     try {
 
@@ -60,22 +60,22 @@ const IndustrialVisitsDisplay = async(req,res) => {
             return res.status(201).send("No data found");
         }
 
-           return res.status(200).send(indusvisit);
-        
+        return res.status(200).send(indusvisit);
+
     } catch (error) {
-        
+
     }
 }
 
 
 //image display
-const IndustrialVisitsImageDisplay = async(req,res) => {
+const IndustrialVisitsImageDisplay = async (req, res) => {
 
     try {
 
         const { _id } = req.params;
 
-        const indusvisit = await IndustrialModel.findById({_id});
+        const indusvisit = await IndustrialModel.findById({ _id });
 
         if (indusvisit) {
             res.set("Content-type", indusvisit.image.contentType);
@@ -83,7 +83,7 @@ const IndustrialVisitsImageDisplay = async(req,res) => {
         }
 
         return res.status(201).send("No data found");
-        
+
     } catch (error) {
         console.log(error);
     }
@@ -96,21 +96,21 @@ const IndustrialVisitsCompanyImageDisplay = async(req,res) => {
     try {
         const { _id } = req.params;
 
-        const indusvisit = await IndustrialModel.findById({_id});
+        const indusvisit = await IndustrialModel.findById({ _id });
 
         if (indusvisit) {
-            res.set("Content-type", indusvisit.companyImage.contentType)
-            return res.status(200).send(indusvisit.companyImage.data);
+            res.set("Content-type", indusvisit.image.contentType)
+            return res.status(200).send(indusvisit.image.data);
         }
 
         return res.status(201).send("No data found");
-        
+
     } catch (error) {
-        console.log(error);        
+        console.log(error);
     }
 }
 
-const IndustrialVisitsDelete = async(req,res) => {
+const IndustrialVisitsDelete = async (req, res) => {
 
     try {
 
@@ -121,9 +121,9 @@ const IndustrialVisitsDelete = async(req,res) => {
             return res.status(201).send("No data found");
         }
 
-        const finalDelete = await IndustrialModel.findByIdAndDelete(indusDelete);        
+        const finalDelete = await IndustrialModel.findByIdAndDelete(indusDelete);
         return res.status(201).send(`${finalDelete.name} is deleted successfully`);
-        
+
     } catch (error) {
         console.log(error);
     }
