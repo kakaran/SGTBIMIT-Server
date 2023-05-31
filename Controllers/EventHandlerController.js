@@ -6,8 +6,8 @@ const EventHandlerAdd = async (req, res) => {
     try {
         const { name, detail } = req.fields;
         console.log(req.fields);
-        const { images ,HeaderImage} = req.files;
-console.log(HeaderImage);
+        const { images, HeaderImage } = req.files;
+        console.log(HeaderImage);
         if (!name) {
             return res.status(401).send({ message: "name is required" });
         } else if (!detail) {
@@ -34,7 +34,7 @@ console.log(HeaderImage);
                 })
             }
 
-            if(HeaderImage){
+            if (HeaderImage) {
                 EventHandler_Data.HeaderImage.data = fs.readFileSync(HeaderImage.path);
                 EventHandler_Data.HeaderImage.contentType = HeaderImage.type;
                 EventHandler_Data.HeaderImage.Name = HeaderImage.name;
@@ -48,14 +48,14 @@ console.log(HeaderImage);
 
 
     } catch (error) {
-        console.log(error);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        console.log(error);
     }
 }
 
 const EventHandlerSingleDisplay = async (req, res) => {
     try {
-        const {_id} = req.params;
-        const data = await EventHandler.findById({_id}).populate("Years.Events.Event_id", "Images._id name year eventHandler detail").select("images._id name mainImage._id detail Years");
+        const { _id } = req.params;
+        const data = await EventHandler.findById({ _id }).populate("Years.Events.Event_id", "Images._id name year eventHandler detail").select("images._id name mainImage._id detail Years");
 
         if (data) {
             return res.status(200).send(data);
@@ -67,12 +67,12 @@ const EventHandlerSingleDisplay = async (req, res) => {
     }
 }
 
-const EventHandleRHederImage = async (req,res) =>{
+const EventHandleRHederImage = async (req, res) => {
     try {
-        const {_id} = req.params;
-        const data = await EventHandler.find({_id}).select("HeaderImage")
+        const { _id } = req.params;
+        const data = await EventHandler.find({ _id }).select("HeaderImage")
         // console.log(data);
-        if(data){
+        if (data) {
             res.set("Content-type", data[0].HeaderImage.contentType);
             return res.status(201).send(data[0].HeaderImage.data)
         }
@@ -81,13 +81,12 @@ const EventHandleRHederImage = async (req,res) =>{
     }
 }
 
-const EventHandlerDisplay = async (req,res) =>{
+const EventHandlerDisplay = async (req, res) => {
     try {
-        const data = await EventHandler.find().select("name Years");
-        if(data){
+        const data = await EventHandler.find().select("name Years detail");
+        if (data) {
             return res.send(data);
-        }else
-        {
+        } else {
             return res.send("Data not found")
         }
     } catch (error) {
@@ -95,12 +94,12 @@ const EventHandlerDisplay = async (req,res) =>{
     }
 }
 
-const AllEventsDisplay = async (req,res) =>{
+const AllEventsDisplay = async (req, res) => {
     try {
-         const data = await EventHandler.find().populate("Years.Events.Event_id", "Images._id name year eventHandler detail").select("images._id name mainImage._id detail Years");
-         if(data){
-            return res.status(200).send({message : "Data is send", data})
-         }
+        const data = await EventHandler.find().populate("Years.Events.Event_id", "Images._id name year eventHandler detail").select("images._id name mainImage._id detail Years");
+        if (data) {
+            return res.status(200).send({ message: "Data is send", data })
+        }
     } catch (error) {
         console.log(error);
     }
@@ -146,5 +145,5 @@ module.exports = {
     EventHandlerDelete,
     EventHandlerSingleDisplay,
     EventHandleRHederImage,
-    AllEventsDisplay 
+    AllEventsDisplay
 } 

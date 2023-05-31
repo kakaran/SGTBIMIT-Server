@@ -1,16 +1,17 @@
 const mongoose = require('mongoose');
 
-const PlacementStaticSchema = mongoose.Schema({
-    Year : Number,
-    Course : [
+const PlacementStaticSchema = new mongoose.Schema({
+    Year: Number,
+    Course: [
         {
-            Name : String,
-            Eligible : Number,
-            Offers : Number
+            Name: String,
+            Eligible: Number,
+            Offers: Number,
+            Percentage: Number,
         }
     ]
 })
 
-const PlacementStatic = mongoose.model("PlacementStatic",PlacementStaticSchema);
+const PlacementStatic = mongoose.model("placementstatics", PlacementStaticSchema);
 
 module.exports = PlacementStatic;
