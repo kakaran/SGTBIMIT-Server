@@ -177,7 +177,7 @@ router.get("/Eventhandler/EventHandler_Image_Display/:_id/:image_id", EventHandl
 router.delete("/Eventhandler/EventHandler_Delete/:_id", EventHandlerDelete);
 router.get("/Eventhandler/EventHandler_Single_Display/:_id", EventHandlerSingleDisplay);
 router.get("/Eventhandler/EventHandleR_Heder_Image/:_id", EventHandleRHederImage);
-router.get("/Eventhandler/AllEvents_Display", AllEventsDisplay)
+router.get("/Eventhandler/AllEvents_Display", AllEventsDisplay);
 
 //Collaborations Routes
 router.post("/Collaborations/Collaborations_Add", formidable(), CollaborationsAdd)
@@ -189,6 +189,14 @@ router.get("/Collaborations/Collaborations_Display", CollaborationsDisplay);
 router.post("/Registration/Registration_Add", RegistrationAdd);
 router.get("/Registration/Registration_Display", RegistrationDisplayAll);
 router.delete("/Registration/Registration_Delete/:_id", RegistrationDelete);
+
+
+//Industrial visits Routes
+router.post("/IndustrialVisits/IndustrialVisits_Add", formidable({ multiples: true }), IndustrialVisitsAdd)
+router.get("/IndustrialVisits/IndustrialVisits_Display", IndustrialVisitsDisplay)
+router.get("/IndustrialVisits/IndustrialVisits_Image_Display/:_id", IndustrialVisitsImageDisplay)
+router.get("/IndustrialVisits/IndustrialVisits_CompanyImg_Display/:_id", IndustrialVisitsCompanyImDaisplay)
+router.delete("/IndustrialVisits/IndustrialVisits_Delete/:_id", IndustrialVisitsDelete)
 
 
 //Placement Feature Star Routes
