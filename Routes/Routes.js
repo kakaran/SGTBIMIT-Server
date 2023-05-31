@@ -28,7 +28,7 @@ const { PlacementFeatureAdd, PlacemetFeatureDisplay, PlacementfeatureImageDispla
 const { PlacementStaticAdd, PlacementStaticYearDelete, PlacementStaticCourseDelete, PlacementStaticDisplay } = require('../Controllers/PlacementStatic.js')
 const { PlacementTeamAdd, PlacementTeamDelete, PlacementTeamDisplay, PlacementTeamImageDisplay } = require("../Controllers/PlacementTeamController.js");
 const { aluminiTestimonialsAdd, aluminiTestimonialDisplay, aluminiTestimonialUpdate, aluminiTestimonialDelete, singleAluminiTestimonialDisplay, aluminiTestimonialImageDisplay } = require("../Controllers/AluminiTestimonials.js");
-const { IndustrialVisitsAdd, IndustrialVisitsDisplay, IndustrialVisitsImageDisplay, IndustrialVisitsCompanyImDaisplay, IndustrialVisitsDelete } = require("../Controllers/IndustrialVisits.js");
+const { IndustrialVisitsAdd, IndustrialVisitsDisplay, IndustrialVisitsImageDisplay, IndustrialVisitsDelete, IndustrialVisitsCompanyImageDisplay, IndustrialVisitsUpdate } = require("../Controllers/IndustrialVisits.js");
 
 router.post("/Administration/Administration_Add", authchecker, formidable(), AdministrationAdd);
 router.post("/Administration/Administration_Delete/:_id", authchecker, AdministrationDelete);
@@ -196,7 +196,8 @@ router.delete("/Registration/Registration_Delete/:_id", RegistrationDelete);
 router.post("/IndustrialVisits/IndustrialVisits_Add", formidable({ multiples: true }), IndustrialVisitsAdd)
 router.get("/IndustrialVisits/IndustrialVisits_Display", IndustrialVisitsDisplay)
 router.get("/IndustrialVisits/IndustrialVisits_Image_Display/:_id", IndustrialVisitsImageDisplay)
-router.get("/IndustrialVisits/IndustrialVisits_CompanyImg_Display/:_id", IndustrialVisitsCompanyImDaisplay)
+router.get("/IndustrialVisits/IndustrialVisits_CompanyImg_Display/:_id", IndustrialVisitsCompanyImageDisplay)
+router.post("/IndustrialVisits/IndustrialVisits_Update/:id", formidable({ multiples: true }), IndustrialVisitsUpdate)
 router.delete("/IndustrialVisits/IndustrialVisits_Delete/:_id", IndustrialVisitsDelete)
 
 
