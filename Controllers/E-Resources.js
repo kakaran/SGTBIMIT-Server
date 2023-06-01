@@ -1,4 +1,4 @@
-const EResources = require('../models/E-Resources');
+const EResources = require('../Models/E-Resources');
 
 const EResourcesAdd = async (req, res) => {
     try {
