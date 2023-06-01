@@ -29,10 +29,10 @@ dbConnect();
 //routes
 
 
-//just for checking
-// app.get("/", function(req,res) {
-//     return res.status(200).send("Everthing is working fine --");
-// })
+// just for checking
+app.get("/", function(req,res) {
+    return res.status(200).send("Everthing is working fine --");
+})
 
 
 
