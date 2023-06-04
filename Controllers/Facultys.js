@@ -15,7 +15,11 @@ const FacultyAdd = async (req, res) => {
             return res.status(401).send("Department is required");
         } else if (image && image.size > 1000000) {
             return res.status(401).send("Image is required and should be less 1mb");
+        } else if (!Index) {
+            return res.status(401).send("index cannot be empty");
+            
         } 
+     
 
         const Faculty = await new Facultys(req.fields);
         if (image) {
@@ -24,13 +28,19 @@ const FacultyAdd = async (req, res) => {
                 Faculty.image.Name = image.name
         }
 
+        const alreadyIndex = await Facultys.find({Index});
+        if (alreadyIndex) {
+            return res.status(401).send("This index is already in use");
+        }
+
+
         if (!Index) {
             const Data = await Facultys.find();
             if (Data == undefined) {
                 Facultys.Index = 1;
             } else {
                 Facultys.Index = Data.length + 1
-            }
+            } 
         }
 
         await Faculty.save();
