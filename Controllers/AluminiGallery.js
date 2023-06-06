@@ -186,7 +186,7 @@ const aluminiDisplayImages = async (req, res) => {
         console.log(req.params);
 
         const data = await aluminiModel.find({ _id }, { images: { $elemMatch: { _id: Index } } });
-        console.log(data);
+        // console.log(data);
 
         if (data) {
             res.set("Content-type", data[0].images[0].contentType);
