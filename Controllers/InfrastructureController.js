@@ -1,6 +1,6 @@
 const Infrastructure = require("../Models/Infrastructure");
+const InfraLife = require("../Models/InfraLife");
 const fs = require("fs");
-
 
 const AddtheInfrastructure = async (req, res) => {
   try {
@@ -30,7 +30,7 @@ const AddtheInfrastructure = async (req, res) => {
     }
 
     await InfraData.save();
-    return res.status(200).send({ message : "Infra Data Upload", status : true});
+    return res.status(200).send({ message: "Infra Data Upload", status: true });
   } catch (error) {
     console.log(error);
   }
@@ -38,12 +38,10 @@ const AddtheInfrastructure = async (req, res) => {
 
 const InfrastructureDropdownData = async (req, res) => {
   try {
-    const Data = await Infrastructure.find(
-      {},
-      {InfraName: 1, _id: 1 }
-    );
+    const Data = await Infrastructure.find({}, { InfraName: 1, _id: 1 });
 
-    if (Data) return res.status(200).send({ message: "Data Send", status: true, Data });
+    if (Data)
+      return res.status(200).send({ message: "Data Send", status: true, Data });
   } catch (error) {
     console.log(error);
   }
@@ -53,9 +51,13 @@ const SingleInfrastructureDisplay = async (req, res) => {
   try {
     const { _id } = req.params;
 
-    const Data = await Infrastructure.findById({ _id }, { "Images._id": 1 , InfraName : 1,Detail : 1});
+    const Data = await Infrastructure.findById(
+      { _id },
+      { "Images._id": 1, InfraName: 1, Detail: 1 }
+    );
 
-    if (Data) return res.status(200).send({ message: "Data Send", status: true, Data });
+    if (Data)
+      return res.status(200).send({ message: "Data Send", status: true, Data });
   } catch (error) {
     console.log(error);
   }
@@ -95,23 +97,73 @@ const InfrastructureDelete = async (req, res) => {
   }
 };
 
-const InfrastructureImageDelete = async (req,res) =>{
-    try {
-        const {_id,Image_id}= req.params;
+const InfrastructureImageDelete = async (req, res) => {
+  try {
+    const { _id, Image_id } = req.params;
 
-        const Data =  await Infrastructure.findById({_id});
+    const Data = await Infrastructure.findById({ _id });
 
-        if(Data){
-            await Infrastructure.updateOne({_id},{
-                $pull : {
-                    "Images" : {_id :Image_id} 
-                }
-            },{arrayFilters : [{"image._id" : Image_id}]})
-        }
-        return res.status(200).send("Image Delete")
-    } catch (error) {
-        console.log(error);
+    if (Data) {
+      await Infrastructure.updateOne(
+        { _id },
+        {
+          $pull: {
+            Images: { _id: Image_id },
+          },
+        },
+        { arrayFilters: [{ "image._id": Image_id }] }
+      );
     }
+    return res.status(200).send("Image Delete");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const InfraLifeImagesAdd = async (req, res) => {
+  try {
+    const { Image } = req.files;
+
+    const InfraLifeData = await InfraLife();
+
+    if (Image) {
+      (InfraLifeData.Image.data = fs.readFileSync(Image.path)),
+        (InfraLifeData.Image.contentType = Image.type),
+        (InfraLifeData.Image.Name = Image.name);
+    }
+
+    await InfraLifeData.save();
+    return res.status(200).send({ message: "Data Uploaded", status: true });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const InfraLifeImagesDisplay = async (req, res) => {
+  try {
+    const { _id } = req.params;
+
+    const Data = await InfraLife.findById({ _id });
+
+    if (Data) {
+      res.set("Content-type", Data.Image.contentType);
+      return res.status(201).send(Data.Image.data);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const InfraLifeDataSend = async (req,res) =>{
+  try {
+    const Data = await InfraLife.find({},{_id : 1});
+
+    if(Data){
+      return res.status(200).send(Data)
+    }
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 module.exports = {
@@ -120,5 +172,8 @@ module.exports = {
   SingleInfrastructureDisplay,
   ImageDisplay,
   InfrastructureDelete,
-  InfrastructureImageDelete
+  InfrastructureImageDelete,
+  InfraLifeImagesAdd,
+  InfraLifeImagesDisplay,
+  InfraLifeDataSend
 };
