@@ -28,15 +28,12 @@ const { PlacementFeatureAdd, PlacemetFeatureDisplay, PlacementfeatureImageDispla
 const { PlacementStaticAdd, PlacementStaticYearDelete, PlacementStaticCourseDelete, PlacementStaticDisplay } = require('../Controllers/PlacementStatic.js')
 const { PlacementTeamAdd, PlacementTeamDelete, PlacementTeamDisplay, PlacementTeamImageDisplay } = require("../Controllers/PlacementTeamController.js");
 const { aluminiTestimonialsAdd, aluminiTestimonialDisplay, aluminiTestimonialUpdate, aluminiTestimonialDelete, singleAluminiTestimonialDisplay, aluminiTestimonialImageDisplay } = require("../Controllers/AluminiTestimonials.js");
-<<<<<<< HEAD
 const { IndustrialVisitsAdd, IndustrialVisitsDisplay, IndustrialVisitsImageDisplay, IndustrialVisitsDelete, IndustrialVisitsCompanyImageDisplay, IndustrialVisitsUpdate } = require("../Controllers/IndustrialVisits.js");
 const { AddtheInfrastructure,InfrastructureImageDelete,InfrastructureDropdownData,SingleInfrastructureDisplay,ImageDisplay,InfrastructureDelete} = require("../Controllers/InfrastructureController.js");
 const { AddResearch_Development, SingleResearch_Development, Research_DevelopmentImageDisplay, Research_DevelopmentImagesDisplay, Research_DevelopmentDelete, Research_DevelopmentUpdate } = require("../Controllers/Research&Development.js");
-=======
 const { IndustrialVisitsAdd,IndustrialVisitsDisplay, IndustrialVisitsImageDisplay, IndustrialVisitsDelete, IndustrialVisitsCompanyImageDisplay, IndustrialVisitsUpdate } = require("../Controllers/IndustrialVisits.js");
 const { AddtheInfrastructure, InfraLifeDataSend,InfraLifeImagesAdd,InfraLifeImagesDisplay,InfrastructureImageDelete,InfrastructureDropdownData,SingleInfrastructureDisplay,ImageDisplay,InfrastructureDelete} = require("../Controllers/InfrastructureController.js")
 const {AluminEventAdd,AluyminiEventDisplay,AluminiEvenmaiImageDisplay,AluminImagesDisplay,AluminImagesDelete,AluminiEventDelete} = require('../Controllers/AluminEventController.js')
->>>>>>> f9d3a14baac7406db4b39087344f032a6db27e92
 
 router.post("/Administration/Administration_Add", authchecker, formidable(), AdministrationAdd);
 router.post("/Administration/Administration_Delete/:_id", authchecker, AdministrationDelete);
