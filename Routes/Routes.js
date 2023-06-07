@@ -29,7 +29,8 @@ const { PlacementStaticAdd, PlacementStaticYearDelete, PlacementStaticCourseDele
 const { PlacementTeamAdd, PlacementTeamDelete, PlacementTeamDisplay, PlacementTeamImageDisplay } = require("../Controllers/PlacementTeamController.js");
 const { aluminiTestimonialsAdd, aluminiTestimonialDisplay, aluminiTestimonialUpdate, aluminiTestimonialDelete, singleAluminiTestimonialDisplay, aluminiTestimonialImageDisplay } = require("../Controllers/AluminiTestimonials.js");
 const { IndustrialVisitsAdd, IndustrialVisitsDisplay, IndustrialVisitsImageDisplay, IndustrialVisitsDelete, IndustrialVisitsCompanyImageDisplay, IndustrialVisitsUpdate } = require("../Controllers/IndustrialVisits.js");
-const { AddtheInfrastructure,InfrastructureImageDelete,InfrastructureDropdownData,SingleInfrastructureDisplay,ImageDisplay,InfrastructureDelete} = require("../Controllers/InfrastructureController.js")
+const { AddtheInfrastructure,InfrastructureImageDelete,InfrastructureDropdownData,SingleInfrastructureDisplay,ImageDisplay,InfrastructureDelete} = require("../Controllers/InfrastructureController.js");
+const { AddResearch_Development, SingleResearch_Development, Research_DevelopmentImageDisplay, Research_DevelopmentImagesDisplay, Research_DevelopmentDelete, Research_DevelopmentUpdate } = require("../Controllers/Research&Development.js");
 
 router.post("/Administration/Administration_Add", authchecker, formidable(), AdministrationAdd);
 router.post("/Administration/Administration_Delete/:_id", authchecker, AdministrationDelete);
@@ -230,6 +231,14 @@ router.get("/Infrastructure/Infrastructure_Single_Display/:_id",SingleInfrastruc
 router.get("/Infrastructure/Infrastructure_Image_Display/:_id/:Image_id",ImageDisplay);
 router.delete("/Infrastructure/Infrastructure_Delete/:_id",InfrastructureDelete);
 router.delete("/Infrastructure/Infrastructure_Image_Delete/:_id/:Image_id",InfrastructureImageDelete);
+
+//R&D  Routes 
+router.post("/Research&Development/Research&Development_Add",formidable({multiples :true}),AddResearch_Development);
+router.get("/Research&Development/Research&Development_Single_Display/:_id",SingleResearch_Development);
+router.get("/Research&Development/Research&Development_Image_Display",Research_DevelopmentImageDisplay);
+router.get("/Research&Development/Research&Development_Images_Display/:_id",Research_DevelopmentImagesDisplay);
+router.delete("/Research&Development/Research&Development_Delete/:_id",Research_DevelopmentDelete);
+router.post("/Research&Development/Research&Development_Update/:_id",Research_DevelopmentUpdate);
 
 
 module.exports = router;    

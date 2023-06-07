@@ -3,13 +3,15 @@ const mongoose = require("mongoose");
 const researchAnddevlpmtSchema = new mongoose.Schema({
     Detail : String,
     Date: String,
-    category: {
-        type : String,
-        require : true,
-            index : {
-                type : String,
-                require : true,
-            }
+    Category: {
+        category : {
+            type : String,
+            require : true
+        },
+        index : {
+            type : Number,
+            require : true,
+        }
     },
     image: {
         data : Buffer,
