@@ -1,4 +1,5 @@
 const PlacementTeam = require('../Models/PlacemetTeam');
+const fs = require('fs')
 
 
 const PlacementTeamAdd = async (req,res) =>{
@@ -17,7 +18,7 @@ const PlacementTeamAdd = async (req,res) =>{
         const PlacementTeamAdd = await PlacementTeam(req.fields);
 
         if(Image){
-            PlacementTeamAdd.Image.data = Image.path;
+            PlacementTeamAdd.Image.data = fs.readFileSync(Image.path);
             PlacementTeamAdd.Image.contentType = Image.type;
             PlacementTeamAdd.Image.Name = Image.Name
         }
@@ -60,7 +61,7 @@ const PlacementTeamImageDisplay = async (req,res) =>{
     try {
         const {_id} = req.params;
 
-        const SearchData = await PlacementTeam.findById(_id);
+        const SearchData = await PlacementTeam.findById({_id},{Image : 1});
 
         if(SearchData){
             res.set("Content-type", SearchData.Image.contentType);
