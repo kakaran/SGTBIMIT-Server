@@ -30,6 +30,7 @@ const { PlacementTeamAdd, PlacementTeamDelete, PlacementTeamDisplay, PlacementTe
 const { aluminiTestimonialsAdd, aluminiTestimonialDisplay, aluminiTestimonialUpdate, aluminiTestimonialDelete, singleAluminiTestimonialDisplay, aluminiTestimonialImageDisplay } = require("../Controllers/AluminiTestimonials.js");
 const { IndustrialVisitsAdd, IndustrialVisitsDisplay, IndustrialVisitsImageDisplay, IndustrialVisitsDelete, IndustrialVisitsCompanyImageDisplay, IndustrialVisitsUpdate } = require("../Controllers/IndustrialVisits.js");
 const { AddtheInfrastructure,InfrastructureImageDelete,InfrastructureDropdownData,SingleInfrastructureDisplay,ImageDisplay,InfrastructureDelete} = require("../Controllers/InfrastructureController.js")
+const {AluminEventAdd,AluyminiEventDisplay,AluminiEvenmaiImageDisplay,AluminImagesDisplay,AluminImagesDelete,AluminiEventDelete} = require('../Controllers/AluminEventController.js')
 
 router.post("/Administration/Administration_Add", authchecker, formidable(), AdministrationAdd);
 router.post("/Administration/Administration_Delete/:_id", authchecker, AdministrationDelete);
@@ -230,6 +231,15 @@ router.get("/Infrastructure/Infrastructure_Single_Display/:_id",SingleInfrastruc
 router.get("/Infrastructure/Infrastructure_Image_Display/:_id/:Image_id",ImageDisplay);
 router.delete("/Infrastructure/Infrastructure_Delete/:_id",InfrastructureDelete);
 router.delete("/Infrastructure/Infrastructure_Image_Delete/:_id/:Image_id",InfrastructureImageDelete);
+
+//Alumini Event Routes
+router.post("/AluminiEvents/AluminEvent_Add",formidable({multiples :true}),AluminEventAdd);
+router.get("/AluminiEvents/AluyminiEvent_Display",AluyminiEventDisplay);
+router.get("/AluminiEvents/AluminiEvenmai_Image_Display/:_id",AluminiEvenmaiImageDisplay);
+router.get("/AluminiEvents/Alumin_Images_Display/:_id/:Image_id",AluminImagesDisplay);
+router.delete("/AluminiEvents/AluminiEvent_Delete/:_id",AluminiEventDelete);
+router.delete("/AluminiEvents/Alumin_Images_Delete/:_id/:Image_id",AluminImagesDelete);
+
 
 
 module.exports = router;    
