@@ -30,7 +30,7 @@ const { PlacementTeamAdd, PlacementTeamDelete, PlacementTeamDisplay, PlacementTe
 const { aluminiTestimonialsAdd, aluminiTestimonialDisplay, aluminiTestimonialUpdate, aluminiTestimonialDelete, singleAluminiTestimonialDisplay, aluminiTestimonialImageDisplay } = require("../Controllers/AluminiTestimonials.js");
 const { IndustrialVisitsAdd, IndustrialVisitsDisplay, IndustrialVisitsImageDisplay, IndustrialVisitsDelete, IndustrialVisitsCompanyImageDisplay, IndustrialVisitsUpdate } = require("../Controllers/IndustrialVisits.js");
 const { AddtheInfrastructure, InfrastructureImageDelete, InfrastructureDropdownData, SingleInfrastructureDisplay, ImageDisplay, InfrastructureDelete, InfraLifeImagesAdd, InfraLifeDataSend, InfraLifeImagesDisplay } = require("../Controllers/InfrastructureController.js");
-const { AddResearch_Development, SingleResearch_Development, Research_DevelopmentImageDisplay, Research_DevelopmentImagesDisplay, Research_DevelopmentDelete, Research_DevelopmentUpdate } = require("../Controllers/Research&Development.js");
+const { AddResearchDevelopment, SingleResearch_Development, ResearchDevlopmetDisplay,Research_DevelopmentImageDisplay, Research_DevelopmentImagesDisplay, Research_DevelopmentDelete, Research_DevelopmentUpdate } = require("../Controllers/Research&Development.js");
 // const { IndustrialVisitsAdd, IndustrialVisitsDisplay, IndustrialVisitsImageDisplay, IndustrialVisitsDelete, IndustrialVisitsCompanyImageDisplay, IndustrialVisitsUpdate } = require("../Controllers/IndustrialVisits.js");
 // const { AddtheInfrastructure, InfraLifeDataSend, InfraLifeImagesAdd, InfraLifeImagesDisplay, InfrastructureImageDelete, InfrastructureDropdownData, SingleInfrastructureDisplay, ImageDisplay, InfrastructureDelete } = require("../Controllers/InfrastructureController.js")
 const { AluminEventAdd, AluyminiEventDisplay, AluminiEvenmaiImageDisplay, AluminImagesDisplay, AluminImagesDelete, AluminiEventDelete } = require('../Controllers/AluminEventController.js')
@@ -239,10 +239,10 @@ router.delete("/Infrastructure/Infrastructure_Delete/:_id", InfrastructureDelete
 router.delete("/Infrastructure/Infrastructure_Image_Delete/:_id/:Image_id", InfrastructureImageDelete);
 
 //R&D  Routes 
-router.post("/Research&Development/Research&Development_Add", formidable({ multiples: true }), AddResearch_Development);
-router.get("/Research&Development/Research&Development_Single_Display/:_id", SingleResearch_Development);
-router.get("/Research&Development/Research&Development_Image_Display", Research_DevelopmentImageDisplay);
-router.get("/Research&Development/Research&Development_Images_Display/:_id", Research_DevelopmentImagesDisplay);
+router.post("/Research_Development/Research_Development_Add", formidable({ multiples: true }), AddResearchDevelopment);
+router.get("/Research_Development/Research_Development_Display",ResearchDevlopmetDisplay);
+router.get("/Research&Development/Research&Development_Image_Display/:_id", Research_DevelopmentImageDisplay);
+router.get("/Research&Development/Research&Development_Images_Display/:_id/:Image_id", Research_DevelopmentImagesDisplay);
 router.delete("/Research&Development/Research&Development_Delete/:_id", Research_DevelopmentDelete);
 router.post("/Research&Development/Research&Development_Update/:_id", Research_DevelopmentUpdate);
 

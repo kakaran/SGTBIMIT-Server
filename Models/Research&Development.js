@@ -1,27 +1,32 @@
 const mongoose = require("mongoose");
 
-const researchAnddevlpmtSchema = new mongoose.Schema({
-    Detail : String,
+const researchAnddevlpmtSchema = new mongoose.Schema(
+  {
+    Detail: String,
     Date: String,
-    Category: {
-        category : {
-            type : String,
-            require : true
-        },
-        index : {
-            type : Number,
-            require : true,
-        }
+    category: {
+      type: String,
+      require: true,
+    },
+    heading : String,
+    index: {
+      type: Number,
     },
     image: {
-        data : Buffer,
-        contentType: String,
+      data: Buffer,
+      contentType: String,
     },
-    images : [{
+    images: [
+      {
         data: Buffer,
-        contentType : String,
-    }],
-},{timestamps : true}
-)
+        contentType: String,
+      },
+    ],
+  },
+  { timestamps: true }
+);
 
-module.exports = mongoose.model("Research&Development", researchAnddevlpmtSchema);
+module.exports = mongoose.model(
+  "Research&Development",
+  researchAnddevlpmtSchema
+);
