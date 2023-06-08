@@ -99,8 +99,8 @@ const IndustrialVisitsCompanyImageDisplay = async(req,res) => {
         const indusvisit = await IndustrialModel.findById({ _id });
 
         if (indusvisit) {
-            res.set("Content-type", indusvisit.image.contentType)
-            return res.status(200).send(indusvisit.image.data);
+            res.set("Content-type", indusvisit.companyImage.contentType)
+            return res.status(200).send(indusvisit.companyImage.data);
         }
 
         return res.status(201).send("No data found");
