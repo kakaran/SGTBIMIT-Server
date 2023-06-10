@@ -30,7 +30,7 @@ const { PlacementTeamAdd, PlacementTeamDelete, PlacementTeamDisplay, PlacementTe
 const { aluminiTestimonialsAdd, aluminiTestimonialDisplay, aluminiTestimonialUpdate, aluminiTestimonialDelete, singleAluminiTestimonialDisplay, aluminiTestimonialImageDisplay } = require("../Controllers/AluminiTestimonials.js");
 const { IndustrialVisitsAdd, IndustrialVisitsDisplay, IndustrialVisitsImageDisplay, IndustrialVisitsDelete, IndustrialVisitsCompanyImageDisplay, IndustrialVisitsUpdate } = require("../Controllers/IndustrialVisits.js");
 const { AddtheInfrastructure, InfrastructureImageDelete, InfrastructureDropdownData, SingleInfrastructureDisplay, ImageDisplay, InfrastructureDelete, InfraLifeImagesAdd, InfraLifeDataSend, InfraLifeImagesDisplay } = require("../Controllers/InfrastructureController.js");
-const { AddResearchDevelopment, SingleResearch_Development, ResearchDevlopmetDisplay,Research_DevelopmentImageDisplay, Research_DevelopmentImagesDisplay, Research_DevelopmentDelete, Research_DevelopmentUpdate } = require("../Controllers/Research&Development.js");
+const { AddResearchDevelopment, SingleResearch_Development, ResearchDevlopmetDisplay, Research_DevelopmentImageDisplay, Research_DevelopmentImagesDisplay, Research_DevelopmentDelete, Research_DevelopmentUpdate } = require("../Controllers/Research&Development.js");
 // const { IndustrialVisitsAdd, IndustrialVisitsDisplay, IndustrialVisitsImageDisplay, IndustrialVisitsDelete, IndustrialVisitsCompanyImageDisplay, IndustrialVisitsUpdate } = require("../Controllers/IndustrialVisits.js");
 // const { AddtheInfrastructure, InfraLifeDataSend, InfraLifeImagesAdd, InfraLifeImagesDisplay, InfrastructureImageDelete, InfrastructureDropdownData, SingleInfrastructureDisplay, ImageDisplay, InfrastructureDelete } = require("../Controllers/InfrastructureController.js")
 const { AluminEventAdd, AluyminiEventDisplay, AluminiEvenmaiImageDisplay, AluminImagesDisplay, AluminImagesDelete, AluminiEventDelete } = require('../Controllers/AluminEventController.js')
@@ -40,7 +40,7 @@ router.post("/Administration/Administration_Delete/:_id", authchecker, Administr
 router.get("/Administration/Administration_Display", AdministrationDisplay);
 router.get("/Administration/AdministrationImageDisplay/:_id", AdministrationImageDisplay);
 router.get("/Administration/Single_Administration_Display/:_id", SingleAdministrationDisplay);
-router.post("/Administration/Administration_Update/:_id", authchecker, formidable(), AdministrationUpdate); 3
+router.post("/Administration/Administration_Update/:_id", authchecker, formidable(), AdministrationUpdate);
 
 //Placement and Intership Routes 
 router.post("/Placement_Intership/PlacementInterships_Add", authchecker, formidable(), PlacementIntershipsAdd);
@@ -240,7 +240,7 @@ router.delete("/Infrastructure/Infrastructure_Image_Delete/:_id/:Image_id", Infr
 
 //R&D  Routes 
 router.post("/Research_Development/Research_Development_Add", formidable({ multiples: true }), AddResearchDevelopment);
-router.get("/Research_Development/Research_Development_Display",ResearchDevlopmetDisplay);
+router.get("/Research_Development/Research_Development_Display", ResearchDevlopmetDisplay);
 router.get("/Research&Development/Research&Development_Image_Display/:_id", Research_DevelopmentImageDisplay);
 router.get("/Research&Development/Research&Development_Images_Display/:_id/:Image_id", Research_DevelopmentImagesDisplay);
 router.delete("/Research&Development/Research&Development_Delete/:_id", Research_DevelopmentDelete);
