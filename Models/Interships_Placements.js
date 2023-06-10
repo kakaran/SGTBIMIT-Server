@@ -10,7 +10,8 @@ const placeInter = mongoose.Schema({
     },
     companyName :{
         type: String
-    }
+    },
+    package : Number
 },{
     timestamps : true
 });

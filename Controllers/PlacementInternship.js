@@ -6,11 +6,15 @@ const fs = require('fs');
 const PlacementIntershipsAdd = async (req,res) =>{
     try {
 
-        const {name} = req.fields
+        const {name,companyName,package} = req.fields
         const {image} = req.files;
 
         if(!name) {
             return res.status(200).send({message : "Name is required"});
+        }else if (!companyName){
+            return res.status(200).send({message : "companyName is required", statu : false})
+        }else if (!package){
+            return res.status(200).send({message : "package is required", statu : false})
         }else if (image && image.size > 1000000) {
             return res.status(401).send("Image is required and should be less 1mb");
         }

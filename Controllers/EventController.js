@@ -146,17 +146,22 @@ const EventImageDisplay = async (req, res) => {
 
 const EventHandlerDeleteEvent = async (_id, name, year) => {
     try {
-        const SearcheventHandler = await EventHandler.find({ name: name }).select("-images -HeaderImage");
+        const SearcheventHandler = await EventHandler.findOne({ name: name }).select("-images -HeaderImage");
+        // console.log(_id,name,year);
+        // console.log(SearcheventHandler);
         if (SearcheventHandler) {
             const EventDeleteFromEveHand = await EventHandler.updateOne({ name: name, "Years.year": year }, {
                 $pull: {
-                    "Years.$.Events": {
-                        Event_id: _id
+                    // "Years.$.Events": {
+                    //     Event_id: _id
+                    // }
+                    "Years.$[year].Events" : {
+                        Event_id : _id
                     }
                 }
-            })
+            },{arrayFilters : [{"year.year" : year}]})
 
-            console.log(EventDeleteFromEveHand);
+            // console.log(EventDeleteFromEveHand);
         }
     } catch (error) {
         console.log(error);
@@ -167,12 +172,12 @@ const EventDelete = async (req, res) => {
     try {
         const { _id } = req.params;
 
-        const Search_Data = await Event.find({ _id });
+        const Search_Data = await Event.find({ _id },{});
 
         // console.log(Search_Data);
 
         if (Search_Data.length) {
-            await EventHandlerDeleteEvent(Search_Data[0]._id, Search_Data[0].name, Search_Data[0].year);
+            await EventHandlerDeleteEvent(Search_Data[0]._id, Search_Data[0].eventHandler, Search_Data[0].year);
             await Event.findByIdAndDelete({ _id });
             return res.status(200).send("Data deleted");
         } else {
