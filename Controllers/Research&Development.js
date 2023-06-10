@@ -3,17 +3,17 @@ const fs = require("fs");
 
 const AddResearchDevelopment = async (req, res) => {
   try {
-    const { Date, Detail, category, index ,heading} = req.fields;
+    const { Date, Detail, category, index, heading } = req.fields;
     const { image, images } = req.files;
 
-    if(!Date){
-        return res.status(409).send({message : "Date is Required" , status : false})
-    }else if(!Detail){
-        return res.status(409).send({message : "Detail is Requires", status : false})
-    }else if(!category){
-        return res.status(409).send({message : "Category is Requires", status : false})
-    }else if(!heading){
-        return res.status(409).send({message : "Evnet Heading is Requires", status : false})
+    if (!Date) {
+      return res.status(409).send({ message: "Date is Required", status: false })
+    } else if (!Detail) {
+      return res.status(409).send({ message: "Detail is Requires", status: false })
+    } else if (!category) {
+      return res.status(409).send({ message: "Category is Requires", status: false })
+    } else if (!heading) {
+      return res.status(409).send({ message: "Evnet Heading is Requires", status: false })
     }
 
     const resanddev = await researchAnddevlpmtModel(req.fields);
@@ -48,8 +48,8 @@ const AddResearchDevelopment = async (req, res) => {
 
 const Research_DevelopmentImageDisplay = async (req, res) => {
   try {
-    const {_id} = req.params;
-    const res_dev = await researchAnddevlpmtModel.findById({_id}).select("image");
+    const { _id } = req.params;
+    const res_dev = await researchAnddevlpmtModel.findById({ _id }).select("image");
     console.log(res_dev);
 
     if (!res_dev) {
@@ -80,18 +80,34 @@ const Research_DevelopmentImagesDisplay = async (req, res) => {
     console.log(error);
   }
 };
-const ResearchDevlopmetDisplay = async (req,res)=>{
+const ResearchDevlopmetDisplay = async (req, res) => {
   try {
-    const Data = await researchAnddevlpmtModel.find({},{Detail:1,Date : 1,category : 1,heading :1,"images._id" : 1})
-    if(Data) return res.status(200).send({message : "Data Send", status : true , Data})
+    const Data = await researchAnddevlpmtModel.find({}, { Detail: 1, Date: 1, category: 1, heading: 1, "images._id": 1 })
+    if (Data) return res.status(200).send({ message: "Data Send", status: true, Data })
   } catch (error) {
     console.log(error);
   }
 }
 
-const SingleResearch_Development = async (req, res) => {};
-const Research_DevelopmentDelete = async (req, res) => {};
-const Research_DevelopmentUpdate = async (req, res) => {};
+const SingleResearch_Development = async (req, res) => {
+  try {
+    const { _id } = req.params;
+    const Data = await researchAnddevlpmtModel.findById(_id);
+    if (Data) return res.status(200).send({ message: "Data Send", Data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+const Research_DevelopmentDelete = async (req, res) => {
+  try {
+    const { _id } = req.params;
+    const Data = await researchAnddevlpmtModel.findByIdAndDelete(_id);
+    if (Data) return res.status(200).send({ message: "Data Deleted", Data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+const Research_DevelopmentUpdate = async (req, res) => { };
 
 module.exports = {
   AddResearchDevelopment,

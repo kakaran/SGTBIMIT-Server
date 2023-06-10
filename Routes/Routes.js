@@ -241,17 +241,18 @@ router.delete("/Infrastructure/Infrastructure_Image_Delete/:_id/:Image_id", Infr
 //R&D  Routes 
 router.post("/Research_Development/Research_Development_Add", formidable({ multiples: true }), AddResearchDevelopment);
 router.get("/Research_Development/Research_Development_Display", ResearchDevlopmetDisplay);
+router.get("/Research_Development/Research_Development_Single_Display/:_id", SingleResearch_Development);
 router.get("/Research&Development/Research&Development_Image_Display/:_id", Research_DevelopmentImageDisplay);
 router.get("/Research&Development/Research&Development_Images_Display/:_id/:Image_id", Research_DevelopmentImagesDisplay);
 router.delete("/Research&Development/Research&Development_Delete/:_id", Research_DevelopmentDelete);
 router.post("/Research&Development/Research&Development_Update/:_id", Research_DevelopmentUpdate);
 
 //Alumini Event Routes
-router.post("/AluminiEvents/AluminEvent_Add",formidable({multiples :true}),AluminEventAdd);
-router.get("/AluminiEvents/AluyminiEvent_Display",AluyminiEventDisplay);
-router.get("/AluminiEvents/AluminiEvenmai_Image_Display/:_id",AluminiEvenmaiImageDisplay);
-router.get("/AluminiEvents/Alumin_Images_Display/:_id/:Image_id",AluminImagesDisplay);
-router.delete("/AluminiEvents/AluminiEvent_Delete/:_id",AluminiEventDelete);
-router.delete("/AluminiEvents/Alumin_Images_Delete/:_id/:Image_id",AluminImagesDelete);
+router.post("/AluminiEvents/AluminEvent_Add", formidable({ multiples: true }), AluminEventAdd);
+router.get("/AluminiEvents/AluyminiEvent_Display", AluyminiEventDisplay);
+router.get("/AluminiEvents/AluminiEvenmai_Image_Display/:_id", AluminiEvenmaiImageDisplay);
+router.get("/AluminiEvents/Alumin_Images_Display/:_id/:Image_id", AluminImagesDisplay);
+router.delete("/AluminiEvents/AluminiEvent_Delete/:_id", AluminiEventDelete);
+router.delete("/AluminiEvents/Alumin_Images_Delete/:_id/:Image_id", AluminImagesDelete);
 
 module.exports = router;    
