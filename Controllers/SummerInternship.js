@@ -49,7 +49,7 @@ const SummerInternshipAdd = async(req,res) => {
                 }
                 
         await summerInter.save();
-        return res.status(200).send({ Message: "Data upload ", status: true });
+        return res.status(200).send({ Message: "Data upload", status: true });
 
 
     } catch (error) {
@@ -59,7 +59,17 @@ const SummerInternshipAdd = async(req,res) => {
 
 
 const SummerInternshipDisplay = async(req,res) => {
+
     try {
+
+        const summerintern = await summerInternshipModel.find({}).select("-companyImage -topInterns.studImage");
+
+        if (!summerintern) {
+            return res.status(200).send({ Message: "Data not found"});
+        }
+
+        return res.status(200).send(summerintern);
+
         
     } catch (error) {
         
@@ -72,6 +82,7 @@ const SummerInternshipImageDisplay = async(req,res) => {
         
     }
 }
+
 const SummerInternshipImagesDisplay = async(req,res) => {
     try {
         
@@ -79,8 +90,21 @@ const SummerInternshipImagesDisplay = async(req,res) => {
         
     }
 }
+
 const SummerInternshipDelete = async(req,res) => {
+
     try {
+
+        const _id = req.params._id
+
+        const summerintern = await summerInternshipModel.findById(_id);
+
+        if (!summerintern) {
+            return res.status(200).send({ Message: "Data not found"});
+        }
+
+        await summerInternshipModel.findByIdAndDelete(summerintern);        
+        return res.status(200).send({ Message: "deleted successfully"});
         
     } catch (error) {
         
