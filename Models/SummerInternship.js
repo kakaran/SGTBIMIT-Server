@@ -6,10 +6,7 @@ const SummerInternshipSchema = new mongoose.Schema({
     companyName : String,
     companyDetail : String,
     partnershipWith : String,
-    internshipOffered : [{
-        type: String,
-        required:true,
-    }],
+    internshipOffered : [String],
     companyImage : {
         data:Buffer,
         contentType: String,
