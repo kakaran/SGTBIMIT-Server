@@ -77,6 +77,8 @@ const SummerInternshipDisplay = async(req,res) => {
         
     }
 }
+
+
 const SummerInternshipCompanyImageDisplay = async(req,res) => {
 
     try {
@@ -98,8 +100,24 @@ const SummerInternshipCompanyImageDisplay = async(req,res) => {
 }
 
 
-const SummerInternshipImagesDisplay = async(req,res) => {
+const SummerInternshipTopInternsImagesDisplay = async(req,res) => {
+
     try {
+
+        const id = req.params._id
+        const studentImage = req.params.studentImage
+
+        const summerintern = await summerInternshipModel.findById(id,
+            { topInterns : { $elemMatch : {_id : studentImage}}});
+        console.log(summerintern);
+
+        if (summerintern) {
+            res.set("Content-type", summerintern.topInterns[0].studImage.contentType);
+            return res.status(200).send(summerintern.topInterns[0].studImage.data);            
+        }
+        
+        return res.status(400).send({ Message: "Data not found"});            
+
         
     } catch (error) {
         
@@ -133,6 +151,6 @@ module.exports = {
     SummerInternshipAdd,
     SummerInternshipDisplay,
     SummerInternshipCompanyImageDisplay,
-    SummerInternshipImagesDisplay,
+    SummerInternshipTopInternsImagesDisplay,
     SummerInternshipDelete
 }
