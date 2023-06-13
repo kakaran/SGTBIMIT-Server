@@ -26,20 +26,26 @@ const SummerInternshipAdd = async(req,res) => {
   
                   for (let i = 0; i < studImage.length; i++) {  
                       summerInter.topInterns.push({
-                          data : fs.readFileSync(studImage[i].path),
-                          contentType : studImage[i].type,
-                          studName : studName[i],
-                          studYear : studYear[i],
-                          internshipIn : internshipIn[i],
+                              studImage : {
+                                data : fs.readFileSync(studImage[i].path),
+                                contentType : studImage[i].type,
+                              },
+                              studName : studName[i],
+                              studYear : studYear[i],
+                              internshipIn : internshipIn[i],                            
                       })                
                   }
   
-                }else if(studImage) {
-                    data = fs.readFileSync(studImage.path);
-                    contentType = studImage.type;
-                    summerInter.topInterns.studName = studName;
-                    summerInter.topInterns.studYear = studYear;
-                    summerInter.topInterns.internshipIn = internshipIn;
+                }else {
+                    summerInter.topInterns.push({
+                            studImage : {
+                                data : fs.readFileSync(studImage.path),
+                                contentType : studImage.type,
+                            },
+                            studName,
+                            studYear,
+                            internshipIn,
+                    })                   
                 }
                 
         await summerInter.save();

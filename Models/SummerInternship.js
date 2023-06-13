@@ -11,12 +11,14 @@ const SummerInternshipSchema = new mongoose.Schema({
         data:Buffer,
         contentType: String,
     },
-    topInterns : [{
+    topInterns : [
+        {
         studName : String,
         studYear : Number,
         internshipIn : String,
         studImage : {data:Buffer,contentType: String},
-    }],
+        }
+    ],
     
 },{timestamps : true});
 
