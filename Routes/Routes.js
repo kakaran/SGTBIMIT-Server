@@ -33,7 +33,8 @@ const { AddtheInfrastructure, InfrastructureImageDelete, InfrastructureDropdownD
 const { AddResearchDevelopment, SingleResearch_Development, ResearchDevlopmetDisplay, Research_DevelopmentImageDisplay, Research_DevelopmentImagesDisplay, Research_DevelopmentDelete, Research_DevelopmentUpdate } = require("../Controllers/Research&Development.js");
 // const { IndustrialVisitsAdd, IndustrialVisitsDisplay, IndustrialVisitsImageDisplay, IndustrialVisitsDelete, IndustrialVisitsCompanyImageDisplay, IndustrialVisitsUpdate } = require("../Controllers/IndustrialVisits.js");
 // const { AddtheInfrastructure, InfraLifeDataSend, InfraLifeImagesAdd, InfraLifeImagesDisplay, InfrastructureImageDelete, InfrastructureDropdownData, SingleInfrastructureDisplay, ImageDisplay, InfrastructureDelete } = require("../Controllers/InfrastructureController.js")
-const { AluminEventAdd, AluyminiEventDisplay, AluminiEvenmaiImageDisplay, AluminImagesDisplay, AluminImagesDelete, AluminiEventDelete } = require('../Controllers/AluminEventController.js')
+const { AluminEventAdd, AluyminiEventDisplay, AluminiEvenmaiImageDisplay, AluminImagesDisplay, AluminImagesDelete, AluminiEventDelete } = require('../Controllers/AluminEventController.js');
+const { SummerInternshipAdd, SummerInternshipDisplay, SummerInternshipImageDisplay, SummerInternshipImagesDisplay, SummerInternshipDelete } = require("../Controllers/SummerInternship.js");
 
 router.post("/Administration/Administration_Add", authchecker, formidable(), AdministrationAdd);
 router.post("/Administration/Administration_Delete/:_id", authchecker, AdministrationDelete);
@@ -254,5 +255,15 @@ router.get("/AluminiEvents/AluminiEvenmai_Image_Display/:_id", AluminiEvenmaiIma
 router.get("/AluminiEvents/Alumin_Images_Display/:_id/:Image_id", AluminImagesDisplay);
 router.delete("/AluminiEvents/AluminiEvent_Delete/:_id", AluminiEventDelete);
 router.delete("/AluminiEvents/Alumin_Images_Delete/:_id/:Image_id", AluminImagesDelete);
+
+
+//SummerInternship
+router.post("/SummerInternship/SummerInternship_add", formidable({ multiples: true }), SummerInternshipAdd);
+router.get("/SummerInternship/SummerInternship_Display", SummerInternshipDisplay);
+router.get("/SummerInternship/SummerInternship_Image_Display/:_id", SummerInternshipImageDisplay);
+router.get("/SummerInternship/SummerInternship_Display/:_id/:Image_id", SummerInternshipImagesDisplay);
+router.delete("/SummerInternship/SummerInternship_Delete/:_id", SummerInternshipDelete);
+// router.delete("/SummerInternship/SummerInternship_Delete/:_id/:Image_id", SummerInternshipImagesDelete);
+
 
 module.exports = router;    
