@@ -8,9 +8,11 @@ const SummerInternshipAdd = async(req,res) => {
         const {companyName,companyDetail,partnershipWith,internshipOffered,studName,studYear,internshipIn} = req.fields;
         const {companyImage,studImage} = req.files;
         
-        if (!companyName || !companyDetail || !partnershipWith || !internshipOffered) {
+        if (!companyName || !companyDetail || !partnershipWith || !internshipOffered || !studYear || !studName || !internshipIn) {
             return res.status(401).send("all fileds is Required");
           } else if (!companyImage || companyImage.size > 1000000) {
+            return res.status(200).send("companyImage size under 1MB only");
+          } else if (!studImage || studImage.size > 1000000) {
             return res.status(200).send("companyImage size under 1MB only");
           }
 
@@ -75,13 +77,26 @@ const SummerInternshipDisplay = async(req,res) => {
         
     }
 }
-const SummerInternshipImageDisplay = async(req,res) => {
+const SummerInternshipCompanyImageDisplay = async(req,res) => {
+
     try {
+        
+        const id = req.params._id
+        const summerintern = await summerInternshipModel.findById(id, {companyImage: 1});
+
+        if (summerintern) {
+            res.set("Content-type", summerintern.companyImage.contentType);
+            return res.status(200).send(summerintern.companyImage.data);            
+        }
+        
+        return res.status(400).send({ Message: "Data not found"});            
+
         
     } catch (error) {
         
     }
 }
+
 
 const SummerInternshipImagesDisplay = async(req,res) => {
     try {
@@ -90,6 +105,8 @@ const SummerInternshipImagesDisplay = async(req,res) => {
         
     }
 }
+
+
 
 const SummerInternshipDelete = async(req,res) => {
 
@@ -115,7 +132,7 @@ const SummerInternshipDelete = async(req,res) => {
 module.exports = {
     SummerInternshipAdd,
     SummerInternshipDisplay,
-    SummerInternshipImageDisplay,
+    SummerInternshipCompanyImageDisplay,
     SummerInternshipImagesDisplay,
     SummerInternshipDelete
 }
