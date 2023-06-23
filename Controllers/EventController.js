@@ -1,6 +1,7 @@
 const Event = require("../Models/Events");
 const EventHandler = require("../Models/EventHandler");
 const fs = require('fs');
+const { log } = require("console");
 
 const EventhandlerManage = async (eventName, year, Id) => {
     try {
@@ -155,11 +156,11 @@ const EventHandlerDeleteEvent = async (_id, name, year) => {
                     // "Years.$.Events": {
                     //     Event_id: _id
                     // }
-                    "Years.$[year].Events" : {
-                        Event_id : _id
+                    "Years.$[year].Events": {
+                        Event_id: _id
                     }
                 }
-            },{arrayFilters : [{"year.year" : year}]})
+            }, { arrayFilters: [{ "year.year": year }] })
 
             // console.log(EventDeleteFromEveHand);
         }
@@ -172,7 +173,7 @@ const EventDelete = async (req, res) => {
     try {
         const { _id } = req.params;
 
-        const Search_Data = await Event.find({ _id },{});
+        const Search_Data = await Event.find({ _id }, {});
 
         // console.log(Search_Data);
 
@@ -191,6 +192,7 @@ const EventDelete = async (req, res) => {
 const EventMainImageDisplay = async (req, res) => {
     try {
         const { _id } = req.params;
+        console.log(_id);
 
         const SearchData = await Event.findById({ _id }).select("mainImage");
 
@@ -280,11 +282,21 @@ const EventUpdate = async (req, res) => {
     }
 }
 
+const AllEventDisplay = async (req, res) => {
+    try {
+        const Data = await Event.find({}).select("-Images.data -mainImage.data").sort({ createdAt: -1 });
+        if (Data) { return res.status(200).send(Data) }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
     EventAdd,
     EventImageDisplay,
     EventDelete,
     EventUpdate,
     EventMainImageDisplay,
-    SingleEventDisplay
+    SingleEventDisplay,
+    AllEventDisplay
 }

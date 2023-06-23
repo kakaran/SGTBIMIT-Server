@@ -17,7 +17,7 @@ const { AdmissionRequestDelete, AdmissionRequestDisplay, AdmissionFormFill } = r
 
 const authchecker = require("../Middlewares/authentication.js");
 const { eventAddImage, eventDisplayImage, eventDisplayImages, eventUpdateImage, eventUpdateImages, eventDelete, eventImagesDelete } = require("../Controllers/EventGallery.js");
-const { EventAdd, SingleEventDisplay, EventDelete, EventUpdate, EventImageDisplay, EventMainImageDisplay } = require('../Controllers/EventController.js');
+const { EventAdd, AllEventDisplay, SingleEventDisplay, EventDelete, EventUpdate, EventImageDisplay, EventMainImageDisplay } = require('../Controllers/EventController.js');
 const { EventHandlerAdd, EventHandlerDisplay, EventHandlerImageDisplay, EventHandlerDelete, EventHandlerSingleDisplay, EventHandleRHederImage, AllEventsDisplay } = require("../Controllers/EventHandlerController.js");
 const { CollaborationsAdd, CollaborationsDelete, CollaborationsImageDisplay, CollaborationsDisplay } = require("../Controllers/CollaborationsController.js")
 const { RegistrationAdd, RegistrationDisplayAll, RegistrationDelete } = require("../Controllers/RegistrationController.js")
@@ -176,6 +176,7 @@ router.post("/Event/Event_Update/:_id", formidable({ multiples: true }), EventUp
 router.get("/Event/Event_Image_Display/:_id/:Image_id", EventImageDisplay);
 router.get("/Event/Event_MainImage_Display/:_id", EventMainImageDisplay);
 router.get("/Event/Single_Event_Display/:_id", SingleEventDisplay);
+router.get("/Event/All_Event_Display", AllEventDisplay);
 
 //EventHandler Routes//
 router.post("/Eventhandler/EventHandler_Add", formidable({ multiples: true }), EventHandlerAdd);
