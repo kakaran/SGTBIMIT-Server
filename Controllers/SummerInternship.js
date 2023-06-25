@@ -8,7 +8,7 @@ const SummerInternshipAdd = async(req,res) => {
         const {companyName,companyDetail,partnershipWith,internshipOffered,studName,studYear,internshipIn} = req.fields;
         const {companyImage,studImage} = req.files;
         
-        if (!companyName || !companyDetail || !partnershipWith || !internshipOffered || !studYear || !studName || !internshipIn) {
+        if (!companyName || !companyDetail || !internshipOffered || !studYear || !studName || !internshipIn) {
             return res.status(401).send("all fileds is Required");
           } else if (!companyImage || companyImage.size > 1000000) {
             return res.status(200).send("companyImage size under 1MB only");
@@ -147,10 +147,49 @@ const SummerInternshipDelete = async(req,res) => {
 }
 
 
+const SummerInternshipStudentUpdate = async(req,res) => {
+
+    try {
+
+        const id = req.params._id
+        const {studName,studYear,internshipIn} = req.fields;
+        const {studImage} = req.files;
+        console.log(req.fields);
+        
+        const summerintern = await summerInternshipModel.findById(id);
+
+        if (!summerintern) {
+            return res.status(400).send({ Message: "Data not found"});
+        }
+
+        await summerInternshipModel.updateOne({_id: id}, 
+            {$set : { 
+                        topInterns : {
+                            studImage : {
+                                data : fs.readFileSync(studImage.path),
+                                contentType : studImage.type,
+                            },
+                            studName,
+                            studYear,
+                            internshipIn,
+                            }
+             }},
+             { new: true}
+            );        
+
+        return res.status(200).send({ Message: "student Updated successfully"});
+        
+    } catch (error) {
+        
+    }
+}
+
+
 module.exports = {
     SummerInternshipAdd,
     SummerInternshipDisplay,
     SummerInternshipCompanyImageDisplay,
     SummerInternshipTopInternsImagesDisplay,
-    SummerInternshipDelete
+    SummerInternshipDelete,
+    SummerInternshipStudentUpdate,
 }
