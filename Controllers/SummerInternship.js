@@ -199,7 +199,7 @@ const SummerInternshipStudentAdd = async(req,res) => {
             return res.status(400).send({ Message: "Data not found"});
         }
 
-        await summerInternshipModel.updateOne({id}, 
+        await summerInternshipModel.findByIdAndUpdate(id, 
             {$push : { 
                         topInterns : {
                             studImage : {
