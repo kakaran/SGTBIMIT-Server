@@ -184,6 +184,45 @@ const SummerInternshipStudentUpdate = async(req,res) => {
     }
 }
 
+const SummerInternshipStudentAdd = async(req,res) => {
+
+    try {
+
+        const id = req.params._id
+        const {studName,studYear,internshipIn} = req.fields;
+        const {studImage} = req.files;
+        console.log(req.fields);
+        
+        const summerintern = await summerInternshipModel.findById(id);
+
+        if (!summerintern) {
+            return res.status(400).send({ Message: "Data not found"});
+        }
+
+        await summerInternshipModel.updateOne({id}, 
+            {$push : { 
+                        topInterns : {
+                            studImage : {
+                                data : fs.readFileSync(studImage.path),
+                                contentType : studImage.type,
+                            },
+                            studName,
+                            studYear,
+                            internshipIn,
+                            }
+             }},
+             { new: true}
+            );        
+
+        return res.status(200).send({ Message: "student Added successfully"});
+        
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
 
 module.exports = {
     SummerInternshipAdd,
@@ -191,5 +230,6 @@ module.exports = {
     SummerInternshipCompanyImageDisplay,
     SummerInternshipTopInternsImagesDisplay,
     SummerInternshipDelete,
+    SummerInternshipStudentAdd,
     SummerInternshipStudentUpdate,
 }
